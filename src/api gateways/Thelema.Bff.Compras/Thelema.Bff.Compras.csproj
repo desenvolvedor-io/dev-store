@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>f3b781d5-30b2-4c41-af65-5f4de74d504d</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+
+		<PackageReference Include="Google.Protobuf" Version="3.14.0" />
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.34.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.34.1" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\building blocks\Thelema.Core\Thelema.Core.csproj" />
+		<ProjectReference Include="..\..\building blocks\Thelema.MessageBus\Thelema.MessageBus.csproj" />
+		<ProjectReference Include="..\..\building blocks\Thelema.WebAPI.Core\Thelema.WebAPI.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="..\..\services\Thelema.Carrinho.API\Protos\carrinho.proto" GrpcServices="Client" />
+	</ItemGroup>
+
+</Project>
