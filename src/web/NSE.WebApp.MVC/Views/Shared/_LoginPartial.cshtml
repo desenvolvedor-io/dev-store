@@ -1,0 +1,33 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@using NSE.WebAPI.Core.Usuario
+@inject IAspNetUser AppUser
+
+@if (AppUser.EstaAutenticado())
+{
+<div>
+    <vc:carrinho />
+</div>
+<div>
+    <div class="dropdown d-inline-block">
+        <a href="#" class="icontext dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <img class="icon icon-sm rounded-circle" src="https://s.gravatar.com/avatar/@this.HashEmailForGravatar(AppUser.ObterUserEmail())?d=mm&s=45">
+        </a> <!-- iconbox // -->
+        <div class="dropdown-menu dropdown-menu-left" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 12px; left: 91px; transform: translate3d(150px, 32px, 0px);">
+            <a class="dropdown-item" href="#">Meu Perfil</a>
+            <a class="dropdown-item" asp-controller="Pedido" asp-action="MeusPedidos">Meus Pedidos</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" asp-controller="Identidade" asp-action="Logout">Sair</a>
+        </div>
+    </div>
+</div>
+}
+else
+{
+<div class="widget-header">
+    <small class="title text-muted">Bem vindo!</small>
+    <div>
+        <a asp-controller="Identidade" asp-action="Registro">Crie sua conta</a> <span> | </span>
+        <a asp-controller="Identidade" asp-action="Login"> Login</a>
+    </div>
+</div>
+}

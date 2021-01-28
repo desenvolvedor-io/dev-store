@@ -1,0 +1,42 @@
+﻿@model NSE.WebApp.MVC.Models.UsuarioLogin
+
+@{
+    ViewData["Title"] = "Login de usuário";
+}
+
+
+<section class="section-conten padding-y container" style="min-height:35vh">
+    
+    <vc:Summary></vc:Summary>
+
+    <div class="card mx-auto" style="max-width: 380px; margin-top: 100px;">
+        
+        <div class="card-body">
+            <h4 class="card-title mb-4">Seja bem vindo!</h4>
+            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Senha"></label>
+                    <input type="password" asp-for="Senha" class="form-control" />
+                    <span asp-validation-for="Senha" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">Ainda não tem uma conta?<a asp-controller="Identidade" asp-action="Registro"> Criar uma conta</a></div>
+    </div>
+
+</section>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

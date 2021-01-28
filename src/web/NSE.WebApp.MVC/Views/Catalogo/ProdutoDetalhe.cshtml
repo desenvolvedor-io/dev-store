@@ -1,0 +1,84 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model NSE.WebApp.MVC.Models.ProdutoViewModel
+@{
+    ViewData["Title"] = Model.Nome;
+}
+<section class="section-content padding-y bg container">
+    <div class="card">
+        <div class="row no-gutters">
+            <aside class="col-md-6">
+                <article class="gallery-wrap">
+                    <div class="img-big-wrap" style="text-align: center">
+                        <img src="~/images/produtos/@Model.Imagem" alt="@Model.Nome">
+                    </div>
+                </article>
+            </aside>
+            <main class="col-md-6 border-left">
+                <article class="content-body">
+                    <form asp-controller="Carrinho" asp-action="AdicionarItemCarrinho" method="post">
+                        
+                        <input type="hidden" id="ProdutoId" name="ProdutoId" value="@Model.Id" />
+
+                        <h2 class="title">@Model.Nome</h2>
+
+                        <div class="rating-wrap my-3">
+                            <ul class="rating-stars">
+                                <li style="width: 80%" class="stars-active">
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </li>
+                            </ul>
+                            <small class="label-rating text-muted">132 avaliações</small>
+                            <small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> 154 peças vendidas</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <var class="price h4">@this.FormatoMoeda(Model.Valor)</var>
+                        </div>
+
+                        <h5>@Model.Descricao</h5><br/>
+                        <p> @this.MensagemEstoque(Model.QuantidadeEstoque)</p>
+
+                        <hr>
+
+                        @{
+                            if (Model.QuantidadeEstoque > 0)
+                            {
+                                <div class="form-row">
+                                    <div class="form-group col-md flex-grow-0">
+                                        <label>Quantidade</label>
+                                        <div class="input-group input-spinner">
+                                            <select id="Quantidade" name="Quantidade" class="form-control">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br/>
+                                <button type="submit" class="btn  btn-outline-primary">
+                                    <span class="text">Adicionar ao carrinho</span> <i class="fas fa-shopping-cart"> &nbsp;</i>
+                                </button>
+
+                            }
+                        }
+
+                        <a asp-action="Index" class="btn  btn-info">
+                            <span class="text">Voltar</span>
+                        </a>
+                    </form>
+                </article>
+            </main>
+        </div>
+    </div>
+</section>

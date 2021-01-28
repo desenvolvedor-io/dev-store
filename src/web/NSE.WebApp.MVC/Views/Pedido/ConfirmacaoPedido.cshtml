@@ -1,0 +1,110 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model NSE.WebApp.MVC.Models.PedidoViewModel
+
+@{
+    ViewData["Title"] = "Pedido confirmado!";
+}
+
+<section class="padding-y">
+    <div class="container">
+
+        <vc:Summary></vc:Summary>
+
+        @{
+            if (Model.PedidoItems.Any())
+            {
+                <div class="card">
+                    <div class="tracking-wrap">
+                        <div class="step active">
+                            <span class="icon">
+                                <i class="fa fa-location-arrow"></i>
+                            </span>
+                            <span class="text"> Endereço</span>
+                        </div>
+                        <div class="step active">
+                            <span class="icon">
+                                <i class="fa fa-credit-card"></i>
+                            </span>
+                            <span class="text"> Pagamento </span>
+                        </div>
+                        <div class="step active">
+                            <span class="icon">
+                                <i class="fa fa-check-square"></i>
+                            </span>
+                            <span class="text"> Confirmação</span>
+                        </div>
+                    </div>
+                    <article class="card-body">
+                        <header class="mb-4">
+                            <h4 class="card-title">Pedido concluído com sucesso!</h4>
+                        </header>
+                        <div class="row">
+                            @{
+                                foreach (var item in Model.PedidoItems)
+                                {
+                                    <div class="col-md-6">
+                                        <figure class="itemside  mb-3">
+                                            <div class="aside">
+                                                <img src="~/images/produtos/@item.Imagem" alt="@item.Nome" class="border img-xs">
+                                            </div>
+                                            <figcaption class="info">
+                                                <p>
+                                                    <b>@item.Nome</b>
+                                                </p>
+                                                <span>@this.UnidadesPorProdutoValorTotal(item.Quantidade, item.Valor) </span>
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </article>
+                   
+                    <header class="card-header">
+                        <h3 class="d-inline-block mr-3">Pedido número: #@Model.Codigo</h3>
+                    </header>
+                    <article class="card-body border-top">
+
+                        <div class="card-body">
+                            <div class="row"> 
+                                <div class="col-md-8">
+                                    <h6 class="text-muted">Entregar em</h6>
+                                    <p>
+                                        @Model.Endereco.ToString()
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6 class="text-muted">Pagamento</h6>
+                                    <span class="text-success">
+                                        <i class="fas fa-credit-card"></i>
+                                        Transação em cartão de crédito
+                                    </span>
+                                    <p>
+                                        <span class="b">Total:  @this.FormatoMoeda(Model.ValorTotal)</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </article>
+
+                    <div class="card-body border-top">
+                        <div class="text-left">
+                            <a asp-controller="Pedido" asp-action="MeusPedidos" class="btn btn-primary float-md-right"> Meus Pedidos <i class="fa fa-chevron-right"></i> </a>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+</section>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

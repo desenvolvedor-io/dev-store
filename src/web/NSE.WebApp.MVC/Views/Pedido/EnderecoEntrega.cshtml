@@ -1,0 +1,99 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model NSE.WebApp.MVC.Models.PedidoTransacaoViewModel
+
+@{
+    ViewData["Title"] = "Confirme o seu pedido";
+}
+
+<section class="padding-y">
+    <div class="container">
+
+        <vc:Summary></vc:Summary>
+
+        @{
+            if (Model.Itens.Any())
+            {
+                <div class="card">
+                    <div class="tracking-wrap">
+                        <div class="step active">
+                            <span class="icon">
+                                <i class="fa fa-location-arrow"></i>
+                            </span>
+                            <span class="text"> Endereço</span>
+                        </div>
+                        <div class="step">
+                            <span class="icon">
+                                <i class="fa fa-credit-card"></i>
+                            </span>
+                            <span class="text"> Pagamento </span>
+                        </div>
+                        <div class="step">
+                            <span class="icon">
+                                <i class="fa fa-check-square"></i>
+                            </span>
+                            <span class="text"> Confirmação</span>
+                        </div>
+                    </div>
+                    <article class="card-body">
+                        <header class="mb-4">
+                            <h4 class="card-title">Seu pedido</h4>
+                        </header>
+                        <div class="row">
+                            @{
+                                foreach (var item in Model.Itens)
+                                {
+                                    <div class="col-md-6">
+                                        <figure class="itemside  mb-3">
+                                            <div class="aside">
+                                                <img src="~/images/produtos/@item.Imagem" alt="@item.Nome" class="border img-xs">
+                                            </div>
+                                            <figcaption class="info">
+                                                <p>
+                                                    <b>@item.Nome</b>
+                                                </p>
+                                                <span>@this.UnidadesPorProdutoValorTotal(item.Quantidade, item.Valor) </span>
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </article>
+
+                    <partial name="_ResumoFinanceiro" model="Model"/>
+
+                    <div class="card-body border-top">
+                        <partial name="_Endereco" model="Model"/>
+                    </div>
+                    <div class="card-body border-top">
+                        @{
+                            if (Model.Endereco != null)
+                            {
+                                <div class="text-left">
+                                    <a asp-controller="Pedido" asp-action="Pagamento" class="btn btn-primary float-md-right"> Pagamento <i class="fa fa-chevron-right"></i> </a>
+                                </div>
+                            }
+                        }
+
+                        <a asp-controller="Carrinho" asp-action="Index" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Voltar ao carrinho </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<partial name="_NovoEndereco" />
+
+@section Scripts {
+
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+       $(document).ready(function() {
+          BuscaCep();
+       });
+    </script>
+
+}

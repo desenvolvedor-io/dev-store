@@ -1,0 +1,48 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model PagedViewModel<ProdutoViewModel>
+
+@{
+    ViewData["Title"] = "Todos os produtos";
+}
+
+<section>
+    <div>
+        <div style="background-image: url(images/banners/Template.jpg); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover">
+            <div style="text-align: center;">
+                <img src="~/images/banners/nerdstore.png"/>
+            </div>
+        </div>
+        <div class="container" style="padding-top: 20px">
+            <div class="row">
+                @{
+                    foreach (var produto in Model.List.Where(p => p.Ativo).OrderBy(p => p.Nome))
+                    {
+                        <div class="col-md-3">
+                            <div href="#" class="card card-product-grid">
+                                <a asp-controller="Catalogo" asp-action="ProdutoDetalhe" asp-route-id="@produto.Id" class="img-wrap">
+                                    <img src="~/images/produtos/@produto.Imagem" alt="@produto.Nome">
+                                </a>
+                                <figcaption class="info-wrap">
+                                    <a asp-controller="Catalogo" asp-action="ProdutoDetalhe" asp-route-id="@produto.Id" class="title">
+                                        <b> @produto.Nome</b>
+                                    </a>
+
+                                    <small class="card-text">
+                                        @this.MensagemEstoque(produto.QuantidadeEstoque)<br/><br/>
+                                        @produto.Descricao
+                                    </small>
+                                </figcaption>
+                                <div class="card-footer price mt-1">
+                                    <h3>@this.FormatoMoeda(produto.Valor)</h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            
+            <vc:paginacao modelo-paginado="@Model"></vc:paginacao>
+
+        </div>
+    </div>
+</section>

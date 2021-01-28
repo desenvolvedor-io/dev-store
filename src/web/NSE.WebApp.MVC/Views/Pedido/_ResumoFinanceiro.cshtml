@@ -1,0 +1,25 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model NSE.WebApp.MVC.Models.PedidoTransacaoViewModel
+
+<article class="card-body border-top">
+    <dl class="row">
+        @{
+            if (Model.VoucherUtilizado)
+            {
+            <dt class="col-sm-10">Subtotal: <span class="float-right text-muted">@Model.Itens.Sum(i => i.Quantidade) itens</span></dt>
+            <dd class="col-sm-2 text-right">
+                <strong>@this.FormatoMoeda(Model.ValorTotal + Model.Desconto)</strong>
+            </dd>
+
+            <dt class="col-sm-10">Desconto: <span class="float-right text-muted">@Model.VoucherCodigo</span></dt>
+            <dd class="col-sm-2 text-danger text-right">
+                <strong>@this.FormatoMoeda(Model.Desconto)</strong>
+            </dd>
+            }
+        }
+        <dt class="col-sm-10">Total:</dt>
+        <dd class="col-sm-2 text-right">
+            <strong class="h5 text-dark">@this.FormatoMoeda(Model.ValorTotal)</strong>
+        </dd>
+    </dl>
+</article>

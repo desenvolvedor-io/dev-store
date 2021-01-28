@@ -1,0 +1,199 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model NSE.WebApp.MVC.Models.CarrinhoViewModel
+
+@{
+    ViewData["Title"] = "Meu carrinho de compras";
+}
+
+<section class="padding-y">
+    <div class="container">
+
+        <vc:Summary></vc:Summary>
+
+        @{
+            if (Model.Itens.Any())
+            {
+                <div class="row">
+                    <main class="col-md-9">
+                        <div class="card">
+
+
+                            <table class="table table-borderless table-shopping-cart">
+                                <thead class="text-muted">
+                                    <tr class="small text-uppercase">
+                                        <th scope="col">Produto</th>
+                                        <th scope="col">Valor</th>
+                                        <th scope="col">Quantidade</th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model.Itens)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <figure class="itemside">
+                                                        <div class="aside">
+                                                            <img src="~/images/produtos/@item.Imagem" alt="@item.Nome" class="img-sm">
+                                                        </div>
+                                                        <figcaption class="info">
+                                                            <a asp-controller="Catalogo" asp-action="ProdutoDetalhe" asp-route-id="@item.ProdutoId"><h6 style="padding-top: 10px" class="title text-dark">@item.Nome</h6></a>
+                                                            <p class="text-muted small">@this.UnidadesPorProduto(item.Quantidade)</p>
+                                                        </figcaption>
+                                                    </figure>
+                                                </td>
+                                                <td>
+                                                    <div class="price-wrap">
+                                                        <var class="price"> @this.FormatoMoeda(item.Valor * item.Quantidade)</var>
+                                                        <small class="text-muted"> @this.FormatoMoeda(item.Valor) cada</small>
+                                                    </div>
+                                                </td>
+                                                <form method="post" asp-controller="Carrinho" asp-action="AtualizarItemCarrinho">
+                                                    <td>
+
+                                                        <input type="hidden" id="ProdutoId" name="ProdutoId" value="@item.ProdutoId" />
+
+                                                        <div class="text-left">
+                                                            <select id="Quantidade" name="Quantidade" style="width: 80px" class="form-control">
+                                                                @{
+                                                                    @Html.Raw(this.SelectOptionsPorQuantidade(5, item.Quantidade))
+                                                                }
+                                                            </select>
+                                                        </div>
+
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-right">
+                                                            <button type="submit" class="btn btn-success">
+                                                                <i class="fas fa-sync"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </form>
+                                                <td>
+                                                    <form method="post" asp-controller="Carrinho" asp-action="RemoverItemCarrinho">
+                                                        <div>
+
+                                                            <input type="hidden" id="ProdutoId" name="ProdutoId" value="@item.ProdutoId" />
+
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+
+                                                        </div>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+
+                            <div class="card-body border-top">
+                                <a asp-controller="Pedido" asp-action="EnderecoEntrega" class="btn btn-primary float-md-right"> Finalizar Compra <i class="fa fa-chevron-right"></i> </a>
+                                <a asp-controller="Catalogo" asp-action="Index" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Continuar Comprando </a>
+                            </div>
+                        </div>
+
+
+                    </main>
+                    <aside class="col-md-3">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <form asp-action="AplicarVoucher">
+                                    <div class="form-group">
+                                        <label>Possui um Voucher?</label>
+
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="VoucherCodigo" id="VoucherCodigo" value="@Model.Voucher?.Codigo" placeholder="Voucher Desconto">
+                                            <span class="input-group-append">
+                                                <button type="submit" class="btn btn-primary">Aplicar</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                @{
+                                    if (Model.VoucherUtilizado)
+                                    {
+                                        <dl class="dlist-align">
+                                            <dt>Valor original:</dt>
+                                            <dd class="text-right">@this.FormatoMoeda(Model.ValorTotal + Model.Desconto)</dd>
+                                        </dl>
+                                        <dl class="dlist-align" style="color:green">
+                                            <dt>Desconto:</dt>
+                                            <dd class="text-right">@this.FormatoMoeda(Model.Desconto)</dd>
+                                        </dl>
+                                    }
+                                }
+                                <dl class="dlist-align">
+                                    <dt>Total:</dt>
+                                    <dd class="text-right  h5">
+                                        <strong>@this.FormatoMoeda(Model.ValorTotal)</strong>
+                                    </dd>
+                                </dl>
+                                <hr>
+                                <p class="text-center mb-3">
+                                    <img src="~/images/misc/payments.png" height="26">
+                                </p>
+
+                            </div>
+                        </div>
+
+                    </aside>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <div class="row">
+                        <div class="col  align-self-center">
+                            <svg width="265" height="130" viewBox="0 0 265 130">
+                                <defs>
+                                    <path id="a" d="M20 13V0H0v13h20z"></path>
+                                    <path id="c" d="M36.952 67.053h36.952V.82H0v66.232h36.952z"></path>
+                                </defs>
+                                <g fill="none" fill-rule="evenodd">
+                                    <path d="M42 81h5v-.5h-5v.5zm-2 12.5h9V82.51h-9V93.5zm4.5 4a1.25 1.25 0 110-2.5 1.25 1.25 0 010 2.5zM49 79h-9a2 2 0 00-2 2v16a2 2 0 002 2h9a2 2 0 002-2V81a2 2 0 00-2-2z" fill="#B98EC0"></path>
+                                    <g transform="translate(217 102)">
+                                        <mask id="b" fill="#fff">
+                                            <use xlink:href="#a"></use>
+                                        </mask>
+                                        <path d="M17.766 5.03a.75.75 0 11-1.06-1.06.75.75 0 011.06 1.06m-1.75-1.75a.75.75 0 11-1.06-1.06.75.75 0 011.06 1.06m0 3.5a.75.75 0 11-1.06-1.06.75.75 0 011.06 1.06m-1.75-1.75a.75.75 0 11-1.06-1.06.75.75 0 011.06 1.06m-8.044.23h-1v1a.75.75 0 11-1.5 0v-1h-1a.75.75 0 110-1.5h1v-1a.75.75 0 011.5 0v1h1a.75.75 0 110 1.5M15.5 0h-11A4.5 4.5 0 000 4.5V9a4 4 0 108 0 1 1 0 011-1h2a1 1 0 011 1 4 4 0 108 0V4.5A4.5 4.5 0 0015.5 0" fill="#C389AE" mask="url(#b)"></path>
+                                    </g>
+                                    <g fill="#ADCA9A">
+                                        <path d="M206 42h11a2 2 0 002-2h-15a2 2 0 002 2m5.5-6a5.256 5.256 0 01-5.25-5.25 5.256 5.256 0 015.25-5.25 5.256 5.256 0 015.25 5.25A5.256 5.256 0 01211.5 36m5.5-14h-11a2 2 0 00-2 2v15h15V24a2 2 0 00-2-2"></path>
+                                        <path d="M213.17 30.542c0-.894.672-1.623 1.537-1.729A3.744 3.744 0 00211.5 27a3.75 3.75 0 103.416 5.291 1.75 1.75 0 01-1.747-1.75"></path>
+                                    </g>
+                                    <path d="M149.788 31h-37.549c-3.7 0-6.577 3.01-6.577 6.568h50.84c0-3.557-3.014-6.568-6.714-6.568" fill="#2c75d8"></path>
+                                    <g transform="translate(94 41.263)">
+                                        <mask id="d" fill="#fff">
+                                            <use xlink:href="#c"></use>
+                                        </mask>
+                                        <path d="M37.013 36.263c-11.1 0-20.144-9.031-20.144-19.979 0-1.231.96-2.19 2.193-2.19s2.192.959 2.192 2.19c0 8.621 6.99 15.463 15.622 15.463 8.634 0 15.623-6.979 15.623-15.463 0-1.231.959-2.19 2.192-2.19 1.234 0 2.193.959 2.193 2.19.274 11.084-8.77 19.98-19.87 19.98zM70.725 9.032c-.275-4.653-4.112-8.21-8.77-8.21H12.072c-4.66 0-8.497 3.557-8.77 8.21L.012 57.61c-.274 5.063 3.7 9.442 8.77 9.442h56.323c5.07 0 9.182-4.38 8.77-9.442l-3.15-48.58z" fill="#2c75d8" mask="url(#d)"></path>
+                                    </g>
+                                    <circle stroke="#41BD41" cx="81.5" cy="78.5" r="4.5"></circle>
+                                    <circle stroke="#41BD41" cx="8" cy="58" r="2"></circle>
+                                    <circle stroke="#41BD41" cx="258" cy="90" r="2"></circle>
+                                    <circle stroke="#41BD41" cx="193" cy="55" r="3"></circle>
+                                    <path d="M90 6H74a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V8a2 2 0 00-2-2zM74 18h16V8H74v10zm13.5 5h-11a2 2 0 012-2h7a2 2 0 012 2z" fill="#A69EC8"></path>
+                                    <path d="M61.565 37.654l-1.082 3.206h-3.5a.98.98 0 00-.935.655.927.927 0 00.357 1.057l2.832 1.983-1.082 3.206a.927.927 0 00.357 1.058 1.009 1.009 0 001.155 0l2.832-1.982 2.833 1.982a1.009 1.009 0 001.155 0 .927.927 0 00.357-1.058l-1.082-3.206 2.833-1.982a.926.926 0 00.357-1.058.98.98 0 00-.935-.654h-3.501l-1.082-3.207a.981.981 0 00-.935-.654.98.98 0 00-.934.654zm4 71l-1.082 3.206h-3.5a.98.98 0 00-.935.655.927.927 0 00.357 1.057l2.832 1.983-1.082 3.206a.927.927 0 00.357 1.058 1.009 1.009 0 001.155 0l2.832-1.982 2.833 1.982a1.009 1.009 0 001.155 0 .927.927 0 00.357-1.058l-1.082-3.206 2.833-1.982a.926.926 0 00.357-1.058.98.98 0 00-.935-.654h-3.501l-1.082-3.207a.981.981 0 00-.935-.654.98.98 0 00-.934.654zm139-35l-1.082 3.206h-3.5a.98.98 0 00-.935.655.927.927 0 00.357 1.057l2.832 1.983-1.082 3.206a.927.927 0 00.357 1.058 1.009 1.009 0 001.155 0l2.832-1.982 2.833 1.982a1.009 1.009 0 001.155 0 .927.927 0 00.357-1.058l-1.082-3.206 2.833-1.982a.926.926 0 00.357-1.058.98.98 0 00-.935-.654h-3.501l-1.082-3.207a.981.981 0 00-.935-.654.98.98 0 00-.934.654z" fill="#FCD320"></path>
+                                </g>
+                            </svg>
+                            <br /><br />
+                            <h4>Seu carrinho está vazio</h4>
+                            <h5>Vá para a <a asp-controller="Catalogo">página inicial</a> e confira nossos carrinhos. <br />Quando encontrar um que goste clique no botão adicionar ao carrinho ;)</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>

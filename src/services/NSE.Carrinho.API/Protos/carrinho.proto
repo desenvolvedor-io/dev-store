@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option csharp_namespace = "NSE.Carrinho.API.Services.gRPC";
+
+package CarrinhoAPI;
+
+service CarrinhoCompras {
+	rpc ObterCarrinho(ObterCarrinhoRequest) returns (CarrinhoClienteResponse) {}	
+}
+
+message ObterCarrinhoRequest {
+
+}
+
+message CarrinhoClienteResponse {
+	string id = 1;
+	string clienteid  = 2;
+	double valortotal = 3;
+	repeated CarrinhoItemResponse itens = 4;
+	bool voucherutilizado = 5;
+	double desconto = 6;
+	VoucherResponse voucher = 7;
+}
+
+message CarrinhoItemResponse {
+	string id = 1;
+	string produtoid = 2;
+	string nome  = 3;
+	int32 quantidade = 4;
+	double valor  = 5;
+	string imagem  = 6;
+}
+
+message VoucherResponse {
+	double percentual = 1;
+	double valordesconto = 2;
+	string codigo = 3;
+	int32 tipodesconto = 4;
+}

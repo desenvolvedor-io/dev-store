@@ -1,0 +1,21 @@
+﻿@model IPagedList
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @{
+            for (var i = 1; i < Model.TotalPages + 1; i++)
+            {
+                if (i == Model.PageIndex)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" asp-action="@Model.ReferenceAction" asp-route-page="@i" asp-route-ps="@Model.PageSize" asp-route-q="@Model.Query">@i <span class="sr-only">(current)</span></a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" asp-action="@Model.ReferenceAction" asp-route-ps="@Model.PageSize" asp-route-page="@i" asp-route-q="@Model.Query">@i</a></li>
+                }
+            }
+        }
+    </ul>
+</nav>

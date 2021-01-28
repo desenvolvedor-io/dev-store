@@ -1,0 +1,141 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model NSE.WebApp.MVC.Models.PedidoTransacaoViewModel
+
+@{
+    ViewData["Title"] = "Confirme o seu pedido";
+}
+
+<section class="padding-y">
+    <div class="container">
+
+        <vc:Summary></vc:Summary>
+
+        @{
+            if (Model.Itens.Any())
+            {
+                <div class="card">
+                    <div class="tracking-wrap">
+                        <div class="step active">
+                            <span class="icon">
+                                <i class="fa fa-location-arrow"></i>
+                            </span>
+                            <span class="text"> Endereço</span>
+                        </div>
+                        <div class="step active">
+                            <span class="icon">
+                                <i class="fa fa-credit-card"></i>
+                            </span>
+                            <span class="text"> Pagamento </span>
+                        </div>
+                        <div class="step">
+                            <span class="icon">
+                                <i class="fa fa-check-square"></i>
+                            </span>
+                            <span class="text"> Confirmação</span>
+                        </div>
+                    </div>
+                    <article class="card-body">
+                        <header class="mb-4">
+                            <h4 class="card-title">Seu pedido</h4>
+                        </header>
+                        <div class="row">
+                            @{
+                                foreach (var item in Model.Itens)
+                                {
+                                    <div class="col-md-6">
+                                        <figure class="itemside  mb-3">
+                                            <div class="aside">
+                                                <img src="~/images/produtos/@item.Imagem" alt="@item.Nome" class="border img-xs">
+                                            </div>
+                                            <figcaption class="info">
+                                                <p>
+                                                    <b>@item.Nome</b>
+                                                </p>
+                                                <span>@this.UnidadesPorProdutoValorTotal(item.Quantidade, item.Valor) </span>
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </article>
+
+                    <partial name="_ResumoFinanceiro" model="Model"/>
+
+                    <form asp-action="FinalizarPedido" asp-controller="Pedido">
+                        <article class="card-body border-top">
+
+                            <div class="card-body">
+                                   <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <label asp-for="NomeCartao"></label>
+                                            <input asp-for="NomeCartao" class="form-control"/>
+                                            <span asp-validation-for="NomeCartao" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <label asp-for="NumeroCartao"></label>
+                                            <div class="input-group">
+                                                <input asp-for="NumeroCartao" class="form-control"/>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">
+                                                        <i class="fab fa-cc-visa"></i> &nbsp; <i class="fab fa-cc-amex"></i> &nbsp;
+                                                        <i class="fab fa-cc-mastercard"></i>
+                                                    </span>
+                                                </div>
+                                                <span asp-validation-for="NumeroCartao" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <div>
+                                            <label asp-for="ExpiracaoCartao"></label>
+                                            <div class="form-inline">
+                                                <input style="width: 190px" asp-for="ExpiracaoCartao" class="form-control"/>
+                                                <span asp-validation-for="ExpiracaoCartao" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div>
+                                            <spam data-toggle="tooltip" title="" data-original-title="Os 3 dígitos informados atrás do seu cartão">
+                                                <label asp-for="CvvCartao"></label> <i class="fa fa-question-circle"></i>
+                                            </spam>
+
+                                            <div>
+                                                <input style="width: 160px" asp-for="CvvCartao" class="form-control"/>
+                                                <span asp-validation-for="CvvCartao" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </article>
+
+                        <div class="card-body border-top">
+                            <div class="text-left">
+                                <button type="submit" class="btn btn-primary float-md-right"> Finalizar Pedido <i class="fa fa-chevron-right"></i> </button>
+                            </div>
+
+                            <a asp-controller="Pedido" asp-action="EnderecoEntrega" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Voltar ao Endereço </a>
+                        </div>
+                    </form>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+@section Scripts {
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

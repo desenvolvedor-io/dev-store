@@ -1,0 +1,68 @@
+﻿@using NSE.WebApp.MVC.Extensions
+@model IEnumerable<NSE.WebApp.MVC.Models.PedidoViewModel>
+
+@{
+    ViewData["Title"] = "Meus Pedidos";
+}
+
+<section class="padding-y">
+    <div class="container">
+
+        @{
+            foreach (var pedido in Model.OrderBy(p=>p.Data))
+            {
+                <div class="col-md-12" style="padding-bottom: 35px">
+                    <article class="card">
+                        <header class="card-header">
+                            <b class="d-inline-block mr-3">Pedido ID: #@pedido.Codigo @Html.Raw(this.ExibeStatus(pedido.Status))</b>
+                            <span>@pedido.Data.ToLongDateString()</span>
+                        </header>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6 class="text-muted">Pagamento</h6>
+                                    <span class="text-success">
+                                        <i class="fas fa-credit-card"></i>
+                                        Transação em cartão de crédito
+                                    </span>
+
+                                    <p>
+                                        <span class="b">Total:  @this.FormatoMoeda(pedido.ValorTotal)</span>
+                                    </p>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="text-muted">Endereço de entrega</h6>
+                                    <p>
+                                        @pedido.Endereco.ToString()
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <ul class="row">
+                                @{
+                                    foreach (var item in pedido.PedidoItems)
+                                    {
+                                        <li class="col-md-4">
+                                            <figure class="itemside  mb-3">
+                                                <div class="aside">
+                                                    <img src="~/images/produtos/@item.Imagem" alt="@item.Nome" class="border img-xs">
+                                                </div>
+                                                <figcaption class="info">
+                                                    <p>
+                                                        <b>@item.Nome</b>
+                                                    </p>
+                                                    <span>@this.UnidadesPorProdutoValorTotal(item.Quantidade, item.Valor) </span>
+                                                </figcaption>
+                                            </figure>
+                                        </li> 
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            }
+        }
+    </div>
+</section>
