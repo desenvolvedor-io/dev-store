@@ -7,20 +7,20 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["./services/Thelema.Pagamentos.API/Thelema.Pagamentos.API.csproj", "services/Thelema.Pagamentos.API/"]
-COPY ["./building blocks/Thelema.Core/Thelema.Core.csproj", "building blocks/Thelema.WebAPI.Core/"]
-COPY ["./building blocks/Thelema.WebAPI.Core/Thelema.WebAPI.Core.csproj", "building blocks/Thelema.WebAPI.Core/"]
-COPY ["./building blocks/Thelema.MessageBus/Thelema.MessageBus.csproj", "building blocks/Thelema.MessageBus/"]
+COPY ["./services/DevStore.Pagamentos.API/DevStore.Pagamentos.API.csproj", "services/DevStore.Pagamentos.API/"]
+COPY ["./building blocks/DevStore.Core/DevStore.Core.csproj", "building blocks/DevStore.WebAPI.Core/"]
+COPY ["./building blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj", "building blocks/DevStore.WebAPI.Core/"]
+COPY ["./building blocks/DevStore.MessageBus/DevStore.MessageBus.csproj", "building blocks/DevStore.MessageBus/"]
 
-RUN dotnet restore "services/Thelema.Pagamentos.API/Thelema.Pagamentos.API.csproj"
+RUN dotnet restore "services/DevStore.Pagamentos.API/DevStore.Pagamentos.API.csproj"
 COPY . .
-WORKDIR "services/Thelema.Pagamentos.API"
-RUN dotnet build "Thelema.Pagamentos.API.csproj" -c Release -o /app/build
+WORKDIR "services/DevStore.Pagamentos.API"
+RUN dotnet build "DevStore.Pagamentos.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Thelema.Pagamentos.API.csproj" -c Release -o /app/publish
+RUN dotnet publish "DevStore.Pagamentos.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Thelema.Pagamentos.API.dll"]
+ENTRYPOINT ["dotnet", "DevStore.Pagamentos.API.dll"]

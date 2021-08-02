@@ -13,7 +13,7 @@ namespace DevStore.Carrinho.API.Configuration
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "NerdStore Enterprise Carrinho API",
+                    Title = "DevStore Enterprise Carrinho API",
                     Description = "Esta API faz parte do curso ASP.NET Core Enterprise Applications.",
                     Contact = new OpenApiContact() {Name = "Eduardo Pires", Email = "contato@desenvolvedor.io"},
                     License = new OpenApiLicense() {Name = "MIT", Url = new Uri("https://opensource.org/Licenses/MIT")}

@@ -21,7 +21,7 @@ namespace DevStore.Carrinho.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Thelema.Carrinho.API.Model.CarrinhoCliente", b =>
+            modelBuilder.Entity("DevStore.Carrinho.API.Model.CarrinhoCliente", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace DevStore.Carrinho.API.Migrations
                     b.ToTable("CarrinhoCliente");
                 });
 
-            modelBuilder.Entity("Thelema.Carrinho.API.Model.CarrinhoItem", b =>
+            modelBuilder.Entity("DevStore.Carrinho.API.Model.CarrinhoItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -78,9 +78,9 @@ namespace DevStore.Carrinho.API.Migrations
                     b.ToTable("CarrinhoItens");
                 });
 
-            modelBuilder.Entity("Thelema.Carrinho.API.Model.CarrinhoCliente", b =>
+            modelBuilder.Entity("DevStore.Carrinho.API.Model.CarrinhoCliente", b =>
                 {
-                    b.OwnsOne("Thelema.Carrinho.API.Model.Voucher", "Voucher", b1 =>
+                    b.OwnsOne("DevStore.Carrinho.API.Model.Voucher", "Voucher", b1 =>
                         {
                             b1.Property<Guid>("CarrinhoClienteId")
                                 .HasColumnType("uniqueidentifier");
@@ -110,9 +110,9 @@ namespace DevStore.Carrinho.API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Thelema.Carrinho.API.Model.CarrinhoItem", b =>
+            modelBuilder.Entity("DevStore.Carrinho.API.Model.CarrinhoItem", b =>
                 {
-                    b.HasOne("Thelema.Carrinho.API.Model.CarrinhoCliente", "CarrinhoCliente")
+                    b.HasOne("DevStore.Carrinho.API.Model.CarrinhoCliente", "CarrinhoCliente")
                         .WithMany("Itens")
                         .HasForeignKey("CarrinhoId")
                         .OnDelete(DeleteBehavior.Cascade)

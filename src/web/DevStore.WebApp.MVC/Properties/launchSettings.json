@@ -8,8 +8,8 @@
     }
   },
   "profiles": {
-    
-    "SelfHosting": {
+
+    "SelfHosting - Dev": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
