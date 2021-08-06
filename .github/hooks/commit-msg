@@ -31,7 +31,7 @@ if ! head -1 "$1" | grep -qE "^(feat|fix|ci|chore|docs|test|style|refactor|chk|m
     echo "For more information check https://www.conventionalcommits.org/en/v1.0.0/ for more details" >&2
     exit 1
 fi
-if ! head -1 "$1" | grep -qE "^.{1,50}$"; then
+if ! head -1 "$1" | grep -qE "^.{1,100}$"; then
     echo "Aborting commit. Your commit message is too long." >&2
     exit 1
 fi
