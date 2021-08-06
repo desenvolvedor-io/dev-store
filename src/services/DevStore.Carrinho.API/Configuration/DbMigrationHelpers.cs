@@ -1,12 +1,12 @@
-﻿using DevStore.Carrinho.API.Data;
+﻿using System;
+using System.Threading.Tasks;
+using DevStore.ShoppingCart.API.Data;
 using DevStore.WebAPI.Core.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Threading.Tasks;
 
-namespace DevStore.Carrinho.API.Configuration
+namespace DevStore.ShoppingCart.API.Configuration
 {
 
     public static class DbMigrationHelpers
@@ -28,7 +28,7 @@ namespace DevStore.Carrinho.API.Configuration
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
             //var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-            var context = scope.ServiceProvider.GetRequiredService<CarrinhoContext>();
+            var context = scope.ServiceProvider.GetRequiredService<Data.ShoppingCartContext>();
 
             await DbHealthChecker.TestConnection(context);
 

@@ -1,4 +1,4 @@
-using DevStore.Carrinho.API.Configuration;
+using DevStore.ShoppingCart.API.Configuration;
 using DevStore.WebAPI.Core.Identidade;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DevStore.Carrinho.API
+namespace DevStore.ShoppingCart.API
 {
     public class Startup
     {

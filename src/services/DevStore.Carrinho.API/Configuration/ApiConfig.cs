@@ -1,5 +1,5 @@
-﻿using DevStore.Carrinho.API.Data;
-using DevStore.Carrinho.API.Services.gRPC;
+﻿using DevStore.ShoppingCart.API.Data;
+using DevStore.ShoppingCart.API.Services.gRPC;
 using DevStore.WebAPI.Core.Identidade;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,13 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DevStore.Carrinho.API.Configuration
+namespace DevStore.ShoppingCart.API.Configuration
 {
     public static class ApiConfig
     {
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CarrinhoContext>(options =>
+            services.AddDbContext<Data.ShoppingCartContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
@@ -50,7 +50,7 @@ namespace DevStore.Carrinho.API.Configuration
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGrpcService<CarrinhoGrpcService>().RequireCors("Total");
+                endpoints.MapGrpcService<ShoppingCartGrpcService>().RequireCors("Total");
             });
         }
     }

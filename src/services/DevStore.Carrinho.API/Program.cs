@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using DevStore.Carrinho.API.Configuration;
+using DevStore.ShoppingCart.API.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DevStore.Carrinho.API
+namespace DevStore.ShoppingCart.API
 {
     public class Program
     {

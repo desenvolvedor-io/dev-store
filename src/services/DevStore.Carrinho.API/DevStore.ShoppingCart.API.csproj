@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200624041220_cascade.cs" />
-    <Compile Remove="Migrations\20200624041220_cascade.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.37.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
@@ -29,7 +24,7 @@
 
 
 	<ItemGroup>
-		<Protobuf Include="Protos\carrinho.proto" GrpcServices="Server" />
+		<Protobuf Include="Protos\shoppingcart.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 </Project>

@@ -1,16 +1,16 @@
-﻿namespace DevStore.Carrinho.API.Model
+﻿namespace DevStore.ShoppingCart.API.Model
 {
     public class Voucher
     {
-        public decimal? Percentual { get; set; }
-        public decimal? ValorDesconto { get; set; }
-        public string Codigo { get; set; }
-        public TipoDescontoVoucher TipoDesconto { get; set; }
+        public decimal? Percentage { get; set; }
+        public decimal? Discount { get; set; }
+        public string Code { get; set; }
+        public DiscountType DiscountType { get; set; }
     }
 
-    public enum TipoDescontoVoucher
+    public enum DiscountType
     {
-        Porcentagem = 0,
-        Valor = 1
+        Percentage = 0,
+        Value = 1
     }
 }

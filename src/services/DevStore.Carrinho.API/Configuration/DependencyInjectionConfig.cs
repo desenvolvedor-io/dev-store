@@ -1,9 +1,9 @@
-﻿using DevStore.Carrinho.API.Data;
+﻿using DevStore.ShoppingCart.API.Data;
 using DevStore.WebAPI.Core.Usuario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DevStore.Carrinho.API.Configuration
+namespace DevStore.ShoppingCart.API.Configuration
 {
     public static class DependencyInjectionConfig
     {
@@ -11,7 +11,7 @@ namespace DevStore.Carrinho.API.Configuration
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAspNetUser, AspNetUser>();
-            services.AddScoped<CarrinhoContext>();
+            services.AddScoped<Data.ShoppingCartContext>();
         }
     }
 }

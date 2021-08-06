@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DevStore.Carrinho.API.Data;
 using DevStore.Core.Messages.Integration;
 using DevStore.MessageBus;
+using DevStore.ShoppingCart.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DevStore.Carrinho.API.Services
+namespace DevStore.ShoppingCart.API.Services
 {
     public class CarrinhoIntegrationHandler : BackgroundService
     {
@@ -35,14 +35,14 @@ namespace DevStore.Carrinho.API.Services
         private async Task ApagarCarrinho(PedidoRealizadoIntegrationEvent message)
         {
             using var scope = _serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<CarrinhoContext>();
+            var context = scope.ServiceProvider.GetRequiredService<Data.ShoppingCartContext>();
 
-            var carrinho = await context.CarrinhoCliente
-                .FirstOrDefaultAsync(c => c.ClienteId == message.ClienteId);
+            var carrinho = await context.ShoppingCartClient
+                .FirstOrDefaultAsync(c => c.ClientId == message.ClienteId);
 
             if (carrinho != null)
             {
-                context.CarrinhoCliente.Remove(carrinho);
+                context.ShoppingCartClient.Remove(carrinho);
                 await context.SaveChangesAsync();
             }
         }
