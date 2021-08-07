@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DevStore.Clientes.API.Data;
+using DevStore.Clients.API.Data;
 using DevStore.WebAPI.Core.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DevStore.Clientes.API.Configuration
+namespace DevStore.Clients.API.Configuration
 {
 
     public static class DbMigrationHelpers
@@ -28,7 +28,7 @@ namespace DevStore.Clientes.API.Configuration
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
             //var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-            var ssoContext = scope.ServiceProvider.GetRequiredService<ClientesContext>();
+            var ssoContext = scope.ServiceProvider.GetRequiredService<ClientContext>();
 
             await DbHealthChecker.TestConnection(ssoContext);
 

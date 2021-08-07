@@ -16,7 +16,7 @@ namespace DevStore.Core.DomainObjects
         private List<Event> _notificacoes;
         public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
 
-        public void AdicionarEvento(Event evento)
+        public void AddEvent(Event evento)
         {
             _notificacoes = _notificacoes ?? new List<Event>();
             _notificacoes.Add(evento);
