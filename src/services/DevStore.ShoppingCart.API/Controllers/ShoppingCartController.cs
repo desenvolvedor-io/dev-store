@@ -38,7 +38,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             else
                 ManageCart(carrinho, item);
 
-            if (!OperacaoValida()) return CustomResponse();
+            if (!ValidOperation()) return CustomResponse();
 
             await Persist();
             return CustomResponse();
@@ -54,7 +54,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             carrinho.UpdateUnit(itemCarrinho, item.Quantity);
 
             ValidateShoppingCart(carrinho);
-            if (!OperacaoValida()) return CustomResponse();
+            if (!ValidOperation()) return CustomResponse();
 
             _context.CartItems.Update(itemCarrinho);
             _context.ShoppingCartClient.Update(carrinho);
@@ -72,7 +72,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             if (item == null) return CustomResponse();
 
             ValidateShoppingCart(cart);
-            if (!OperacaoValida()) return CustomResponse();
+            if (!ValidOperation()) return CustomResponse();
 
             cart.RemoveItem(item);
 
@@ -101,11 +101,11 @@ namespace DevStore.ShoppingCart.API.Controllers
         {
             return await _context.ShoppingCartClient
                 .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.ClientId == _user.ObterUserId());
+                .FirstOrDefaultAsync(c => c.ClientId == _user.GetUserId());
         }
         private void ManageNewCart(CartItem item)
         {
-            var cart = new ShoppingCartClient(_user.ObterUserId());
+            var cart = new ShoppingCartClient(_user.GetUserId());
             cart.AddItem(item);
 
             ValidateShoppingCart(cart);
@@ -133,13 +133,13 @@ namespace DevStore.ShoppingCart.API.Controllers
         {
             if (item != null && productId != item.ProductId)
             {
-                AdicionarErroProcessamento("Current item is not the same sent item");
+                AddErrorToStack("Current item is not the same sent item");
                 return null;
             }
 
             if (cart == null)
             {
-                AdicionarErroProcessamento("Shopping cart not found");
+                AddErrorToStack("Shopping cart not found");
                 return null;
             }
 
@@ -148,7 +148,7 @@ namespace DevStore.ShoppingCart.API.Controllers
 
             if (cartItem == null || !cart.HasItem(cartItem))
             {
-                AdicionarErroProcessamento("The item is not in cart");
+                AddErrorToStack("The item is not in cart");
                 return null;
             }
 
@@ -157,13 +157,13 @@ namespace DevStore.ShoppingCart.API.Controllers
         private async Task Persist()
         {
             var result = await _context.SaveChangesAsync();
-            if (result <= 0) AdicionarErroProcessamento("Error saving data");
+            if (result <= 0) AddErrorToStack("Error saving data");
         }
         private bool ValidateShoppingCart(ShoppingCartClient carrinho)
         {
             if (carrinho.IsValid()) return true;
 
-            carrinho.ValidationResult.Errors.ToList().ForEach(e => AdicionarErroProcessamento(e.ErrorMessage));
+            carrinho.ValidationResult.Errors.ToList().ForEach(e => AddErrorToStack(e.ErrorMessage));
             return false;
         }
     }

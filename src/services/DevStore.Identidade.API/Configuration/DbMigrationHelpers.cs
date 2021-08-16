@@ -1,12 +1,12 @@
-﻿using DevStore.Identidade.API.Data;
+﻿using System;
+using System.Threading.Tasks;
+using DevStore.Identity.API.Data;
 using DevStore.WebAPI.Core.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Threading.Tasks;
 
-namespace DevStore.Identidade.API.Configuration
+namespace DevStore.Identity.API.Configuration
 {
 
     public static class DbMigrationHelpers

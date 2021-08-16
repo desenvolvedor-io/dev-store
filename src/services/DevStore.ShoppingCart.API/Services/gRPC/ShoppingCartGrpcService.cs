@@ -39,7 +39,7 @@ namespace DevStore.ShoppingCart.API.Services.gRPC
         {
             return await _context.ShoppingCartClient
                 .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.ClientId == _user.ObterUserId());
+                .FirstOrDefaultAsync(c => c.ClientId == _user.GetUserId());
         }
 
         private static ShoppingCartClientClientResponse MapCarrinhoClienteToProtoResponse(ShoppingCartClient carrinho)
