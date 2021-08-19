@@ -28,11 +28,11 @@ namespace DevStore.ShoppingCart.API.Services
 
         private void SetSubscribers()
         {
-            _bus.SubscribeAsync<PedidoRealizadoIntegrationEvent>("PedidoRealizado", async request =>
+            _bus.SubscribeAsync<OrderDoneIntegrationEvent>("PedidoRealizado", async request =>
                 await ApagarCarrinho(request));
         }
 
-        private async Task ApagarCarrinho(PedidoRealizadoIntegrationEvent message)
+        private async Task ApagarCarrinho(OrderDoneIntegrationEvent message)
         {
             using var scope = _serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<Data.ShoppingCartContext>();

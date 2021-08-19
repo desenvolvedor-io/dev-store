@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DevStore.Core.Messages;
+using System;
 using System.Collections.Generic;
-using DevStore.Core.Messages;
 
 namespace DevStore.Core.DomainObjects
 {
@@ -13,26 +13,26 @@ namespace DevStore.Core.DomainObjects
             Id = Guid.NewGuid();
         }
 
-        private List<Event> _notificacoes;
-        public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
+        private List<Event> _events;
+        public IReadOnlyCollection<Event> Notificacoes => _events?.AsReadOnly();
 
-        public void AddEvent(Event evento)
+        public void AddEvent(Event @event)
         {
-            _notificacoes = _notificacoes ?? new List<Event>();
-            _notificacoes.Add(evento);
+            _events ??= new List<Event>();
+            _events.Add(@event);
         }
 
-        public void RemoverEvento(Event eventItem)
+        public void RemoveEvent(Event eventItem)
         {
-            _notificacoes?.Remove(eventItem);
+            _events?.Remove(eventItem);
         }
 
-        public void LimparEventos()
+        public void ClearEvents()
         {
-            _notificacoes?.Clear();
+            _events?.Clear();
         }
 
-        #region Comparações
+        #region Comparisons
 
         public override bool Equals(object obj)
         {

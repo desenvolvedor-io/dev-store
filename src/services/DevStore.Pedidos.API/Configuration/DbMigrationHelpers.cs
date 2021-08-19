@@ -1,12 +1,12 @@
-﻿using DevStore.Pedidos.Infra.Data;
+﻿using System;
+using System.Threading.Tasks;
+using DevStore.Orders.Infra.Data;
 using DevStore.WebAPI.Core.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Threading.Tasks;
 
-namespace DevStore.Pedidos.API.Configuration
+namespace DevStore.Orders.API.Configuration
 {
 
     public static class DbMigrationHelpers
@@ -28,7 +28,7 @@ namespace DevStore.Pedidos.API.Configuration
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
             //var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-            var ssoContext = scope.ServiceProvider.GetRequiredService<PedidosContext>();
+            var ssoContext = scope.ServiceProvider.GetRequiredService<OrdersContext>();
 
             await DbHealthChecker.TestConnection(ssoContext);
 
