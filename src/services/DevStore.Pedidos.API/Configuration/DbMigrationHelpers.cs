@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DevStore.Orders.Infra.Data;
+using DevStore.Orders.Infra.Context;
 using DevStore.WebAPI.Core.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
