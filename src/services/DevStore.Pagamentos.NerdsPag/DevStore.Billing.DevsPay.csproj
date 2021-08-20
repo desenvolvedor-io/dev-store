@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NetDevPack" Version="5.2.0" />
+  </ItemGroup>
+
 </Project>
