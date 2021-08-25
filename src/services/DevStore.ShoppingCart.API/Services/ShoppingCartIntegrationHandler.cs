@@ -1,21 +1,20 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using DevStore.Core.Messages.Integration;
+﻿using DevStore.Core.Messages.Integration;
 using DevStore.MessageBus;
-using DevStore.ShoppingCart.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DevStore.ShoppingCart.API.Services
 {
-    public class CarrinhoIntegrationHandler : BackgroundService
+    public class ShoppingCartIntegrationHandler : BackgroundService
     {
         private readonly IMessageBus _bus;
         private readonly IServiceProvider _serviceProvider;
 
-        public CarrinhoIntegrationHandler(IServiceProvider serviceProvider, IMessageBus bus)
+        public ShoppingCartIntegrationHandler(IServiceProvider serviceProvider, IMessageBus bus)
         {
             _serviceProvider = serviceProvider;
             _bus = bus;
@@ -28,11 +27,11 @@ namespace DevStore.ShoppingCart.API.Services
 
         private void SetSubscribers()
         {
-            _bus.SubscribeAsync<OrderDoneIntegrationEvent>("PedidoRealizado", async request =>
-                await ApagarCarrinho(request));
+            _bus.SubscribeAsync<OrderDoneIntegrationEvent>("OrderDone", async request =>
+                await RemoveShoppingCart(request));
         }
 
-        private async Task ApagarCarrinho(OrderDoneIntegrationEvent message)
+        private async Task RemoveShoppingCart(OrderDoneIntegrationEvent message)
         {
             using var scope = _serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<Data.ShoppingCartContext>();
