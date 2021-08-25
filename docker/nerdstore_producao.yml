@@ -32,17 +32,17 @@ services:
         volumes: 
             - dpkeys:/var/data_protection_keys/         
         depends_on:
-            - api-catalogo
-            - api-identidade
-            - api-cliente
-            - api-bff-compras
+            - api-catalog
+            - api-identity
+            - api-client
+            - api-bff-checkout
 
-    api-identidade:
-        image: desenvolvedorio/devstore-api-identidade:latest
-        container_name: devstore-api-identidade    
+    api-identity:
+        image: desenvolvedorio/devstore-api-identity:latest
+        container_name: devstore-api-identity    
         build: 
             context: ../src
-            dockerfile: ./services/DevStore.Identidade.API/Dockerfile  
+            dockerfile: ./services/DevStore.Identity.API/Dockerfile  
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -55,12 +55,12 @@ services:
             - rabbitmq
             - sql-server
             
-    api-carrinho:
-        image: desenvolvedorio/devstore-api-carrinho:latest
-        container_name: devstore-api-carrinho
+    api-cart:
+        image: desenvolvedorio/devstore-api-cart:latest
+        container_name: devstore-api-cart
         build: 
             context: ../src
-            dockerfile: ./services/DevStore.Carrinho.API/Dockerfile      
+            dockerfile: ./services/DevStore.ShoppingCart.API/Dockerfile      
         restart: always             
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -71,15 +71,15 @@ services:
             - ./certs:/https:ro
         depends_on:
             - rabbitmq
-            - api-identidade
+            - api-identity
             - sql-server         
 
-    api-catalogo:
-        image: desenvolvedorio/devstore-api-catalogo:latest
-        container_name: devstore-api-catalogo
+    api-catalog:
+        image: desenvolvedorio/devstore-api-catalog:latest
+        container_name: devstore-api-catalog
         build: 
             context: ../src
-            dockerfile: ./services/DevStore.Catalogo.API/Dockerfile
+            dockerfile: ./services/DevStore.Catalog.API/Dockerfile
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -92,12 +92,12 @@ services:
             - rabbitmq
             - sql-server
 
-    api-cliente:
-        image: desenvolvedorio/devstore-api-cliente:latest
-        container_name: devstore-api-cliente    
+    api-client:
+        image: desenvolvedorio/devstore-api-client:latest
+        container_name: devstore-api-client    
         build: 
             context: ../src
-            dockerfile: ./services/DevStore.Clientes.API/Dockerfile
+            dockerfile: ./services/DevStore.Clients.API/Dockerfile
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -108,15 +108,15 @@ services:
             - ./certs:/https:ro
         depends_on:
             - rabbitmq
-            - api-identidade
+            - api-identity
             - sql-server  
 
-    api-bff-compras:
-        image: desenvolvedorio/devstore-api-bff-compras:latest
-        container_name: devstore-api-bff-compras
+    api-bff-checkout:
+        image: desenvolvedorio/devstore-api-bff-checkout:latest
+        container_name: devstore-api-bff-checkout
         build: 
             context: ../src
-            dockerfile: ./api gateways/DevStore.Bff.Compras/Dockerfile  
+            dockerfile: ./api gateways/DevStore.Bff.Checkout/Dockerfile  
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -127,17 +127,17 @@ services:
             - ./certs:/https:ro
         depends_on:
             - rabbitmq
-            - api-identidade
-            - api-carrinho
-            - api-pagamento
-            - api-pedido
+            - api-identity
+            - api-cart
+            - api-billing
+            - api-order
             
-    api-pagamento:
-        image: desenvolvedorio/devstore-api-pagamento:latest
-        container_name: devstore-api-pagamento    
+    api-billing:
+        image: desenvolvedorio/devstore-api-billing:latest
+        container_name: devstore-api-billing    
         build: 
             context: ../src
-            dockerfile: ./services/DevStore.Pagamentos.API/Dockerfile
+            dockerfile: ./services/DevStore.Billing.API/Dockerfile
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -148,16 +148,16 @@ services:
             - ./certs:/https:ro
         depends_on:
             - rabbitmq
-            - api-identidade
-            - api-pedido
+            - api-identity
+            - api-order
             - sql-server
             
-    api-pedido:
-        image: desenvolvedorio/devstore-api-pedido:latest
-        container_name: devstore-api-pedido    
+    api-order:
+        image: desenvolvedorio/devstore-api-order:latest
+        container_name: devstore-api-order    
         build: 
             context: ../src
-            dockerfile: ./services/DevStore.Pedidos.API/Dockerfile 
+            dockerfile: ./services/DevStore.Orders.API/Dockerfile 
         restart: always             
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -169,7 +169,7 @@ services:
         depends_on:
             - rabbitmq
             - sql-server
-            - api-identidade                    
+            - api-identity                    
 
     devstore-server:
         image: desenvolvedorio/devstore-server:latest

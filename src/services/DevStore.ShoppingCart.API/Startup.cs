@@ -1,5 +1,5 @@
 using DevStore.ShoppingCart.API.Configuration;
-using DevStore.WebAPI.Core.Identidade;
+using DevStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

@@ -1,12 +1,12 @@
 ﻿using DevStore.ShoppingCart.API.Model;
 using DevStore.WebAPI.Core.Controllers;
-using DevStore.WebAPI.Core.Usuario;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using DevStore.WebAPI.Core.User;
 
 namespace DevStore.ShoppingCart.API.Controllers
 {

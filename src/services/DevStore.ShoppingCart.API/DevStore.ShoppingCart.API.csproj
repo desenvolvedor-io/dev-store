@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\building blocks\DevStore.MessageBus\DevStore.MessageBus.csproj" />
-    <ProjectReference Include="..\..\building blocks\DevStore.WebAPI.Core\DevStore.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\..\building-blocks\DevStore.MessageBus\DevStore.MessageBus.csproj" />
+    <ProjectReference Include="..\..\building-blocks\DevStore.WebAPI.Core\DevStore.WebAPI.Core.csproj" />
   </ItemGroup>
 
 

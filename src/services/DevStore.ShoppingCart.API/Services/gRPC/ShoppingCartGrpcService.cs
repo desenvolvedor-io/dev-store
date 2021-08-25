@@ -1,10 +1,10 @@
 ﻿using DevStore.ShoppingCart.API.Model;
-using DevStore.WebAPI.Core.Usuario;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using DevStore.WebAPI.Core.User;
 
 namespace DevStore.ShoppingCart.API.Services.gRPC
 {

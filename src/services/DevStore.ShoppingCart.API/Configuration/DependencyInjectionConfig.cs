@@ -1,5 +1,5 @@
 ﻿using DevStore.ShoppingCart.API.Data;
-using DevStore.WebAPI.Core.Usuario;
+using DevStore.WebAPI.Core.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 

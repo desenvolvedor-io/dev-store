@@ -12,7 +12,7 @@ namespace DevStore.ShoppingCart.API.Configuration
             IConfiguration configuration)
         {
             services.AddMessageBus(configuration.GetMessageQueueConnection("MessageBus"))
-                .AddHostedService<CarrinhoIntegrationHandler>();
+                .AddHostedService<ShoppingCartIntegrationHandler>();
         }
     }
 }
