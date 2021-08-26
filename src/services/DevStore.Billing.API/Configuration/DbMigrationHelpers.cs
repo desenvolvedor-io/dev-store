@@ -13,8 +13,8 @@ namespace DevStore.Billing.API.Configuration
     {
         /// <summary>
         /// Generate migrations before running this method, you can use command bellow:
-        /// Nuget package manager: Add-Migration DbInit -context PaymentContext
-        /// Dotnet CLI: dotnet ef migrations add DbInit -c PaymentContext
+        /// Nuget package manager: Add-Migration DbInit -context BillingContext
+        /// Dotnet CLI: dotnet ef migrations add DbInit -c BillingContext
         /// </summary>
         public static async Task EnsureSeedData(IServiceScope serviceScope)
         {
@@ -28,7 +28,7 @@ namespace DevStore.Billing.API.Configuration
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
             //var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
-            var ssoContext = scope.ServiceProvider.GetRequiredService<PaymentContext>();
+            var ssoContext = scope.ServiceProvider.GetRequiredService<BillingContext>();
 
             await DbHealthChecker.TestConnection(ssoContext);
 
