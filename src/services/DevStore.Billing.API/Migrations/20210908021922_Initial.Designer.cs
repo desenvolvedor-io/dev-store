@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevStore.Billing.API.Migrations
 {
     [DbContext(typeof(BillingContext))]
-    [Migration("20210826024206_Initial")]
+    [Migration("20210908021922_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,7 +84,7 @@ namespace DevStore.Billing.API.Migrations
             modelBuilder.Entity("DevStore.Billing.API.Models.Transaction", b =>
                 {
                     b.HasOne("DevStore.Billing.API.Models.Payment", "Payment")
-                        .WithMany("Transacoes")
+                        .WithMany("Transactions")
                         .HasForeignKey("PaymentId")
                         .IsRequired();
 
@@ -93,7 +93,7 @@ namespace DevStore.Billing.API.Migrations
 
             modelBuilder.Entity("DevStore.Billing.API.Models.Payment", b =>
                 {
-                    b.Navigation("Transacoes");
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

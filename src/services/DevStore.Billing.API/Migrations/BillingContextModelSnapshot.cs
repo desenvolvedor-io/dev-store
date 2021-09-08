@@ -82,7 +82,7 @@ namespace DevStore.Billing.API.Migrations
             modelBuilder.Entity("DevStore.Billing.API.Models.Transaction", b =>
                 {
                     b.HasOne("DevStore.Billing.API.Models.Payment", "Payment")
-                        .WithMany("Transacoes")
+                        .WithMany("Transactions")
                         .HasForeignKey("PaymentId")
                         .IsRequired();
 
@@ -91,7 +91,7 @@ namespace DevStore.Billing.API.Migrations
 
             modelBuilder.Entity("DevStore.Billing.API.Models.Payment", b =>
                 {
-                    b.Navigation("Transacoes");
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }
