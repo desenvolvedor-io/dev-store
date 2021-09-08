@@ -38,7 +38,7 @@ namespace DevStore.Orders.Infra.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Code = table.Column<int>(type: "int", nullable: false, defaultValueSql: "NEXT VALUE FOR MySequence"),
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VoucherId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     HasVoucher = table.Column<bool>(type: "bit", nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),

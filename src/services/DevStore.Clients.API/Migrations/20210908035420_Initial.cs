@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DevStore.Clients.API.Migrations
+namespace DevStore.Customers.API.Migrations
 {
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Clients",
+                name: "Customer",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -19,7 +19,7 @@ namespace DevStore.Clients.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
+                    table.PrimaryKey("PK_Customer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,23 +34,23 @@ namespace DevStore.Clients.API.Migrations
                     ZipCode = table.Column<string>(type: "varchar(20)", nullable: false),
                     City = table.Column<string>(type: "varchar(100)", nullable: false),
                     State = table.Column<string>(type: "varchar(50)", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Addresses_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
+                        name: "FK_Addresses_Customer_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_ClientId",
+                name: "IX_Addresses_CustomerId",
                 table: "Addresses",
-                column: "ClientId",
+                column: "CustomerId",
                 unique: true);
         }
 
@@ -60,7 +60,7 @@ namespace DevStore.Clients.API.Migrations
                 name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "Customer");
         }
     }
 }

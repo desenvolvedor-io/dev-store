@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevStore.Orders.Infra.Migrations
 {
     [DbContext(typeof(OrdersContext))]
-    [Migration("20210826033024_Initial")]
+    [Migration("20210908035327_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,13 +18,13 @@ namespace DevStore.Orders.Infra.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.HasSequence<int>("MySequence")
                 .StartsAt(1000L);
 
-            modelBuilder.Entity("DevStore.Orders.Domain.Pedidos.Order", b =>
+            modelBuilder.Entity("DevStore.Orders.Domain.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,13 +33,13 @@ namespace DevStore.Orders.Infra.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Code")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValueSql("NEXT VALUE FOR MySequence");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
@@ -63,7 +63,7 @@ namespace DevStore.Orders.Infra.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("DevStore.Orders.Domain.Pedidos.OrderItem", b =>
+            modelBuilder.Entity("DevStore.Orders.Domain.Orders.OrderItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -137,13 +137,13 @@ namespace DevStore.Orders.Infra.Migrations
                     b.ToTable("Vouchers");
                 });
 
-            modelBuilder.Entity("DevStore.Orders.Domain.Pedidos.Order", b =>
+            modelBuilder.Entity("DevStore.Orders.Domain.Orders.Order", b =>
                 {
                     b.HasOne("DevStore.Orders.Domain.Vouchers.Voucher", "Voucher")
                         .WithMany()
                         .HasForeignKey("VoucherId");
 
-                    b.OwnsOne("DevStore.Orders.Domain.Pedidos.Address", "Address", b1 =>
+                    b.OwnsOne("DevStore.Orders.Domain.Orders.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uniqueidentifier");
@@ -189,9 +189,9 @@ namespace DevStore.Orders.Infra.Migrations
                     b.Navigation("Voucher");
                 });
 
-            modelBuilder.Entity("DevStore.Orders.Domain.Pedidos.OrderItem", b =>
+            modelBuilder.Entity("DevStore.Orders.Domain.Orders.OrderItem", b =>
                 {
-                    b.HasOne("DevStore.Orders.Domain.Pedidos.Order", "Order")
+                    b.HasOne("DevStore.Orders.Domain.Orders.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .IsRequired();
@@ -199,7 +199,7 @@ namespace DevStore.Orders.Infra.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("DevStore.Orders.Domain.Pedidos.Order", b =>
+            modelBuilder.Entity("DevStore.Orders.Domain.Orders.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });

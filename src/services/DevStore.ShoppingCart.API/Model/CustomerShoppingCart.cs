@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace DevStore.ShoppingCart.API.Model
 {
-    public class ShoppingCartClient
+    public class CustomerShoppingCart
     {
-        internal const int MAX_QUANTIDADE_ITEM = 5;
+        internal const int MAX_ITEMS = 5;
 
         public Guid Id { get; set; }
-        public Guid ClientId { get; set; }
+        public Guid CustomerId { get; set; }
         public decimal Total { get; set; }
         public List<CartItem> Items { get; set; } = new List<CartItem>();
         public ValidationResult ValidationResult { get; set; }
@@ -21,13 +21,13 @@ namespace DevStore.ShoppingCart.API.Model
 
         public Voucher Voucher { get; set; }
 
-        public ShoppingCartClient(Guid clientId)
+        public CustomerShoppingCart(Guid customerId)
         {
             Id = Guid.NewGuid();
-            ClientId = clientId;
+            CustomerId = customerId;
         }
 
-        public ShoppingCartClient() { }
+        public CustomerShoppingCart() { }
 
         public void ApplyVoucher(Voucher voucher)
         {
@@ -123,28 +123,28 @@ namespace DevStore.ShoppingCart.API.Model
 
         internal bool IsValid()
         {
-            var erros = Items.SelectMany(i => new CartItem.ItemCarrinhoValidation().Validate(i).Errors).ToList();
-            erros.AddRange(new CarrinhoClienteValidation().Validate(this).Errors);
+            var erros = Items.SelectMany(i => new CartItem.ShoppingCartItemValidation().Validate(i).Errors).ToList();
+            erros.AddRange(new CarrinhoCustomereValidation().Validate(this).Errors);
             ValidationResult = new ValidationResult(erros);
 
             return ValidationResult.IsValid;
         }
 
-        public class CarrinhoClienteValidation : AbstractValidator<ShoppingCartClient>
+        public class CarrinhoCustomereValidation : AbstractValidator<CustomerShoppingCart>
         {
-            public CarrinhoClienteValidation()
+            public CarrinhoCustomereValidation()
             {
-                RuleFor(c => c.ClientId)
+                RuleFor(c => c.CustomerId)
                     .NotEqual(Guid.Empty)
-                    .WithMessage("Cliente não reconhecido");
+                    .WithMessage("Customer not found");
 
                 RuleFor(c => c.Items.Count)
                     .GreaterThan(0)
-                    .WithMessage("O carrinho não possui itens");
+                    .WithMessage("The shopping cart does not have any items");
 
                 RuleFor(c => c.Total)
                     .GreaterThan(0)
-                    .WithMessage("O valor total do carrinho precisa ser maior que 0");
+                    .WithMessage("The shopping cart total amount should be greater than 0");
             }
         }
     }

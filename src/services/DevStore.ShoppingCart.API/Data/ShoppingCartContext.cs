@@ -15,7 +15,7 @@ namespace DevStore.ShoppingCart.API.Data
         }
 
         public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<ShoppingCartClient> ShoppingCartClient { get; set; }
+        public DbSet<CustomerShoppingCart> CustomerShoppingCart { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,11 +25,11 @@ namespace DevStore.ShoppingCart.API.Data
 
             modelBuilder.Ignore<ValidationResult>();
 
-            modelBuilder.Entity<ShoppingCartClient>()
-                .HasIndex(c => c.ClientId)
-                .HasName("IDX_Cliente");
+            modelBuilder.Entity<CustomerShoppingCart>()
+                .HasIndex(c => c.CustomerId)
+                .HasName("IDX_Customer");
 
-            modelBuilder.Entity<ShoppingCartClient>()
+            modelBuilder.Entity<CustomerShoppingCart>()
                 .Ignore(c => c.Voucher)
                 .OwnsOne(c => c.Voucher, v =>
                 {
@@ -43,9 +43,9 @@ namespace DevStore.ShoppingCart.API.Data
                     v.Property(vc => vc.Discount);
                 });
 
-            modelBuilder.Entity<ShoppingCartClient>()
+            modelBuilder.Entity<CustomerShoppingCart>()
                 .HasMany(c => c.Items)
-                .WithOne(i => i.ShoppingCartClient)
+                .WithOne(i => i.CustomerShoppingCart)
                 .HasForeignKey(c => c.ShoppingCartId);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()

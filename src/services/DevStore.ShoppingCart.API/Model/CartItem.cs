@@ -21,7 +21,7 @@ namespace DevStore.ShoppingCart.API.Model
         public Guid ShoppingCartId { get; set; }
 
         [JsonIgnore]
-        public ShoppingCartClient ShoppingCartClient { get; set; }
+        public CustomerShoppingCart CustomerShoppingCart { get; set; }
 
         internal void SetShoppingCart(Guid carrinhoId)
         {
@@ -45,12 +45,12 @@ namespace DevStore.ShoppingCart.API.Model
 
         internal bool IsValid()
         {
-            return new ItemCarrinhoValidation().Validate(this).IsValid;
+            return new ShoppingCartItemValidation().Validate(this).IsValid;
         }
 
-        public class ItemCarrinhoValidation : AbstractValidator<CartItem>
+        public class ShoppingCartItemValidation : AbstractValidator<CartItem>
         {
-            public ItemCarrinhoValidation()
+            public ShoppingCartItemValidation()
             {
                 RuleFor(c => c.ProductId)
                     .NotEqual(Guid.Empty)
@@ -65,8 +65,8 @@ namespace DevStore.ShoppingCart.API.Model
                     .WithMessage(item => $"The minimal quantity for {item.Name} is 1");
 
                 RuleFor(c => c.Quantity)
-                    .LessThanOrEqualTo(ShoppingCartClient.MAX_QUANTIDADE_ITEM)
-                    .WithMessage(item => $"The max quantity for {item.Name} is {ShoppingCartClient.MAX_QUANTIDADE_ITEM}");
+                    .LessThanOrEqualTo(CustomerShoppingCart.MAX_ITEMS)
+                    .WithMessage(item => $"The max quantity for {item.Name} is {CustomerShoppingCart.MAX_ITEMS}");
 
                 RuleFor(c => c.Price)
                     .GreaterThan(0)

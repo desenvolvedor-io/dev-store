@@ -5,24 +5,24 @@ option csharp_namespace = "DevStore.ShoppingCart.API.Services.gRPC";
 package ShoppingCartAPI;
 
 service ShoppingCartOrders {
-	rpc GetShoppingCart(GetShoppingCartRequest) returns (ShoppingCartClientClientResponse) {}	
+	rpc GetShoppingCart(GetShoppingCartRequest) returns (CustomerShoppingCartClientResponse) {}	
 }
 
 message GetShoppingCartRequest {
 
 }
 
-message ShoppingCartClientClientResponse {
+message CustomerShoppingCartClientResponse {
 	string id = 1;
-	string clientid  = 2;
+	string customerid  = 2;
 	double total = 3;
-	repeated CarrinhoItemResponse items = 4;
+	repeated ShoppingCartItemResponse items = 4;
 	bool hasvoucher = 5;
 	double discount = 6;
 	VoucherResponse voucher = 7;
 }
 
-message CarrinhoItemResponse {
+message ShoppingCartItemResponse {
 	string id = 1;
 	string productid = 2;
 	string name  = 3;

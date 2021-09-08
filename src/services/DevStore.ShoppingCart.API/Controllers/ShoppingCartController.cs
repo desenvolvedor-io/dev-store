@@ -23,9 +23,9 @@ namespace DevStore.ShoppingCart.API.Controllers
         }
 
         [HttpGet("")]
-        public async Task<ShoppingCartClient> GetShoppingCart()
+        public async Task<CustomerShoppingCart> GetShoppingCart()
         {
-            return await GetShoppingCartClient() ?? new ShoppingCartClient();
+            return await GetShoppingCartClient() ?? new CustomerShoppingCart();
         }
 
         [HttpPost("")]
@@ -47,17 +47,17 @@ namespace DevStore.ShoppingCart.API.Controllers
         [HttpPut("{productId}")]
         public async Task<IActionResult> UpdateItem(Guid productId, CartItem item)
         {
-            var carrinho = await GetShoppingCartClient();
-            var itemCarrinho = await GetValidItem(productId, carrinho, item);
-            if (itemCarrinho == null) return CustomResponse();
+            var shoppingCart = await GetShoppingCartClient();
+            var shoppingCartItem = await GetValidItem(productId, shoppingCart, item);
+            if (shoppingCartItem == null) return CustomResponse();
 
-            carrinho.UpdateUnit(itemCarrinho, item.Quantity);
+            shoppingCart.UpdateUnit(shoppingCartItem, item.Quantity);
 
-            ValidateShoppingCart(carrinho);
+            ValidateShoppingCart(shoppingCart);
             if (!ValidOperation()) return CustomResponse();
 
-            _context.CartItems.Update(itemCarrinho);
-            _context.ShoppingCartClient.Update(carrinho);
+            _context.CartItems.Update(shoppingCartItem);
+            _context.CustomerShoppingCart.Update(shoppingCart);
 
             await Persist();
             return CustomResponse();
@@ -77,7 +77,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             cart.RemoveItem(item);
 
             _context.CartItems.Remove(item);
-            _context.ShoppingCartClient.Update(cart);
+            _context.CustomerShoppingCart.Update(cart);
 
             await Persist();
             return CustomResponse();
@@ -91,27 +91,27 @@ namespace DevStore.ShoppingCart.API.Controllers
 
             cart.ApplyVoucher(voucher);
 
-            _context.ShoppingCartClient.Update(cart);
+            _context.CustomerShoppingCart.Update(cart);
 
             await Persist();
             return CustomResponse();
         }
 
-        private async Task<ShoppingCartClient> GetShoppingCartClient()
+        private async Task<CustomerShoppingCart> GetShoppingCartClient()
         {
-            return await _context.ShoppingCartClient
+            return await _context.CustomerShoppingCart
                 .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.ClientId == _user.GetUserId());
+                .FirstOrDefaultAsync(c => c.CustomerId == _user.GetUserId());
         }
         private void ManageNewCart(CartItem item)
         {
-            var cart = new ShoppingCartClient(_user.GetUserId());
+            var cart = new CustomerShoppingCart(_user.GetUserId());
             cart.AddItem(item);
 
             ValidateShoppingCart(cart);
-            _context.ShoppingCartClient.Add(cart);
+            _context.CustomerShoppingCart.Add(cart);
         }
-        private void ManageCart(ShoppingCartClient cart, CartItem item)
+        private void ManageCart(CustomerShoppingCart cart, CartItem item)
         {
             var savedItem = cart.HasItem(item);
 
@@ -127,9 +127,9 @@ namespace DevStore.ShoppingCart.API.Controllers
                 _context.CartItems.Add(item);
             }
 
-            _context.ShoppingCartClient.Update(cart);
+            _context.CustomerShoppingCart.Update(cart);
         }
-        private async Task<CartItem> GetValidItem(Guid productId, ShoppingCartClient cart, CartItem item = null)
+        private async Task<CartItem> GetValidItem(Guid productId, CustomerShoppingCart cart, CartItem item = null)
         {
             if (item != null && productId != item.ProductId)
             {
@@ -159,7 +159,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             var result = await _context.SaveChangesAsync();
             if (result <= 0) AddErrorToStack("Error saving data");
         }
-        private bool ValidateShoppingCart(ShoppingCartClient carrinho)
+        private bool ValidateShoppingCart(CustomerShoppingCart carrinho)
         {
             if (carrinho.IsValid()) return true;
 

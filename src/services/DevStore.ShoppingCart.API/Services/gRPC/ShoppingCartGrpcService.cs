@@ -26,28 +26,28 @@ namespace DevStore.ShoppingCart.API.Services.gRPC
             _context = context;
         }
 
-        public override async Task<ShoppingCartClientClientResponse> GetShoppingCart(GetShoppingCartRequest request, ServerCallContext context)
+        public override async Task<CustomerShoppingCartClientResponse> GetShoppingCart(GetShoppingCartRequest request, ServerCallContext context)
         {
             _logger.LogInformation("Call GetCart");
 
-            var carrinho = await ObterCarrinhoCliente() ?? new ShoppingCartClient();
+            var shoppingCart = await GetShoppingCartClient() ?? new CustomerShoppingCart();
 
-            return MapCarrinhoClienteToProtoResponse(carrinho);
+            return MapShoppingCartClientToProtoResponse(shoppingCart);
         }
 
-        private async Task<ShoppingCartClient> ObterCarrinhoCliente()
+        private async Task<CustomerShoppingCart> GetShoppingCartClient()
         {
-            return await _context.ShoppingCartClient
+            return await _context.CustomerShoppingCart
                 .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.ClientId == _user.GetUserId());
+                .FirstOrDefaultAsync(c => c.CustomerId == _user.GetUserId());
         }
 
-        private static ShoppingCartClientClientResponse MapCarrinhoClienteToProtoResponse(ShoppingCartClient carrinho)
+        private static CustomerShoppingCartClientResponse MapShoppingCartClientToProtoResponse(CustomerShoppingCart carrinho)
         {
-            var carrinhoProto = new ShoppingCartClientClientResponse
+            var carrinhoProto = new CustomerShoppingCartClientResponse
             {
                 Id = carrinho.Id.ToString(),
-                Clientid = carrinho.ClientId.ToString(),
+                Customerid = carrinho.CustomerId.ToString(),
                 Total = (double)carrinho.Total,
                 Discount = (double)carrinho.Discount,
                 Hasvoucher = carrinho.HasVoucher,
@@ -66,7 +66,7 @@ namespace DevStore.ShoppingCart.API.Services.gRPC
 
             foreach (var item in carrinho.Items)
             {
-                carrinhoProto.Items.Add(new CarrinhoItemResponse
+                carrinhoProto.Items.Add(new ShoppingCartItemResponse
                 {
                     Id = item.Id.ToString(),
                     Name = item.Name,

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DevStore.ShoppingCart.API.Migrations
 {
     [DbContext(typeof(ShoppingCartContext))]
-    [Migration("20210806055427_Initial")]
+    [Migration("20210908035300_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace DevStore.ShoppingCart.API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.6")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DevStore.ShoppingCart.API.Model.CartItem", b =>
@@ -52,13 +52,13 @@ namespace DevStore.ShoppingCart.API.Migrations
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("DevStore.ShoppingCart.API.Model.ShoppingCartClient", b =>
+            modelBuilder.Entity("DevStore.ShoppingCart.API.Model.CustomerShoppingCart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ClientId")
+                    b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Discount")
@@ -72,28 +72,28 @@ namespace DevStore.ShoppingCart.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId")
-                        .HasDatabaseName("IDX_Cliente");
+                    b.HasIndex("CustomerId")
+                        .HasDatabaseName("IDX_Customer");
 
-                    b.ToTable("ShoppingCartClient");
+                    b.ToTable("CustomerShoppingCart");
                 });
 
             modelBuilder.Entity("DevStore.ShoppingCart.API.Model.CartItem", b =>
                 {
-                    b.HasOne("DevStore.ShoppingCart.API.Model.ShoppingCartClient", "ShoppingCartClient")
+                    b.HasOne("DevStore.ShoppingCart.API.Model.CustomerShoppingCart", "CustomerShoppingCart")
                         .WithMany("Items")
                         .HasForeignKey("ShoppingCartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ShoppingCartClient");
+                    b.Navigation("CustomerShoppingCart");
                 });
 
-            modelBuilder.Entity("DevStore.ShoppingCart.API.Model.ShoppingCartClient", b =>
+            modelBuilder.Entity("DevStore.ShoppingCart.API.Model.CustomerShoppingCart", b =>
                 {
                     b.OwnsOne("DevStore.ShoppingCart.API.Model.Voucher", "Voucher", b1 =>
                         {
-                            b1.Property<Guid>("ShoppingCartClientId")
+                            b1.Property<Guid>("CustomerShoppingCartId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Code")
@@ -108,18 +108,18 @@ namespace DevStore.ShoppingCart.API.Migrations
                             b1.Property<decimal?>("Percentage")
                                 .HasColumnType("decimal(18,2)");
 
-                            b1.HasKey("ShoppingCartClientId");
+                            b1.HasKey("CustomerShoppingCartId");
 
-                            b1.ToTable("ShoppingCartClient");
+                            b1.ToTable("CustomerShoppingCart");
 
                             b1.WithOwner()
-                                .HasForeignKey("ShoppingCartClientId");
+                                .HasForeignKey("CustomerShoppingCartId");
                         });
 
                     b.Navigation("Voucher");
                 });
 
-            modelBuilder.Entity("DevStore.ShoppingCart.API.Model.ShoppingCartClient", b =>
+            modelBuilder.Entity("DevStore.ShoppingCart.API.Model.CustomerShoppingCart", b =>
                 {
                     b.Navigation("Items");
                 });

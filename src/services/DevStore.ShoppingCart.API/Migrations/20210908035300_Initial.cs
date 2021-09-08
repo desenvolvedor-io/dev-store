@@ -8,11 +8,11 @@ namespace DevStore.ShoppingCart.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ShoppingCartClient",
+                name: "CustomerShoppingCart",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     HasVoucher = table.Column<bool>(type: "bit", nullable: false),
                     Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -23,7 +23,7 @@ namespace DevStore.ShoppingCart.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCartClient", x => x.Id);
+                    table.PrimaryKey("PK_CustomerShoppingCart", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,9 +42,9 @@ namespace DevStore.ShoppingCart.API.Migrations
                 {
                     table.PrimaryKey("PK_CartItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CartItems_ShoppingCartClient_ShoppingCartId",
+                        name: "FK_CartItems_CustomerShoppingCart_ShoppingCartId",
                         column: x => x.ShoppingCartId,
-                        principalTable: "ShoppingCartClient",
+                        principalTable: "CustomerShoppingCart",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -55,9 +55,9 @@ namespace DevStore.ShoppingCart.API.Migrations
                 column: "ShoppingCartId");
 
             migrationBuilder.CreateIndex(
-                name: "IDX_Cliente",
-                table: "ShoppingCartClient",
-                column: "ClientId");
+                name: "IDX_Customer",
+                table: "CustomerShoppingCart",
+                column: "CustomerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -66,7 +66,7 @@ namespace DevStore.ShoppingCart.API.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCartClient");
+                name: "CustomerShoppingCart");
         }
     }
 }
