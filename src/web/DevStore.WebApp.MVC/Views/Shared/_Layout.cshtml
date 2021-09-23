@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>@ViewData["Title"] - DevStore Enterprise</title>
+    <title>@ViewData["Title"] - devStore Project</title>
 
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet">
@@ -26,7 +26,7 @@
                     <div class="col-lg-5 col-sm-12">
                         <form method="get" asp-controller="Catalog" asp-action="Index" class="search">
                             <div class="input-group w-100">
-                                <input type="text" id="q" name="q" class="form-control" value="@ViewBag.Pesquisa" placeholder="What you are looking for?">
+                                <input type="text" id="q" name="q" class="form-control" value="@ViewBag.Search" placeholder="What you are looking for?">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fa fa-search"></i>
@@ -58,7 +58,7 @@
                     <aside class="col-md-4">
                         <article class="mr-3">
                             <img src="~/images/logo.png" class="logo-footer">
-                            <p class="mt-3">An institutional text here from Dev Store Enterprise.</p>
+                            <p class="mt-3">A complete Microservices project based in .NET and best practices.</p>
                             <div>
                                 <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#"><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#"><i class="fab fa-instagram"></i></a>
@@ -79,7 +79,7 @@
                     <aside class="col-sm-4 col-md-3">
                         <h6 class="title">Services</h6>
                         <ul class="list-unstyled">
-                            <li> <a href="#">My Orders</a></li>
+                            <li> <a asp-controller="Order" asp-action="MyOrders">My Orders</a></li>
                             <li> <a href="#">Profile</a></li>
                             <li> <a href="#">Canceled orders</a></li>
                             <li> <a href="#">Chargeback</a></li>
@@ -94,9 +94,9 @@
             </section>
 
             <section class="footer-copyright border-top">
-                <p class="float-left text-muted"> Dev Store Enterprise </p>
+                <p class="float-left text-muted"> devStore Project</p>
                 <p class="float-right text-muted">
-                    Content of online course ASP.NET Core Enterprise Applications -
+                    Fully developed and supported by -
                     <a target="_blank" href="https://desenvolvedor.io">desenvolvedor.io</a>
                 </p>
             </section>
