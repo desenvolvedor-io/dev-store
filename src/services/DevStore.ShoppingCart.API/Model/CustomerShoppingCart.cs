@@ -75,9 +75,9 @@ namespace DevStore.ShoppingCart.API.Model
             return Items.Any(p => p.ProductId == item.ProductId);
         }
 
-        internal CartItem GetProductById(Guid produtoId)
+        internal CartItem GetProductById(Guid productId)
         {
-            return Items.FirstOrDefault(p => p.ProductId == produtoId);
+            return Items.FirstOrDefault(p => p.ProductId == productId);
         }
 
         internal void AddItem(CartItem item)
@@ -123,16 +123,16 @@ namespace DevStore.ShoppingCart.API.Model
 
         internal bool IsValid()
         {
-            var erros = Items.SelectMany(i => new CartItem.ShoppingCartItemValidation().Validate(i).Errors).ToList();
-            erros.AddRange(new CarrinhoCustomereValidation().Validate(this).Errors);
-            ValidationResult = new ValidationResult(erros);
+            var errors = Items.SelectMany(i => new CartItem.ShoppingCartItemValidation().Validate(i).Errors).ToList();
+            errors.AddRange(new CustomerShoppingCartValidation().Validate(this).Errors);
+            ValidationResult = new ValidationResult(errors);
 
             return ValidationResult.IsValid;
         }
 
-        public class CarrinhoCustomereValidation : AbstractValidator<CustomerShoppingCart>
+        public class CustomerShoppingCartValidation : AbstractValidator<CustomerShoppingCart>
         {
-            public CarrinhoCustomereValidation()
+            public CustomerShoppingCartValidation()
             {
                 RuleFor(c => c.CustomerId)
                     .NotEqual(Guid.Empty)

@@ -31,12 +31,12 @@ namespace DevStore.ShoppingCart.API.Controllers
         [HttpPost("")]
         public async Task<IActionResult> AddItem(CartItem item)
         {
-            var carrinho = await GetShoppingCartClient();
+            var shoppingCart = await GetShoppingCartClient();
 
-            if (carrinho == null)
+            if (shoppingCart == null)
                 ManageNewCart(item);
             else
-                ManageCart(carrinho, item);
+                ManageCart(shoppingCart, item);
 
             if (!ValidOperation()) return CustomResponse();
 
@@ -159,11 +159,11 @@ namespace DevStore.ShoppingCart.API.Controllers
             var result = await _context.SaveChangesAsync();
             if (result <= 0) AddErrorToStack("Error saving data");
         }
-        private bool ValidateShoppingCart(CustomerShoppingCart carrinho)
+        private bool ValidateShoppingCart(CustomerShoppingCart shoppingCart)
         {
-            if (carrinho.IsValid()) return true;
+            if (shoppingCart.IsValid()) return true;
 
-            carrinho.ValidationResult.Errors.ToList().ForEach(e => AddErrorToStack(e.ErrorMessage));
+            shoppingCart.ValidationResult.Errors.ToList().ForEach(e => AddErrorToStack(e.ErrorMessage));
             return false;
         }
     }
