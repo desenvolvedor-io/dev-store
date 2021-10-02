@@ -11,7 +11,10 @@ services:
 
     sql-server:
         image: desenvolvedorio/devstore-sql-server:latest
-        container_name: devstore-sql-server        
+        container_name: devstore-sql-server
+        build: 
+            context: ../sql
+            dockerfile: ./Dockerfile
         environment:
             SA_PASSWORD: "MyDB@123"
             ACCEPT_EULA: "Y"     
@@ -19,6 +22,9 @@ services:
     web-mvc:
         image: desenvolvedorio/devstore-web-mvc-ecommerce:latest
         container_name: devstore-web-mvc-ecommerce
+        build:
+            context: ../src
+            dockerfile: ./web/DevStore.WebApp.MVC/Dockerfile
         restart: always            
         environment:
             - ASPNETCORE_ENVIRONMENT=Production
@@ -36,7 +42,10 @@ services:
 
     api-identity:
         image: desenvolvedorio/devstore-api-identity:latest
-        container_name: devstore-api-identity            
+        container_name: devstore-api-identity    
+        build: 
+            context: ../src
+            dockerfile: ./services/DevStore.Identity.API/Dockerfile  
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -51,7 +60,10 @@ services:
             
     api-cart:
         image: desenvolvedorio/devstore-api-cart:latest
-        container_name: devstore-api-cart        
+        container_name: devstore-api-cart
+        build: 
+            context: ../src
+            dockerfile: ./services/DevStore.ShoppingCart.API/Dockerfile      
         restart: always             
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -67,7 +79,10 @@ services:
 
     api-catalog:
         image: desenvolvedorio/devstore-api-catalog:latest
-        container_name: devstore-api-catalog        
+        container_name: devstore-api-catalog
+        build: 
+            context: ../src
+            dockerfile: ./services/DevStore.Catalog.API/Dockerfile
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -82,7 +97,10 @@ services:
 
     api-customers:
         image: desenvolvedorio/devstore-api-customers:latest
-        container_name: devstore-api-customers            
+        container_name: devstore-api-customers    
+        build: 
+            context: ../src
+            dockerfile: ./services/DevStore.Customers.API/Dockerfile
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -98,7 +116,10 @@ services:
 
     api-bff-checkout:
         image: desenvolvedorio/devstore-api-bff-checkout:latest
-        container_name: devstore-api-bff-checkout        
+        container_name: devstore-api-bff-checkout
+        build: 
+            context: ../src
+            dockerfile: ./api-gateways/DevStore.Bff.Checkout/Dockerfile  
         restart: always 
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -116,7 +137,10 @@ services:
             
     api-billing:
         image: desenvolvedorio/devstore-api-billing:latest
-        container_name: devstore-api-billing            
+        container_name: devstore-api-billing    
+        build: 
+            context: ../src
+            dockerfile: ./services/DevStore.Billing.API/Dockerfile
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -133,7 +157,10 @@ services:
             
     api-order:
         image: desenvolvedorio/devstore-api-order:latest
-        container_name: devstore-api-order            
+        container_name: devstore-api-order    
+        build: 
+            context: ../src
+            dockerfile: ./services/DevStore.Orders.API/Dockerfile 
         restart: always             
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -149,7 +176,10 @@ services:
 
     devstore-server:
         image: desenvolvedorio/devstore-server:latest
-        container_name: devstore-server            
+        container_name: devstore-server    
+        build: 
+            context: ./
+            dockerfile: ./nginx/Dockerfile 
         restart: always 
         ports:
             - "80:80"
