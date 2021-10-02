@@ -8,8 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["./web/DevStore.WebApp.MVC/DevStore.WebApp.MVC.csproj", "web/DevStore.WebApp.MVC/"]
-COPY ["./building blocks/DevStore.Core/DevStore.Core.csproj", "building blocks/DevStore.WebAPI.Core/"]
-COPY ["./building blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj", "building blocks/DevStore.WebAPI.Core/"]
+COPY ["./building-blocks/DevStore.Core/DevStore.Core.csproj", "building blocks/DevStore.WebAPI.Core/"]
+COPY ["./building-blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj", "building blocks/DevStore.WebAPI.Core/"]
 
 RUN dotnet restore "web/DevStore.WebApp.MVC/DevStore.WebApp.MVC.csproj"
 COPY . .
