@@ -42,31 +42,31 @@ namespace DevStore.ShoppingCart.API.Services.gRPC
                 .FirstOrDefaultAsync(c => c.CustomerId == _user.GetUserId());
         }
 
-        private static CustomerShoppingCartClientResponse MapShoppingCartClientToProtoResponse(CustomerShoppingCart carrinho)
+        private static CustomerShoppingCartClientResponse MapShoppingCartClientToProtoResponse(CustomerShoppingCart shoppingCart)
         {
-            var carrinhoProto = new CustomerShoppingCartClientResponse
+            var shoppingCartResponse = new CustomerShoppingCartClientResponse
             {
-                Id = carrinho.Id.ToString(),
-                Customerid = carrinho.CustomerId.ToString(),
-                Total = (double)carrinho.Total,
-                Discount = (double)carrinho.Discount,
-                Hasvoucher = carrinho.HasVoucher,
+                Id = shoppingCart.Id.ToString(),
+                Customerid = shoppingCart.CustomerId.ToString(),
+                Total = (double)shoppingCart.Total,
+                Discount = (double)shoppingCart.Discount,
+                Hasvoucher = shoppingCart.HasVoucher,
             };
 
-            if (carrinho.Voucher != null)
+            if (shoppingCart.Voucher != null)
             {
-                carrinhoProto.Voucher = new VoucherResponse
+                shoppingCartResponse.Voucher = new VoucherResponse
                 {
-                    Code = carrinho.Voucher.Code,
-                    Percentage = (double?)carrinho.Voucher.Percentage ?? 0,
-                    Discount = (double?)carrinho.Voucher.Discount ?? 0,
-                    Discounttype = (int)carrinho.Voucher.DiscountType
+                    Code = shoppingCart.Voucher.Code,
+                    Percentage = (double?)shoppingCart.Voucher.Percentage ?? 0,
+                    Discount = (double?)shoppingCart.Voucher.Discount ?? 0,
+                    Discounttype = (int)shoppingCart.Voucher.DiscountType
                 };
             }
 
-            foreach (var item in carrinho.Items)
+            foreach (var item in shoppingCart.Items)
             {
-                carrinhoProto.Items.Add(new ShoppingCartItemResponse
+                shoppingCartResponse.Items.Add(new ShoppingCartItemResponse
                 {
                     Id = item.Id.ToString(),
                     Name = item.Name,
@@ -77,7 +77,7 @@ namespace DevStore.ShoppingCart.API.Services.gRPC
                 });
             }
 
-            return carrinhoProto;
+            return shoppingCartResponse;
         }
     }
 }

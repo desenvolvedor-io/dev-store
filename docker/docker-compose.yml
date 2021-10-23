@@ -1,0 +1,161 @@
+version: "3"
+
+services:
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: devstore-rabbit
+        environment:
+            RABBITMQ_DEFAULT_USER: "devstore"
+            RABBITMQ_DEFAULT_PASS: "devstore"
+
+    sql-server:
+        image: desenvolvedorio/devstore-sql-server:latest
+        container_name: devstore-sql-server        
+        environment:
+            SA_PASSWORD: "MyDB@123"
+            ACCEPT_EULA: "Y"     
+
+    web-mvc:
+        image: desenvolvedorio/devstore-web-mvc-ecommerce:latest
+        container_name: devstore-web-mvc-ecommerce
+        restart: always            
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://*:5001
+            - LC_ALL=en_US.UTF-8
+            - LANG=en_US.UTF-8
+            # Change the two lines above to your culture (ex pt_BR)
+        volumes: 
+            - dpkeys:/var/data_protection_keys/         
+        depends_on:
+            - api-catalog
+            - api-identity
+            - api-customers
+            - api-bff-checkout
+
+    api-identity:
+        image: desenvolvedorio/devstore-api-identity:latest
+        container_name: devstore-api-identity            
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5101;http://+5102
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/nerdstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - sql-server
+            
+    api-cart:
+        image: desenvolvedorio/devstore-api-cart:latest
+        container_name: devstore-api-cart        
+        restart: always             
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5201;http://+5202
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/nerdstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - api-identity
+            - sql-server         
+
+    api-catalog:
+        image: desenvolvedorio/devstore-api-catalog:latest
+        container_name: devstore-api-catalog        
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5301;http://+5302
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/nerdstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - sql-server
+
+    api-customers:
+        image: desenvolvedorio/devstore-api-customers:latest
+        container_name: devstore-api-customers            
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5401;http://+5402
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/nerdstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - api-identity
+            - sql-server  
+
+    api-bff-checkout:
+        image: desenvolvedorio/devstore-api-bff-checkout:latest
+        container_name: devstore-api-bff-checkout        
+        restart: always 
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5501;http://+5502
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/nerdstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - api-identity
+            - api-cart
+            - api-billing
+            - api-order
+            
+    api-billing:
+        image: desenvolvedorio/devstore-api-billing:latest
+        container_name: devstore-api-billing            
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5601;http://+5602
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/nerdstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - api-identity
+            - api-order
+            - sql-server
+            
+    api-order:
+        image: desenvolvedorio/devstore-api-order:latest
+        container_name: devstore-api-order            
+        restart: always             
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5701;http://+5702
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/nerdstore-certificate.pfx
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - rabbitmq
+            - sql-server
+            - api-identity                    
+
+    devstore-server:
+        image: desenvolvedorio/devstore-server:latest
+        container_name: devstore-server            
+        restart: always 
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - web-mvc
+
+volumes:
+    dpkeys:     
