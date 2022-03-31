@@ -1,10 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using DevStore.ShoppingCart.API.Data;
-using DevStore.WebAPI.Core.Configuration;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using DevStore.WebAPI.Core.Configuration;
 
 namespace DevStore.ShoppingCart.API.Configuration
 {

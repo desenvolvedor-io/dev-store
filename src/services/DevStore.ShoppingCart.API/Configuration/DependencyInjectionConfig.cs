@@ -1,7 +1,4 @@
-﻿using DevStore.ShoppingCart.API.Data;
-using DevStore.WebAPI.Core.User;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+﻿using DevStore.WebAPI.Core.User;
 
 namespace DevStore.ShoppingCart.API.Configuration
 {

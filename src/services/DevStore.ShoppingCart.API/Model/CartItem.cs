@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System;
 using System.Text.Json.Serialization;
 
 namespace DevStore.ShoppingCart.API.Model
