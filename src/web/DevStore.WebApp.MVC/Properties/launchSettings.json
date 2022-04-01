@@ -8,7 +8,6 @@
     }
   },
   "profiles": {
-
     "SelfHosting - Dev": {
       "commandName": "Project",
       "launchBrowser": true,
