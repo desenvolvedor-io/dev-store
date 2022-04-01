@@ -38,8 +38,6 @@ var app = builder.Build();
 
 #region Configure Pipeline
 
-var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ShoppingCartContext>();
-var user = app.Services.CreateScope().ServiceProvider.GetRequiredService<IAspNetUser>();
 var Errors = new List<string>();
 
 app.UseSwaggerConfiguration();
@@ -58,24 +56,29 @@ app.Run();
 
 void MapActions(WebApplication app)
 {
-    app.MapGet("/shopping-cart", [Authorize] async () =>
-        await GetShoppingCartClient() ?? new CustomerShoppingCart())
+    app.MapGet("/shopping-cart", [Authorize] async (
+        ShoppingCartContext context,
+        IAspNetUser user) =>
+
+        await GetShoppingCartClient(context, user) ?? new CustomerShoppingCart())
         .WithName("GetShoppingCart")
         .WithTags("ShoppingCart");
 
     app.MapPost("/shopping-cart", [Authorize] async (
+        ShoppingCartContext context,
+        IAspNetUser user,
         CartItem item) =>
         {
-            var shoppingCart = await GetShoppingCartClient();
+            var shoppingCart = await GetShoppingCartClient(context, user);
 
             if (shoppingCart == null)
-                ManageNewCart(item);
+                ManageNewCart(context, user, item);
             else
-                ManageCart(shoppingCart, item);
+                ManageCart(context, shoppingCart, item);
 
             if (Errors.Any()) return CustomResponse();
 
-            await Persist();
+            await Persist(context);
             return CustomResponse();
         })
         .ProducesValidationProblem()
@@ -85,11 +88,13 @@ void MapActions(WebApplication app)
         .WithTags("ShoppingCart");
 
     app.MapPut("/shopping-cart/{productId}", [Authorize] async (
+        ShoppingCartContext context,
+        IAspNetUser user,
         Guid productId,
         CartItem item) =>
         {
-            var shoppingCart = await GetShoppingCartClient();
-            var shoppingCartItem = await GetValidItem(productId, shoppingCart, item);
+            var shoppingCart = await GetShoppingCartClient(context, user);
+            var shoppingCartItem = await GetValidItem(context, productId, shoppingCart, item);
             if (shoppingCartItem == null) return CustomResponse();
 
             shoppingCart.UpdateUnit(shoppingCartItem, item.Quantity);
@@ -100,7 +105,7 @@ void MapActions(WebApplication app)
             context.CartItems.Update(shoppingCartItem);
             context.CustomerShoppingCart.Update(shoppingCart);
 
-            await Persist();
+            await Persist(context);
             return CustomResponse();
         })
         .ProducesValidationProblem()
@@ -110,11 +115,13 @@ void MapActions(WebApplication app)
         .WithTags("ShoppingCart");
 
     app.MapDelete("/shopping-cart/{productId}", [Authorize] async (
+        ShoppingCartContext context,
+        IAspNetUser user,
         Guid productId) =>
         {
-            var cart = await GetShoppingCartClient();
+            var cart = await GetShoppingCartClient(context, user);
 
-            var item = await GetValidItem(productId, cart);
+            var item = await GetValidItem(context, productId, cart);
             if (item == null) return CustomResponse();
 
             ValidateShoppingCart(cart);
@@ -125,7 +132,7 @@ void MapActions(WebApplication app)
             context.CartItems.Remove(item);
             context.CustomerShoppingCart.Update(cart);
 
-            await Persist();
+            await Persist(context);
             return CustomResponse();
         })
         .ProducesValidationProblem()
@@ -136,15 +143,17 @@ void MapActions(WebApplication app)
         .WithTags("ShoppingCart");
 
     app.MapPost("/shopping-cart/apply-voucher", [Authorize] async (
+        ShoppingCartContext context,
+        IAspNetUser user,
         Voucher voucher) =>
         {
-            var cart = await GetShoppingCartClient();
+            var cart = await GetShoppingCartClient(context, user);
 
             cart.ApplyVoucher(voucher);
 
             context.CustomerShoppingCart.Update(cart);
 
-            await Persist();
+            await Persist(context);
             return CustomResponse();
         })
         .ProducesValidationProblem()
@@ -158,14 +167,14 @@ void MapActions(WebApplication app)
 
 #region Action Methods
 
-async Task<CustomerShoppingCart> GetShoppingCartClient()
+async Task<CustomerShoppingCart> GetShoppingCartClient(ShoppingCartContext context, IAspNetUser user)
 {
     return await context.CustomerShoppingCart
         .Include(c => c.Items)
         .FirstOrDefaultAsync(c => c.CustomerId == user.GetUserId());
 }
 
-void ManageNewCart(CartItem item)
+void ManageNewCart(ShoppingCartContext context, IAspNetUser user, CartItem item)
 {
     var cart = new CustomerShoppingCart(user.GetUserId());
     cart.AddItem(item);
@@ -174,7 +183,7 @@ void ManageNewCart(CartItem item)
     context.CustomerShoppingCart.Add(cart);
 }
 
-void ManageCart(CustomerShoppingCart cart, CartItem item)
+void ManageCart(ShoppingCartContext context, CustomerShoppingCart cart, CartItem item)
 {
     var savedItem = cart.HasItem(item);
 
@@ -193,7 +202,7 @@ void ManageCart(CustomerShoppingCart cart, CartItem item)
     context.CustomerShoppingCart.Update(cart);
 }
 
-async Task<CartItem> GetValidItem(Guid productId, CustomerShoppingCart cart, CartItem item = null)
+async Task<CartItem> GetValidItem(ShoppingCartContext context, Guid productId, CustomerShoppingCart cart, CartItem item = null)
 {
     if (item != null && productId != item.ProductId)
     {
@@ -219,7 +228,7 @@ async Task<CartItem> GetValidItem(Guid productId, CustomerShoppingCart cart, Car
     return cartItem;
 }
 
-async Task Persist()
+async Task Persist(ShoppingCartContext context)
 {
     var result = await context.SaveChangesAsync();
     if (result <= 0) AddErrorToStack("Error saving data");
