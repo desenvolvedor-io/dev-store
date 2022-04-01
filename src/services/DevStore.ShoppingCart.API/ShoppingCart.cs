@@ -1,35 +1,29 @@
-﻿using DevStore.ShoppingCart.API.Model;
-using DevStore.WebAPI.Core.Controllers;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DevStore.ShoppingCart.API.Data;
+using DevStore.ShoppingCart.API.Model;
 using DevStore.WebAPI.Core.User;
+using Microsoft.EntityFrameworkCore;
 
-namespace DevStore.ShoppingCart.API.Controllers
+namespace DevStore.ShoppingCart.API
 {
-    [Authorize, Route("shopping-cart")]
-    public class ShoppingCartController : MainController
+    public class ShoppingCart
     {
+        private readonly ShoppingCartContext _context;
         private readonly IAspNetUser _user;
-        private readonly Data.ShoppingCartContext _context;
 
-        public ShoppingCartController(IAspNetUser user, Data.ShoppingCartContext context)
+        private ICollection<string> _errors = new List<string>();
+
+        public ShoppingCart(ShoppingCartContext context, IAspNetUser user)
         {
-            _user = user;
             _context = context;
+            _user = user;
         }
 
-        [HttpGet("")]
         public async Task<CustomerShoppingCart> GetShoppingCart()
         {
             return await GetShoppingCartClient() ?? new CustomerShoppingCart();
         }
 
-        [HttpPost("")]
-        public async Task<IActionResult> AddItem(CartItem item)
+        public async Task<IResult> AddItem(CartItem item)
         {
             var shoppingCart = await GetShoppingCartClient();
 
@@ -38,14 +32,13 @@ namespace DevStore.ShoppingCart.API.Controllers
             else
                 ManageCart(shoppingCart, item);
 
-            if (!ValidOperation()) return CustomResponse();
+            if (_errors.Any()) return CustomResponse();
 
             await Persist();
             return CustomResponse();
         }
 
-        [HttpPut("{productId}")]
-        public async Task<IActionResult> UpdateItem(Guid productId, CartItem item)
+        public async Task<IResult> UpdateItem(Guid productId, CartItem item)
         {
             var shoppingCart = await GetShoppingCartClient();
             var shoppingCartItem = await GetValidItem(productId, shoppingCart, item);
@@ -54,7 +47,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             shoppingCart.UpdateUnit(shoppingCartItem, item.Quantity);
 
             ValidateShoppingCart(shoppingCart);
-            if (!ValidOperation()) return CustomResponse();
+            if (_errors.Any()) return CustomResponse();
 
             _context.CartItems.Update(shoppingCartItem);
             _context.CustomerShoppingCart.Update(shoppingCart);
@@ -63,8 +56,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             return CustomResponse();
         }
 
-        [HttpDelete("{productId}")]
-        public async Task<IActionResult> RemoveItem(Guid productId)
+        public async Task<IResult> RemoveItem(Guid productId)
         {
             var cart = await GetShoppingCartClient();
 
@@ -72,7 +64,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             if (item == null) return CustomResponse();
 
             ValidateShoppingCart(cart);
-            if (!ValidOperation()) return CustomResponse();
+            if (_errors.Any()) return CustomResponse();
 
             cart.RemoveItem(item);
 
@@ -83,9 +75,7 @@ namespace DevStore.ShoppingCart.API.Controllers
             return CustomResponse();
         }
 
-        [HttpPost]
-        [Route("apply-voucher")]
-        public async Task<IActionResult> ApplyVoucher(Voucher voucher)
+        public async Task<IResult> ApplyVoucher(Voucher voucher)
         {
             var cart = await GetShoppingCartClient();
 
@@ -97,13 +87,15 @@ namespace DevStore.ShoppingCart.API.Controllers
             return CustomResponse();
         }
 
-        private async Task<CustomerShoppingCart> GetShoppingCartClient()
+
+        async Task<CustomerShoppingCart> GetShoppingCartClient()
         {
             return await _context.CustomerShoppingCart
                 .Include(c => c.Items)
                 .FirstOrDefaultAsync(c => c.CustomerId == _user.GetUserId());
         }
-        private void ManageNewCart(CartItem item)
+
+        void ManageNewCart(CartItem item)
         {
             var cart = new CustomerShoppingCart(_user.GetUserId());
             cart.AddItem(item);
@@ -111,7 +103,8 @@ namespace DevStore.ShoppingCart.API.Controllers
             ValidateShoppingCart(cart);
             _context.CustomerShoppingCart.Add(cart);
         }
-        private void ManageCart(CustomerShoppingCart cart, CartItem item)
+
+        void ManageCart(CustomerShoppingCart cart, CartItem item)
         {
             var savedItem = cart.HasItem(item);
 
@@ -129,7 +122,8 @@ namespace DevStore.ShoppingCart.API.Controllers
 
             _context.CustomerShoppingCart.Update(cart);
         }
-        private async Task<CartItem> GetValidItem(Guid productId, CustomerShoppingCart cart, CartItem item = null)
+
+        async Task<CartItem> GetValidItem(Guid productId, CustomerShoppingCart cart, CartItem item = null)
         {
             if (item != null && productId != item.ProductId)
             {
@@ -154,17 +148,38 @@ namespace DevStore.ShoppingCart.API.Controllers
 
             return cartItem;
         }
-        private async Task Persist()
+
+        async Task Persist()
         {
             var result = await _context.SaveChangesAsync();
             if (result <= 0) AddErrorToStack("Error saving data");
         }
-        private bool ValidateShoppingCart(CustomerShoppingCart shoppingCart)
+
+        bool ValidateShoppingCart(CustomerShoppingCart shoppingCart)
         {
             if (shoppingCart.IsValid()) return true;
 
             shoppingCart.ValidationResult.Errors.ToList().ForEach(e => AddErrorToStack(e.ErrorMessage));
             return false;
+        }
+
+        void AddErrorToStack(string error)
+        {
+            _errors.Add(error);
+        }
+
+        IResult CustomResponse(object result = null)
+        {
+            if (!_errors.Any())
+            {
+                return Results.Ok(result);
+            }
+
+            return Results.BadRequest(Results.ValidationProblem(
+                new Dictionary<string, string[]>
+                {
+                    { "Messages", _errors.ToArray() }
+                }));
         }
     }
 }

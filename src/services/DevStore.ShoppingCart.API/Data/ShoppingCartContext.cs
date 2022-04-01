@@ -1,7 +1,6 @@
 ﻿using DevStore.ShoppingCart.API.Model;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace DevStore.ShoppingCart.API.Data
 {

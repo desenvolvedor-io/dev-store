@@ -1,6 +1,5 @@
 ﻿
-function CartaoCredito() {
-
+function CreditCard() {
 
     if ($("#card_number").length > 0) {
         $("#card_number").validateCreditCard(function (e) {
@@ -27,9 +26,8 @@ function CartaoCredito() {
 
 
 $(document).ready(function () {
-    CartaoCredito();
+    CreditCard();
     $('#card_number').mask('0000 0000 0000 0000');
     $('#card_expiration').mask('00/00');
     $('#card_cvv').mask('0000');
-
 });

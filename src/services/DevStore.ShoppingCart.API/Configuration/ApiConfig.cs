@@ -1,12 +1,5 @@
-﻿using DevStore.ShoppingCart.API.Data;
-using DevStore.ShoppingCart.API.Services.gRPC;
-using DevStore.WebAPI.Core.Identity;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+﻿using DevStore.ShoppingCart.API.Services.gRPC;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace DevStore.ShoppingCart.API.Configuration
 {
@@ -16,8 +9,6 @@ namespace DevStore.ShoppingCart.API.Configuration
         {
             services.AddDbContext<Data.ShoppingCartContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddControllers();
 
             services.AddGrpc();
 
@@ -32,7 +23,7 @@ namespace DevStore.ShoppingCart.API.Configuration
             });
         }
 
-        public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
+        public static void UseApiConfiguration(this WebApplication app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -41,17 +32,12 @@ namespace DevStore.ShoppingCart.API.Configuration
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
             app.UseCors("Total");
 
-            app.UseAuthConfiguration();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                endpoints.MapGrpcService<ShoppingCartGrpcService>().RequireCors("Total");
-            });
+            app.MapGrpcService<ShoppingCartGrpcService>().RequireCors("Total");
         }
     }
 }

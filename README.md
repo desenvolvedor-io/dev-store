@@ -1,20 +1,38 @@
-What is the DevStore?
-=====================
-The DevStore is a open-source project written in .NET Core
+![image](https://user-images.githubusercontent.com/5068797/161198565-ac18c5ac-c0d9-4669-9568-b2009e944d77.png)
 
-The goal of this project is implement the most common used technologies and share with the technical community the best way to develop great applications with .NET
+DevStore - A microservices e-commerce reference application built with ASP.NET
+=====================
+A real-world reference application powered by [desenvolvedor.io](https://desenvolvedor.io/) implementing the most common and used technologies to share with the technical community the best way to develop full and complex applications with .NET
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6518989bea914b348c92385dda05f93d)](https://www.codacy.com/manual/EduardoPires/DevStoreProject?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=EduardoPires/DevStoreProject&amp;utm_campaign=Badge_Grade)
 [![Build status](https://ci.appveyor.com/api/projects/status/rl2ja69994rt3ei6?svg=true)](https://ci.appveyor.com/project/EduardoPires/DevStoreproject)
-![.NET Core](https://github.com/EduardoPires/DevStoreProject/workflows/.NET%20Core/badge.svg)
-[![License](https://img.shields.io/github/license/eduardopires/DevStoreproject.svg)](LICENSE)
-[![Issues open](https://img.shields.io/github/issues/eduardopires/DevStoreproject.svg)](https://huboard.com/EduardoPires/DevStoreProject/)
+
+###### This project was inspired by [EShopOnContainers](https://github.com/dotnet-architecture/eShopOnContainers), however we want build this project by "our way" 
+
+###### The EShopOnContainers is an awesome project however the code has some little "bad smells" and is more complex than the DevStore. We like to think of the DevStore as a simplified (but no less complex) version and written with more care in code and small details.
 
 ## Give a Star! :star:
-If you liked the project or if DevStore helped you, please give a star ;)
+If you liked the project or if DevStore is helping you, please give us a star ;)
 
-## Want to learn everything?  :mortar_board:
-Check my online courses at [desenvolvedor.io](https://desenvolvedor.io)
+![image](https://user-images.githubusercontent.com/5068797/161200961-af22100f-ef9f-43c4-8a56-7ee53dccb0be.png)
+
+## Want to learn everything to build an app like this?  :mortar_board:
+Check this online courses at [desenvolvedor.io](https://desenvolvedor.io) (only in portuguese)
+
+- [ASP.NET Core Expert](https://desenvolvedor.io/formacao/asp-net-core-expert)
+- [Software Architect](https://desenvolvedor.io/formacao/arquiteto-de-software)
+
+## Architecture Overview
+
+### The entire application is based in a unique solution with 7 API's and one web application (MVC)
+![image](https://user-images.githubusercontent.com/5068797/161202409-edcf2f38-0714-4de5-927d-1a02be4501ec.png)
+
+This is a reference application, each microservice has its own database and represents a bounded context (DDD concept).
+There is a BFF / API Gateway to manage the Basket / Order / Payment requests and data structure from responses.
+
+![image](https://user-images.githubusercontent.com/5068797/161207732-e4f67ce4-624d-4067-a756-67ee1bb553de.png)
+
+
 
 ## How to use:
 - You will need the latest Visual Studio 2019 and the latest .NET Core SDK.

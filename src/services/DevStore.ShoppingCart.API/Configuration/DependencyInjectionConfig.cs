@@ -1,7 +1,5 @@
 ﻿using DevStore.ShoppingCart.API.Data;
 using DevStore.WebAPI.Core.User;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DevStore.ShoppingCart.API.Configuration
 {
@@ -11,7 +9,8 @@ namespace DevStore.ShoppingCart.API.Configuration
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAspNetUser, AspNetUser>();
-            services.AddScoped<Data.ShoppingCartContext>();
+            services.AddScoped<ShoppingCartContext>();
+            services.AddScoped<ShoppingCart>();            
         }
     }
 }

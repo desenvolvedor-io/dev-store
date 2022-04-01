@@ -27,7 +27,6 @@ namespace DevStore.Billing.API.Configuration
             using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
-            //var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
             var ssoContext = scope.ServiceProvider.GetRequiredService<BillingContext>();
 
             await DbHealthChecker.TestConnection(ssoContext);

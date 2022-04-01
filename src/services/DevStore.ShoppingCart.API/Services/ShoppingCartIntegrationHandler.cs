@@ -1,11 +1,7 @@
 ﻿using DevStore.Core.Messages.Integration;
 using DevStore.MessageBus;
+using DevStore.ShoppingCart.API.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace DevStore.ShoppingCart.API.Services
 {
@@ -34,7 +30,7 @@ namespace DevStore.ShoppingCart.API.Services
         private async Task RemoveShoppingCart(OrderDoneIntegrationEvent message)
         {
             using var scope = _serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<Data.ShoppingCartContext>();
+            var context = scope.ServiceProvider.GetRequiredService<ShoppingCartContext>();
 
             var shoppingCart = await context.CustomerShoppingCart
                 .FirstOrDefaultAsync(c => c.CustomerId == message.CustomerId);

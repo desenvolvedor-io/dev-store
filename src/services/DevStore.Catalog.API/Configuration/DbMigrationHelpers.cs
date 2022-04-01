@@ -15,8 +15,8 @@ namespace DevStore.Catalog.API.Configuration
     {
         /// <summary>
         /// Generate migrations before running this method, you can use command bellow:
-        /// Nuget package manager: Add-Migration DbInit -context PagamentosContext
-        /// Dotnet CLI: dotnet ef migrations add DbInit -c PagamentosContext
+        /// Nuget package manager: Add-Migration DbInit -context CatalogContext
+        /// Dotnet CLI: dotnet ef migrations add DbInit -c CatalogContext
         /// </summary>
         public static async Task EnsureSeedData(IServiceScope serviceScope)
         {
@@ -29,7 +29,6 @@ namespace DevStore.Catalog.API.Configuration
             using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
-            //var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
             var context = scope.ServiceProvider.GetRequiredService<CatalogContext>();
 
             await DbHealthChecker.TestConnection(context);
