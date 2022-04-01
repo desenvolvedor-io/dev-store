@@ -38,8 +38,8 @@ var app = builder.Build();
 
 #region Configure Pipeline
 
-var context = app.Services.GetRequiredService<ShoppingCartContext>();
-var user = app.Services.GetRequiredService<IAspNetUser>();
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ShoppingCartContext>();
+var user = app.Services.CreateScope().ServiceProvider.GetRequiredService<IAspNetUser>();
 var Errors = new List<string>();
 
 app.UseSwaggerConfiguration();
@@ -47,6 +47,8 @@ app.UseSwaggerConfiguration();
 app.UseApiConfiguration(app.Environment);
 
 MapActions(app);
+
+DbMigrationHelpers.EnsureSeedData(app).Wait();
 
 app.Run();
 
@@ -61,7 +63,7 @@ void MapActions(WebApplication app)
         .WithName("GetShoppingCart")
         .WithTags("ShoppingCart");
 
-    app.MapPost("/fornecedor", [Authorize] async (
+    app.MapPost("/shopping-cart", [Authorize] async (
         CartItem item) =>
         {
             var shoppingCart = await GetShoppingCartClient();
@@ -82,7 +84,7 @@ void MapActions(WebApplication app)
         .WithName("AddItem")
         .WithTags("ShoppingCart");
 
-    app.MapPut("/fornecedor/{productId}", [Authorize] async (
+    app.MapPut("/shopping-cart/{productId}", [Authorize] async (
         Guid productId,
         CartItem item) =>
         {
@@ -107,7 +109,7 @@ void MapActions(WebApplication app)
         .WithName("UpdateItem")
         .WithTags("ShoppingCart");
 
-    app.MapDelete("/fornecedor/{productId}", [Authorize] async (
+    app.MapDelete("/shopping-cart/{productId}", [Authorize] async (
         Guid productId) =>
         {
             var cart = await GetShoppingCartClient();
@@ -133,7 +135,7 @@ void MapActions(WebApplication app)
         .WithName("RemoveItem")
         .WithTags("ShoppingCart");
 
-    app.MapPost("/fornecedor/apply-voucher", [Authorize] async (
+    app.MapPost("/shopping-cart/apply-voucher", [Authorize] async (
         Voucher voucher) =>
         {
             var cart = await GetShoppingCartClient();

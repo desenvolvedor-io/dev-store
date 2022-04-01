@@ -6,6 +6,8 @@ namespace DevStore.ShoppingCart.API.Configuration
     {
         public static void AddSwaggerConfiguration(this IServiceCollection services)
         {
+            services.AddEndpointsApiExplorer();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
@@ -44,13 +46,10 @@ namespace DevStore.ShoppingCart.API.Configuration
             });
         }
 
-        public static void UseSwaggerConfiguration(this IApplicationBuilder app)
+        public static void UseSwaggerConfiguration(this WebApplication app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-            });
+            app.UseSwaggerUI();
         }
     }
 }
