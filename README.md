@@ -1,6 +1,6 @@
 ![image](https://user-images.githubusercontent.com/5068797/161198565-ac18c5ac-c0d9-4669-9568-b2009e944d77.png)
 
-DevStore - A microservices e-commerce built with ASP.NET
+DevStore - A microservices e-commerce reference application built with ASP.NET
 =====================
 A real-world reference application powered by [desenvolvedor.io](https://desenvolvedor.io/) implementing the most common and used technologies to share with the technical community the best way to develop full and complex applications with .NET
 
