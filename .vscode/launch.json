@@ -1,0 +1,112 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "DevStore MVC WebApp",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/web/DevStore.WebApp.MVC/bin/Debug/net5.0/DevStore.WebApp.MVC.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/web/DevStore.WebApp.MVC",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "DevStore Billing API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/services/DevStore.Billing.API/bin/Debug/net5.0/DevStore.Billing.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/services/DevStore.Billing.API",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "DevStore Catalog API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/services/DevStore.Catalog.API/bin/Debug/net5.0/DevStore.Catalog.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/services/DevStore.Catalog.API",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "DevStore Customers API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/services/DevStore.Customers.API/bin/Debug/net5.0/DevStore.Customers.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/services/DevStore.Customers.API",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "DevStore Identity API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/services/DevStore.Identity.API/bin/Debug/net5.0/DevStore.Identity.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/services/DevStore.Identity.API",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "DevStore Orders API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/services/DevStore.Orders.API/bin/Debug/net5.0/DevStore.Orders.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/services/DevStore.Orders.API",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "DevStore ShoppingCart API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/services/DevStore.ShoppingCart.API/bin/Debug/net6.0/DevStore.ShoppingCart.API.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/services/DevStore.ShoppingCart.API",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "DevStore BFF Checkout",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/api-gateways/DevStore.Bff.Checkout/bin/Debug/net5.0/DevStore.Bff.Checkout.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/api-gateways/DevStore.Bff.Checkout",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Start all projects",
+            "configurations": [
+                "DevStore MVC WebApp",
+                "DevStore Billing API",
+                "DevStore Catalog API",
+                "DevStore Customers API",
+                "DevStore Identity API",
+                "DevStore Orders API",
+                "DevStore ShoppingCart API",
+                "DevStore BFF Checkout"
+            ],
+            "stopAll": true
+        }
+    ]
+}   
