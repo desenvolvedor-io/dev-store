@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DevStore.Identity.API.Data;
 using DevStore.WebAPI.Core.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,9 +17,9 @@ namespace DevStore.Identity.API.Configuration
         /// Nuget package manager: Add-Migration DbInit -context ApplicationDbContext
         /// Dotnet CLI: dotnet ef migrations add DbInit -c ApplicationDbContext
         /// </summary>
-        public static async Task EnsureSeedData(IServiceScope serviceScope)
+        public static async Task EnsureSeedData(WebApplication app)
         {
-            var services = serviceScope.ServiceProvider;
+            var services = app.Services.CreateScope().ServiceProvider;
             await EnsureSeedData(services);
         }
 

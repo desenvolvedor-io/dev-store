@@ -14,7 +14,8 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
     .AddEnvironmentVariables();
 
-builder.Configuration.AddUserSecrets<Program>();
+if (builder.Environment.IsDevelopment())
+    builder.Configuration.AddUserSecrets<Program>();
 
 #endregion
 
