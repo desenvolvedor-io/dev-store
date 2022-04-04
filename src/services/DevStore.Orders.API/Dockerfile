@@ -7,15 +7,15 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["src/services/DevStore.Orders.API/DevStore.Orders.API.csproj", "src/services/DevStore.Orders.API/"]
-COPY ["src/services/DevStore.Orders.Infra/DevStore.Orders.Infra.csproj", "src/services/DevStore.Orders.Infra/"]
-COPY ["src/services/DevStore.Orders.Domain/DevStore.Orders.Domain.csproj", "src/services/DevStore.Orders.Domain/"]
-COPY ["src/building-blocks/DevStore.Core/DevStore.Core.csproj", "src/building-blocks/DevStore.Core/"]
-COPY ["src/building-blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj", "src/building-blocks/DevStore.WebAPI.Core/"]
-COPY ["src/building-blocks/DevStore.MessageBus/DevStore.MessageBus.csproj", "src/building-blocks/DevStore.MessageBus/"]
-RUN dotnet restore "src/services/DevStore.Orders.API/DevStore.Orders.API.csproj"
+COPY ["services/DevStore.Orders.API/DevStore.Orders.API.csproj", "services/DevStore.Orders.API/"]
+COPY ["services/DevStore.Orders.Infra/DevStore.Orders.Infra.csproj", "services/DevStore.Orders.Infra/"]
+COPY ["services/DevStore.Orders.Domain/DevStore.Orders.Domain.csproj", "services/DevStore.Orders.Domain/"]
+COPY ["building-blocks/DevStore.Core/DevStore.Core.csproj", "building-blocks/DevStore.Core/"]
+COPY ["building-blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj", "building-blocks/DevStore.WebAPI.Core/"]
+COPY ["building-blocks/DevStore.MessageBus/DevStore.MessageBus.csproj", "building-blocks/DevStore.MessageBus/"]
+RUN dotnet restore "services/DevStore.Orders.API/DevStore.Orders.API.csproj"
 COPY . .
-WORKDIR "/src/src/services/DevStore.Orders.API"
+WORKDIR "services/DevStore.Orders.API"
 RUN dotnet build "DevStore.Orders.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

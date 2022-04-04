@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using DevStore.Orders.Infra.Context;
 using DevStore.WebAPI.Core.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -16,9 +18,9 @@ namespace DevStore.Orders.API.Configuration
         /// Nuget package manager: Add-Migration DbInit -context OrdersContext
         /// Dotnet CLI: dotnet ef migrations add DbInit -c OrdersContext
         /// </summary>
-        public static async Task EnsureSeedData(IServiceScope serviceScope)
+        public static async Task EnsureSeedData(WebApplication app)
         {
-            var services = serviceScope.ServiceProvider;
+            var services = app.Services.CreateScope().ServiceProvider;
             await EnsureSeedData(services);
         }
 
@@ -31,8 +33,10 @@ namespace DevStore.Orders.API.Configuration
 
             await DbHealthChecker.TestConnection(ssoContext);
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
                 await ssoContext.Database.EnsureCreatedAsync();
+
+
         }
 
     }

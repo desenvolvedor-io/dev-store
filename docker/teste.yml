@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+
+    genpfx:
+        image: emberstack/openssl
+        container_name: genpfx
+        volumes:
+            - ./certs:/certs:rw
+        command: > 
+            sh -c "[ -e "./certs/devstore.academy.localhost" ] && echo File Already exist || openssl genrsa -out devstore.rsa 2048 &&
+                   openssl req -sha256 -new -key devstore.rsa -out devstore.csr -subj '/CN=localhost' &&
+                   openssl x509 -req -sha256 -days 1825 -in devstore.csr -signkey devstore.rsa -out devstore.crt &&
+                   openssl pkcs12 -export -out /certs/devstore.academy.localhost -inkey devstore.rsa -in devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe"
+
+volumes:
+    certs:

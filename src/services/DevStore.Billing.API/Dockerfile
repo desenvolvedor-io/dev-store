@@ -7,14 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["src/services/DevStore.Billing.API/DevStore.Billing.API.csproj", "src/services/DevStore.Billing.API/"]
-COPY ["src/services/DevStore.Billing.DevsPay/DevStore.Billing.DevsPay.csproj", "src/services/DevStore.Billing.DevsPay/"]
-COPY ["src/building-blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj", "src/building-blocks/DevStore.WebAPI.Core/"]
-COPY ["src/building-blocks/DevStore.Core/DevStore.Core.csproj", "src/building-blocks/DevStore.Core/"]
-COPY ["src/building-blocks/DevStore.MessageBus/DevStore.MessageBus.csproj", "src/building-blocks/DevStore.MessageBus/"]
-RUN dotnet restore "src/services/DevStore.Billing.API/DevStore.Billing.API.csproj"
+COPY ["services/DevStore.Billing.API/DevStore.Billing.API.csproj", "services/DevStore.Billing.API/"]
+COPY ["services/DevStore.Billing.DevsPay/DevStore.Billing.DevsPay.csproj", "services/DevStore.Billing.DevsPay/"]
+COPY ["building-blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj", "building-blocks/DevStore.WebAPI.Core/"]
+COPY ["building-blocks/DevStore.Core/DevStore.Core.csproj", "building-blocks/DevStore.Core/"]
+COPY ["building-blocks/DevStore.MessageBus/DevStore.MessageBus.csproj", "building-blocks/DevStore.MessageBus/"]
+RUN dotnet restore "services/DevStore.Billing.API/DevStore.Billing.API.csproj"
 COPY . .
-WORKDIR "/src/src/services/DevStore.Billing.API"
+WORKDIR "services/DevStore.Billing.API"
 RUN dotnet build "DevStore.Billing.API.csproj" -c Release -o /app/build
 
 FROM build AS publish

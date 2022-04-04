@@ -1,5 +1,6 @@
 ﻿using DevStore.ShoppingCart.API.Data;
 using DevStore.WebAPI.Core.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevStore.ShoppingCart.API.Configuration
 {
@@ -7,19 +8,27 @@ namespace DevStore.ShoppingCart.API.Configuration
     {
         /// <summary>
         /// Generate migrations before running this method, you can use command bellow:
-        /// Nuget package manager: Add-Migration DbInit -context ShoppingCartContext
-        /// Dotnet CLI: dotnet ef migrations add DbInit -c ShoppingCartContext
+        /// Nuget package manager: Add-Migration DbInit -context OrdersContext
+        /// Dotnet CLI: dotnet ef migrations add DbInit -c OrdersContext
         /// </summary>
         public static async Task EnsureSeedData(WebApplication app)
         {
-            using var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<ShoppingCartContext>();
+            var services = app.Services.CreateScope().ServiceProvider;
+            await EnsureSeedData(services);
+        }
 
-            await DbHealthChecker.TestConnection(context);
+        public static async Task EnsureSeedData(IServiceProvider serviceProvider)
+        {
+            using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
-            if (app.Environment.IsDevelopment())
-            {
-                await context.Database.EnsureCreatedAsync();
-            }
+            var ssoContext = scope.ServiceProvider.GetRequiredService<ShoppingCartContext>();
+
+            await DbHealthChecker.TestConnection(ssoContext);
+
+            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
+                await ssoContext.Database.EnsureCreatedAsync();
+
         }
     }
 }

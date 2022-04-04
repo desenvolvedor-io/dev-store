@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 
 namespace DevStore.Catalog.API.Configuration
 {
@@ -18,9 +19,9 @@ namespace DevStore.Catalog.API.Configuration
         /// Nuget package manager: Add-Migration DbInit -context CatalogContext
         /// Dotnet CLI: dotnet ef migrations add DbInit -c CatalogContext
         /// </summary>
-        public static async Task EnsureSeedData(IServiceScope serviceScope)
+        public static async Task EnsureSeedData(WebApplication serviceScope)
         {
-            var services = serviceScope.ServiceProvider;
+            var services = serviceScope.Services.CreateScope().ServiceProvider;
             await EnsureSeedData(services);
         }
 
@@ -33,7 +34,7 @@ namespace DevStore.Catalog.API.Configuration
 
             await DbHealthChecker.TestConnection(context);
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
             {
                 await context.Database.EnsureCreatedAsync();
                 await EnsureSeedProducts(context);
