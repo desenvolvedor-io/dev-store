@@ -1,4 +1,4 @@
 FROM nginx
-COPY nginx/nginx.prod.conf /etc/nginx/nginx.conf
+COPY nginx/devstore.conf /etc/nginx/conf.d/devstore.conf
 COPY nginx/nerdstore-certificate.pem /etc/nginx
 COPY nginx/nerdstore-certificate.key /etc/nginx

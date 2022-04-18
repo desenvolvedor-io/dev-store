@@ -55,7 +55,7 @@ namespace DevStore.WebAPI.Core.Configuration
                 context.Database.GetAppliedMigrations();   // Check the database connection
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
                 return false;
             }
