@@ -1,5 +1,7 @@
 ﻿using DevStore.ShoppingCart.API.Services.gRPC;
-using Microsoft.EntityFrameworkCore;
+using DevStore.WebAPI.Core.DatabaseFlavor;
+using static DevStore.WebAPI.Core.DatabaseFlavor.ProviderConfiguration;
+using DevStore.ShoppingCart.API.Data;
 
 namespace DevStore.ShoppingCart.API.Configuration
 {
@@ -7,8 +9,7 @@ namespace DevStore.ShoppingCart.API.Configuration
     {
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<Data.ShoppingCartContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.ConfigureProviderForContext<ShoppingCartContext>(DetectDatabase(configuration));
 
             services.AddGrpc();
 
