@@ -65,10 +65,12 @@ services:
             dockerfile: ./services/DevStore.Identity.API/Dockerfile  
         restart: always    
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Docker
-            - ASPNETCORE_URLS=https://+:5101;http://+5102
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devstore.academy-localhost.pfx
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: https://+:5101;http://+5102
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
+            CUSTOMCONNSTR_DefaultConnection: "Server=database-identity;Database=DSUsers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            AppSettings__DatabaseType: SqlServer
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -93,10 +95,12 @@ services:
             dockerfile: ./services/DevStore.ShoppingCart.API/Dockerfile      
         restart: always             
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Docker
-            - ASPNETCORE_URLS=https://+:5201;http://+5202
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devstore.academy-localhost.pfx
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: https://+:5201;http://+5202
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
+            CUSTOMCONNSTR_DefaultConnection: "Server=database-cart;Database=DSShoppingCart;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            AppSettings__DatabaseType: SqlServer          
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -122,10 +126,12 @@ services:
             dockerfile: ./services/DevStore.Catalog.API/Dockerfile
         restart: always 
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Docker
-            - ASPNETCORE_URLS=https://+:5301;http://+5302
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devstore.academy-localhost.pfx
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: https://+:5301;http://+5302
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
+            CUSTOMCONNSTR_DefaultConnection: "Server=database-catalog;Database=DSCatalog;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            AppSettings__DatabaseType: SqlServer        
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -150,10 +156,12 @@ services:
             dockerfile: ./services/DevStore.Customers.API/Dockerfile
         restart: always 
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Docker
-            - ASPNETCORE_URLS=https://+:5401;http://+5402
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devstore.academy-localhost.pfx
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: https://+:5401;http://+5402
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
+            CUSTOMCONNSTR_DefaultConnection: "Server=database-customers;Database=DSCustomers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            AppSettings__DatabaseType: SqlServer                 
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -170,10 +178,10 @@ services:
             dockerfile: ./api-gateways/DevStore.Bff.Checkout/Dockerfile  
         restart: always 
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Docker
-            - ASPNETCORE_URLS=https://+:5501;http://+5502
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devstore.academy-localhost.pfx
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: https://+:5501;http://+5502
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx       
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -202,10 +210,12 @@ services:
             dockerfile: ./services/DevStore.Billing.API/Dockerfile
         restart: always    
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Docker
-            - ASPNETCORE_URLS=https://+:5601;http://+5602
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devstore.academy-localhost.pfx
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: https://+:5601;http://+5602
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
+            CUSTOMCONNSTR_DefaultConnection: "Server=database-billing;Database=DSBilling;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            AppSettings__DatabaseType: SqlServer                    
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -232,10 +242,12 @@ services:
             dockerfile: ./services/DevStore.Orders.API/Dockerfile 
         restart: always             
         environment: 
-            - ASPNETCORE_ENVIRONMENT=Docker
-            - ASPNETCORE_URLS=https://+:5701;http://+5702
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/devstore.academy-localhost.pfx
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: https://+:5701;http://+5702
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
+            CUSTOMCONNSTR_DefaultConnection: "Server=database-order;Database=DSOrders;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            AppSettings__DatabaseType: SqlServer              
         volumes:
             - ./certs:/https:ro
         depends_on:
