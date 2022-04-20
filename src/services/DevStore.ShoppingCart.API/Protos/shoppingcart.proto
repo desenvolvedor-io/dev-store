@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option csharp_namespace = "DevStore.ShoppingCart.API.Services.gRPC";
+
+package ShoppingCartAPI;
+
+service ShoppingCartOrders {
+	rpc GetShoppingCart(GetShoppingCartRequest) returns (CustomerShoppingCartClientResponse) {}	
+}
+
+message GetShoppingCartRequest {
+
+}
+
+message CustomerShoppingCartClientResponse {
+	string id = 1;
+	string customerid  = 2;
+	double total = 3;
+	repeated ShoppingCartItemResponse items = 4;
+	bool hasvoucher = 5;
+	double discount = 6;
+	VoucherResponse voucher = 7;
+}
+
+message ShoppingCartItemResponse {
+	string id = 1;
+	string productid = 2;
+	string name  = 3;
+	int32 quantity = 4;
+	double price  = 5;
+	string image  = 6;
+}
+
+message VoucherResponse {
+	double percentage = 1;
+	double discount = 2;
+	string code = 3;
+	int32 discounttype = 4;
+}
