@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.0.0...v1.1.0) (2022-04-20)
+
+
+### Features
+
+* serilog & seq ([d79e675](https://github.com/desenvolvedor-io/dev-store/commit/d79e675f51391c555c6660f4db7deac80865d638))
+
 # 1.0.0 (2022-04-20)
 
 

@@ -5,6 +5,8 @@ services:
     rabbitmq:
         image: rabbitmq:3-management
         container_name: devstore-rabbit
+        expose:
+            - 5672
         environment:
             RABBITMQ_DEFAULT_USER: "devstore"
             RABBITMQ_DEFAULT_PASS: "devstore"  
@@ -235,17 +237,21 @@ services:
         ports:
             - 5341:80
         environment:
-            ACCEPT_EULA: Y
+            ACCEPT_EULA: "Y"
             
     devstore-server:
-        image: desenvolvedorio/devstore-server:latest
-        container_name: devstore-server            
+        image: nginx
         restart: always 
+        volumes:
+            - ./nginx/devstore.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./nginx/nerdstore-certificate.key:/etc/nginx/nerdstore-certificate.key:ro
+            - ./nginx/nerdstore-certificate.pem:/etc/nginx/nerdstore-certificate.pem:ro
         ports:
             - "7500:80"
             - "7501:443"
         depends_on:
             - web-mvc
+
 
 volumes:
     dpkeys:     

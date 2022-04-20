@@ -7,8 +7,7 @@
 
 A real-world reference application powered by [desenvolvedor.io](https://desenvolvedor.io/) <img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" /> implementing the most common and used technologies to share with the technical community the best way to develop full and complex applications with .NET
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/6518989bea914b348c92385dda05f93d)](https://www.codacy.com/manual/EduardoPires/DevStoreProject?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=EduardoPires/DevStoreProject&amp;utm_campaign=Badge_Grade)
-[![Build status](https://ci.appveyor.com/api/projects/status/rl2ja69994rt3ei6?svg=true)](https://ci.appveyor.com/project/EduardoPires/DevStoreproject)
+---
 
 ###### This project was inspired by [EShopOnContainers](https://github.com/dotnet-architecture/eShopOnContainers), however the real motivation was to build it by "our way".
 
@@ -18,7 +17,7 @@ A real-world reference application powered by [desenvolvedor.io](https://desenvo
 If you liked the project or if DevStore is helping you, please give us a star ;)
 
 <p align="center">
-    <img alt="DevStore" src="https://user-images.githubusercontent.com/5068797/161200961-af22100f-ef9f-43c4-8a56-7ee53dccb0be.png" />
+    <img alt="DevStore" src="https://user-images.githubusercontent.com/5068797/164293734-a72fbeeb-0965-4413-a624-29e1c56c25df.png" />
 </p>
 
 ## Want to learn everything to build an app like this?  :mortar_board:
@@ -111,10 +110,30 @@ docker-compose up
 
 ### If you want to build the local images and run the DevStore application in your Docker enviroment:
 
+This compose will provide one database container each API service.
+
 ```
 docker-compose -f docker-compose-local.yml up --build
 ```
+
+### If you prefer save machine resources use the light local compose:
+
+This compose will provide just one database container for all API services.
+
+```
+docker-compose -f docker-compose-local-light.yml up --build
+```
 ---
+
+### If you want run locally with VS/VS Code:
+
+You will need:
+
+- Docker
+- SQL instance (or container)
+- RabbitMQ
+
+So you can edit the Docker compose to just run the database and queue dependencies and save your time.
 
 ### If you want Visual Studio with F5 and debug experience:
 
