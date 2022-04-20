@@ -2,6 +2,7 @@
 using DevStore.WebAPI.Core.DatabaseFlavor;
 using static DevStore.WebAPI.Core.DatabaseFlavor.ProviderConfiguration;
 using DevStore.ShoppingCart.API.Data;
+using DevStore.WebAPI.Core.Configuration;
 
 namespace DevStore.ShoppingCart.API.Configuration
 {
@@ -22,6 +23,8 @@ namespace DevStore.ShoppingCart.API.Configuration
                             .AllowAnyMethod()
                             .AllowAnyHeader());
             });
+
+            services.AddGenericHealthCheck();
         }
 
         public static void UseApiConfiguration(this WebApplication app, IWebHostEnvironment env)
@@ -39,6 +42,8 @@ namespace DevStore.ShoppingCart.API.Configuration
             app.UseAuthorization();
 
             app.MapGrpcService<ShoppingCartGrpcService>().RequireCors("Total");
+
+            app.UseGenericHealthCheck("/healthz");
         }
     }
 }
