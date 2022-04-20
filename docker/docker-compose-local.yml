@@ -178,15 +178,15 @@ services:
             - api-billing
             - api-order
             - generate-pfx
-
+ 
     database-billing:
-            image: mcr.microsoft.com/mssql/server:2017-latest
-            container_name: devstore-database-billing
-            expose:
-                - 1433
-            environment:
-                SA_PASSWORD: "MyDB@123"
-                ACCEPT_EULA: "Y"             
+        image: mcr.microsoft.com/mssql/server:2017-latest
+        container_name: devstore-database-billing
+        expose:
+            - 1433
+        environment:
+            SA_PASSWORD: "MyDB@123"
+            ACCEPT_EULA: "Y"
 
 
     api-billing:
@@ -201,8 +201,8 @@ services:
             ASPNETCORE_URLS: https://+:5601;http://+5602
             ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
             ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
-            CUSTOMCONNSTR_DefaultConnection: "Server=database-billing;Database=DSBilling;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
-            AppSettings__DatabaseType: SqlServer                    
+            CUSTOMCONNSTR_DefaultConnection: "Server=database-billing;Port=5432;Database=DSBilling;User Id=sa;Password=MyDB@123"
+            AppSettings__DatabaseType: Postgre
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -250,7 +250,7 @@ services:
         ports:
             - 5341:80
         environment:
-            ACCEPT_EULA: Y
+            ACCEPT_EULA: "Y"
 
     # This service is used to generate the PFX file for gRPC communication
     generate-pfx:
