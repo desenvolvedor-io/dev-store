@@ -228,6 +228,15 @@ services:
             - api-identity     
             - generate-pfx               
 
+    seq:
+        image: datalust/seq:latest
+        expose:
+            - 5341
+        ports:
+            - 5341:80
+        environment:
+            ACCEPT_EULA: Y
+            
     devstore-server:
         image: desenvolvedorio/devstore-server:latest
         container_name: devstore-server            

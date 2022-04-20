@@ -3,19 +3,16 @@ using DevStore.ShoppingCart.API.Configuration;
 using DevStore.ShoppingCart.API.Model;
 using DevStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Serilog;
 
 #region Builder Configuration
 
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration
-    .SetBasePath(builder.Environment.ContentRootPath)
-    .AddJsonFile("appsettings.json", true, true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
-    .AddEnvironmentVariables();
-
-if (builder.Environment.IsDevelopment())
-    builder.Configuration.AddUserSecrets<Program>();
+builder.Logging.AddSerilog(new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger());
 
 #endregion
 

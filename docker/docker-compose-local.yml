@@ -2,30 +2,6 @@ version: "3"
 
 services:
 
-    generate-pfx:
-        image: emberstack/openssl
-        container_name: generate-pfx
-        volumes:
-            - ./certs:/https:rw
-        command: > 
-            sh -c "[ -e "./https/devstore.academy-localhost.pfx" ] && echo File Already exist || (
-                   rm /https/devstore.academy-localhost.pfx &&
-                   openssl genrsa -out devstore.rsa 2048 &&
-                   openssl req -sha256 -new -key devstore.rsa -out devstore.csr -subj '/CN=localhost' &&
-                   openssl x509 -req -sha256 -days 365 -in devstore.csr -signkey devstore.rsa -out devstore.crt &&
-                   openssl pkcs12 -export -out /https/devstore.academy-localhost.pfx -inkey devstore.rsa -in devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe &&
-                   rm devstore.rsa devstore.csr devstore.crt)"
-
-    devstore-rabbit:
-        image: rabbitmq:3-management
-        container_name: devstore-rabbit
-        ports:
-            - 5672:5672
-            - 15672:15672
-        environment:
-            RABBITMQ_DEFAULT_USER: "devstore"
-            RABBITMQ_DEFAULT_PASS: "devstore"
-
     web-mvc:
         image: desenvolvedorio/devstore-web-mvc-ecommerce:latest
         container_name: devstore-web-mvc-ecommerce
@@ -47,6 +23,17 @@ services:
             - api-customers
             - api-bff-checkout
             - generate-pfx
+    
+    devstore-rabbit:
+        image: rabbitmq:3-management
+        container_name: devstore-rabbit
+        ports:
+            - 5672:5672
+            - 15672:15672
+        environment:
+            RABBITMQ_DEFAULT_USER: "devstore"
+            RABBITMQ_DEFAULT_PASS: "devstore"
+
 
     database-identity:
             image: mcr.microsoft.com/mssql/server:2017-latest
@@ -256,15 +243,37 @@ services:
             - api-identity   
             - generate-pfx                 
 
+    seq:
+        image: datalust/seq:latest
+        expose:
+            - 5341
+        ports:
+            - 5341:80
+        environment:
+            ACCEPT_EULA: Y
+
+    # This service is used to generate the PFX file for gRPC communication
+    generate-pfx:
+        image: emberstack/openssl
+        container_name: generate-pfx
+        volumes:
+            - ./certs:/https:rw
+        command: > 
+            sh -c "[ -e "./https/devstore.academy-localhost.pfx" ] && echo File Already exist || (
+                   rm /https/devstore.academy-localhost.pfx &&
+                   openssl genrsa -out devstore.rsa 2048 &&
+                   openssl req -sha256 -new -key devstore.rsa -out devstore.csr -subj '/CN=localhost' &&
+                   openssl x509 -req -sha256 -days 365 -in devstore.csr -signkey devstore.rsa -out devstore.crt &&
+                   openssl pkcs12 -export -out /https/devstore.academy-localhost.pfx -inkey devstore.rsa -in devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe &&
+                   rm devstore.rsa devstore.csr devstore.crt)"
+
     devstore-server:
-        image: desenvolvedorio/devstore-server:latest
-        container_name: devstore-server    
-        build: 
-            context: ./
-            dockerfile: ./nginx/Dockerfile 
+        image: nginx
         restart: always 
         volumes:
-            - ./nginx/conf.d:/etc/nginx/conf.d:ro
+            - ./nginx/devstore.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./nginx/nerdstore-certificate.key:/etc/nginx/nerdstore-certificate.key:ro
+            - ./nginx/nerdstore-certificate.pem:/etc/nginx/nerdstore-certificate.pem:ro
         ports:
             - "7500:80"
             - "7501:443"

@@ -15,16 +15,9 @@ namespace DevStore.ShoppingCart.API.Services
             _serviceProvider = serviceProvider;
             _bus = bus;
         }
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            SetSubscribers();
-            return Task.CompletedTask;
-        }
-
-        private void SetSubscribers()
-        {
-            _bus.SubscribeAsync<OrderDoneIntegrationEvent>("OrderDone", async request =>
-                await RemoveShoppingCart(request));
+            await _bus.SubscribeAsync<OrderDoneIntegrationEvent>("OrderDone", RemoveShoppingCart);
         }
 
         private async Task RemoveShoppingCart(OrderDoneIntegrationEvent message)
