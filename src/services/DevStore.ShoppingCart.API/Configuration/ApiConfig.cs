@@ -34,7 +34,11 @@ namespace DevStore.ShoppingCart.API.Configuration
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // Under certain scenarios, e.g minikube / linux environment / behind load balancer
+            // https redirection could lead dev's to over complicated configuration for testing purpouses
+            // In production is a good practice to keep it true
+            if (app.Configuration["USE_HTTPS_REDIRECTION"] == "true")
+                app.UseHttpsRedirection();
 
             app.UseCors("Total");
 
