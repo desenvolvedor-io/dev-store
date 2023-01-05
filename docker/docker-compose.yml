@@ -18,7 +18,7 @@ services:
             - ./certs:/https:rw
         command: > 
             sh -c "[ -e "./https/devstore.academy-localhost.pfx" ] && echo File Already exist || (
-                   rm /https/devstore.academy-localhost.pfx &&
+                   rm -f /https/devstore.academy-localhost.pfx &&
                    openssl genrsa -out devstore.rsa 2048 &&
                    openssl req -sha256 -new -key devstore.rsa -out devstore.csr -subj '/CN=localhost' &&
                    openssl x509 -req -sha256 -days 365 -in devstore.csr -signkey devstore.rsa -out devstore.crt &&

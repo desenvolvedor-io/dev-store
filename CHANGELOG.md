@@ -1,3 +1,17 @@
+# [1.1.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.0.0...v1.1.0) (2022-06-06)
+
+
+### Bug Fixes
+
+* removendo o dapper do repositório de produto ([e5fdc76](https://github.com/desenvolvedor-io/dev-store/commit/e5fdc76d42783499945bcc768cb384ac6d0bb882))
+* removing smalltalk ([343c18c](https://github.com/desenvolvedor-io/dev-store/commit/343c18ca46178c90b501f435dfe2dac2060c9eba))
+* translated function names and variable to english ([#13](https://github.com/desenvolvedor-io/dev-store/issues/13)) & ([#16](https://github.com/desenvolvedor-io/dev-store/issues/16)) ([#17](https://github.com/desenvolvedor-io/dev-store/issues/17)) ([8b40b11](https://github.com/desenvolvedor-io/dev-store/commit/8b40b11bf800f91484c3449e5d418ee6abfcb3cf))
+
+
+### Features
+
+* Create CODE_OF_CONDUCT.md ([#18](https://github.com/desenvolvedor-io/dev-store/issues/18)) ([d02a4ae](https://github.com/desenvolvedor-io/dev-store/commit/d02a4ae1876c8abfaf163e123fcb44ca061b5aa8))
+
 # 1.0.0 (2022-04-20)
 
 
