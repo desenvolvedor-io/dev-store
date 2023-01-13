@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "SelfHosting - Dev": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "status",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:4211;http://localhost:4210"
+    }
+  }
+}

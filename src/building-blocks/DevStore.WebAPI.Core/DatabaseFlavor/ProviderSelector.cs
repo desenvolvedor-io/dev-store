@@ -12,13 +12,12 @@ namespace DevStore.WebAPI.Core.DatabaseFlavor
             (DatabaseType, string) options) where TContext : DbContext
         {
             var (database, connString) = options;
-            Build(connString);
             return database switch
             {
-                DatabaseType.SqlServer => services.PersistStore<TContext>(With.SqlServer),
-                DatabaseType.MySql => services.PersistStore<TContext>(With.MySql),
-                DatabaseType.Postgre => services.PersistStore<TContext>(With.Postgre),
-                DatabaseType.Sqlite => services.PersistStore<TContext>(With.Sqlite),
+                DatabaseType.SqlServer => services.PersistStore<TContext>(Build(connString).With().SqlServer),
+                DatabaseType.MySql => services.PersistStore<TContext>(Build(connString).With().MySql),
+                DatabaseType.Postgre => services.PersistStore<TContext>(Build(connString).With().Postgre),
+                DatabaseType.Sqlite => services.PersistStore<TContext>(Build(connString).With().Sqlite),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(database), database, null)
             };
@@ -27,13 +26,12 @@ namespace DevStore.WebAPI.Core.DatabaseFlavor
         public static Action<DbContextOptionsBuilder> WithProviderAutoSelection((DatabaseType, string) options)
         {
             var (database, connString) = options;
-            Build(connString);
             return database switch
             {
-                DatabaseType.SqlServer => With.SqlServer,
-                DatabaseType.MySql => With.MySql,
-                DatabaseType.Postgre => With.Postgre,
-                DatabaseType.Sqlite => With.Sqlite,
+                DatabaseType.SqlServer => Build(connString).With().SqlServer,
+                DatabaseType.MySql => Build(connString).With().MySql,
+                DatabaseType.Postgre => Build(connString).With().Postgre,
+                DatabaseType.Sqlite => Build(connString).With().Sqlite,
 
                 _ => throw new ArgumentOutOfRangeException(nameof(database), database, null)
             };

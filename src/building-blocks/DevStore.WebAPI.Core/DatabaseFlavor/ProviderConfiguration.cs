@@ -9,16 +9,20 @@ namespace DevStore.WebAPI.Core.DatabaseFlavor;
 public class ProviderConfiguration
 {
     private readonly string _connectionString;
-    public static ProviderConfiguration With;
+    public ProviderConfiguration With() => this;
     private static readonly string MigrationAssembly = typeof(ProviderConfiguration).GetTypeInfo().Assembly.GetName().Name;
 
-    public static void Build(string connString)
+    public static ProviderConfiguration Build(string connString)
     {
-        if (With is null)
-            With = new ProviderConfiguration(connString);
+        return new ProviderConfiguration(connString);
     }
 
-    public ProviderConfiguration(string connString) => _connectionString = connString;
+
+
+    public ProviderConfiguration(string connString)
+    {
+        _connectionString = connString;
+    }
 
     public Action<DbContextOptionsBuilder> SqlServer =>
         options => options.UseSqlServer(_connectionString, sql => sql.MigrationsAssembly(MigrationAssembly));
@@ -27,7 +31,8 @@ public class ProviderConfiguration
         options => options.UseMySql(_connectionString, ServerVersion.AutoDetect(_connectionString), sql => sql.MigrationsAssembly(MigrationAssembly));
 
     public Action<DbContextOptionsBuilder> Postgre =>
-        options => {
+        options =>
+        {
             options.UseNpgsql(_connectionString, sql => sql.MigrationsAssembly(MigrationAssembly));
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         };
@@ -41,6 +46,6 @@ public class ProviderConfiguration
     /// Trying to improve readability at ConfigureServices
     /// </summary>
     public static (DatabaseType, string) DetectDatabase(IConfiguration configuration) => (
-        configuration.GetValue<DatabaseType>("AppSettings:DatabaseType"),
+        configuration.GetValue<DatabaseType>("AppSettings:DatabaseType", DatabaseType.None),
         configuration.GetConnectionString("DefaultConnection"));
 }

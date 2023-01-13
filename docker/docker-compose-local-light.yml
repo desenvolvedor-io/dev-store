@@ -10,13 +10,15 @@ services:
             dockerfile: ./web/DevStore.WebApp.MVC/Dockerfile
         restart: always            
         environment:
-            - ASPNETCORE_ENVIRONMENT=Docker
-            - ASPNETCORE_URLS=http://*:5001
-            - LC_ALL=en_US.UTF-8
-            - LANG=en_US.UTF-8
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: "https://+:443;http://+:80"
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
+            LC_ALL: "en_US.UTF-8"
+            LANG: "en_US.UTF-8"
             # Change the two lines above to your culture (ex pt_BR)
         volumes: 
-            - dpkeys:/var/data_protection_keys/         
+            - ./certs:/https:ro
         depends_on:
             - api-catalog
             - api-identity
@@ -28,7 +30,9 @@ services:
         image: rabbitmq:3-management
         container_name: devstore-rabbit
         expose:
+        ports:
             - 5672
+            - 15672
         environment:
             RABBITMQ_DEFAULT_USER: "devstore"
             RABBITMQ_DEFAULT_PASS: "devstore"
@@ -45,14 +49,14 @@ services:
             
     api-identity:
         image: desenvolvedorio/devstore-api-identity:latest
-        container_name: devstore-api-identity    
+        container_name: devstore-api-identity
         build: 
             context: ../src
             dockerfile: ./services/DevStore.Identity.API/Dockerfile  
         restart: always    
         environment: 
             ASPNETCORE_ENVIRONMENT: Docker
-            ASPNETCORE_URLS: https://+:5101;http://+5102
+            ASPNETCORE_URLS: https://+:443;http://+:80
             ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
             ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
             CUSTOMCONNSTR_DefaultConnection: "Server=database-devstore;Database=DSUsers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
@@ -73,7 +77,7 @@ services:
         restart: always             
         environment: 
             ASPNETCORE_ENVIRONMENT: Docker
-            ASPNETCORE_URLS: https://+:5201;http://+5202
+            ASPNETCORE_URLS: https://+:443;http://+:80
             ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
             ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
             CUSTOMCONNSTR_DefaultConnection: "Server=database-devstore;Database=DSShoppingCart;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
@@ -95,7 +99,7 @@ services:
         restart: always 
         environment: 
             ASPNETCORE_ENVIRONMENT: Docker
-            ASPNETCORE_URLS: https://+:5301;http://+5302
+            ASPNETCORE_URLS: https://+:443;http://+:80
             ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
             ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
             CUSTOMCONNSTR_DefaultConnection: "Server=database-devstore;Database=DSCatalog;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
@@ -116,7 +120,7 @@ services:
         restart: always 
         environment: 
             ASPNETCORE_ENVIRONMENT: Docker
-            ASPNETCORE_URLS: https://+:5401;http://+5402
+            ASPNETCORE_URLS: https://+:443;http://+:80
             ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
             ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
             CUSTOMCONNSTR_DefaultConnection: "Server=database-devstore;Database=DSCustomers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
@@ -138,7 +142,7 @@ services:
         restart: always 
         environment: 
             ASPNETCORE_ENVIRONMENT: Docker
-            ASPNETCORE_URLS: https://+:5501;http://+5502
+            ASPNETCORE_URLS: https://+:443;http://+:80
             ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
             ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
         volumes:
@@ -160,7 +164,7 @@ services:
         restart: always    
         environment: 
             ASPNETCORE_ENVIRONMENT: Docker
-            ASPNETCORE_URLS: https://+:5601;http://+5602
+            ASPNETCORE_URLS: https://+:443;http://+:80
             ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
             ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
             CUSTOMCONNSTR_DefaultConnection: "Server=database-devstore;Database=DSBilling;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
@@ -183,7 +187,7 @@ services:
         restart: always             
         environment: 
             ASPNETCORE_ENVIRONMENT: Docker
-            ASPNETCORE_URLS: https://+:5701;http://+5702
+            ASPNETCORE_URLS: https://+:443;http://+:80
             ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
             ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
             CUSTOMCONNSTR_DefaultConnection: "Server=database-devstore;Database=DSOrders;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
@@ -196,6 +200,27 @@ services:
             - api-identity   
             - generate-pfx                 
 
+    web-status:
+        image: desenvolvedorio/devstore-web-status:latest
+        container_name: devstore-web-status
+        build: 
+            context: ../src
+            dockerfile: ./web/DevStore.WebApp.Status/Dockerfile
+        restart: always    
+        environment: 
+            ASPNETCORE_ENVIRONMENT: Docker
+            ASPNETCORE_URLS: https://+:443;http://+:80
+            CUSTOMCONNSTR_DefaultConnection: "Server=database-devstore;Database=DSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
+            ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
+            AppSettings__DatabaseType: SqlServer
+            USE_HTTPS_REDIRECTION: "false"
+        volumes:
+            - ./certs:/https:ro
+        depends_on:
+            - database-devstore
+
+
     generate-pfx:
         image: emberstack/openssl
         container_name: generate-pfx
@@ -207,13 +232,10 @@ services:
                    openssl genrsa -out devstore.rsa 2048 &&
                    openssl req -sha256 -new -key devstore.rsa -out devstore.csr -subj '/CN=localhost' &&
                    openssl x509 -req -sha256 -days 365 -in devstore.csr -signkey devstore.rsa -out devstore.crt &&
-                   openssl pkcs12 -export -out /https/devstore.academy-localhost.pfx -inkey devstore.rsa -in devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe &&
-                   rm devstore.rsa devstore.csr devstore.crt)"
+                   openssl pkcs12 -export -out /https/devstore.academy-localhost.pfx -inkey devstore.rsa -in devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe)"
 
     seq:
         image: datalust/seq:latest
-        expose:
-            - 5341
         ports:
             - 5341:80
         environment:
@@ -230,9 +252,9 @@ services:
         ports:
             - "7500:80"
             - "7501:443"
+            - "7510:8080"
+            - "7511:4443"
         depends_on:
             - web-mvc
 
-volumes:
-    dpkeys: 
-    
+
