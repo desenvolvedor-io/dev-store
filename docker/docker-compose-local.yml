@@ -6,7 +6,22 @@ x-common-variables: &common-variables
     ASPNETCORE_Kestrel__Certificates__Default__Password: 9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe
     ASPNETCORE_Kestrel__Certificates__Default__Path: /https/devstore.academy-localhost.pfx
     AppSettings__DatabaseType: SqlServer
-    MessageQueueConnection__MessageBus: host=rabbitmq:5672;publisherConfirms=true;timeout=30;username=devstore;password=devstore
+    RabbitMqTransportOptions__Host: "rabbitmq"
+    RabbitMqTransportOptions__Port: 5672
+    RabbitMqTransportOptions__User: "devstore"
+    RabbitMqTransportOptions__Pass: "devstore"
+    RabbitMqTransportOptions__VirtualHost: "/"
+
+# x-healthcheck: &common-healthcheck
+#    test: >
+#        sh -c "(
+#            apt-get update && apt-get install -y curl &&
+#            curl --fail http://localhost/healthz-infra || exit 1
+#        )"
+#    interval: 3s
+#    timeout: 5s
+#    retries: 10
+#    start_period: 3s
 
 include:
     - docker-common-resources.yml
@@ -22,19 +37,20 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSUsers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSUsers;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
             generate-pfx:
                 condition: service_completed_successfully
             database:
-                condition: service_healthy
+                condition: service_started
             logging:
-                condition: service_healthy
+                condition: service_started
             rabbitmq:
-                condition: service_healthy
-
+                condition: service_started
+        # healthcheck: *common-healthcheck
+    
     api-cart:
         image: devstore-api-cart:preview
         container_name: devstore-api-cart
@@ -44,12 +60,13 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSShoppingCart;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSShoppingCart;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
             api-identity:
                 condition: service_started
+        # healthcheck: *common-healthcheck                
 
     api-catalog:
         image: devstore-api-catalog:preview
@@ -60,13 +77,14 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSCatalog;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSCatalog;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
             api-identity:
                 condition: service_started
-
+        # healthcheck: *common-healthcheck
+    
     api-customers:
         image: devstore-api-customers:preview
         container_name: devstore-api-customers
@@ -76,13 +94,14 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSCustomers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSCustomers;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
             api-identity:
                 condition: service_started
-
+        # healthcheck: *common-healthcheck
+    
     api-order:
         image: devstore-api-order:preview
         container_name: devstore-api-order
@@ -92,13 +111,14 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSOrders;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSOrders;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
             Logging__Console__FormatterName: ""
         volumes:
             - ./certs:/https:ro
         depends_on:
             api-identity:
                 condition: service_started
+        # healthcheck: *common-healthcheck
 
     api-billing:
         image: devstore-api-billing:preview
@@ -109,7 +129,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSBilling;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSBilling;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -117,6 +137,7 @@ services:
                 condition: service_started
             api-order:
                 condition: service_started
+        # healthcheck: *common-healthcheck
     
     api-bff-checkout:
         image: devstore-api-bff-checkout:preview
@@ -127,22 +148,30 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSStatus;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
-            - api-identity
-            - api-cart
-            - api-billing
-            - api-order
+            api-identity:
+                condition: service_started
+            api-cart:
+                condition: service_started
+            api-billing:
+                condition: service_started
+            api-order:
+                condition: service_started
+        # healthcheck: *common-healthcheck
     
     web-mvc:
         image: devstore-web-mvc-ecommerce:preview
         container_name: devstore-web-mvc-ecommerce
+        build:
+            context: ../src
+            dockerfile: ./web/DevStore.WebApp.MVC/Dockerfile        
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSStatus;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
             LC_ALL: "en_US.UTF-8"
             LANG: "en_US.UTF-8"
             # Change the two lines above to your culture (ex pt_BR)
@@ -154,10 +183,15 @@ services:
             - ./certs:/https:ro
             - dpkeys:/var/data_protection_keys/
         depends_on:
-            - api-catalog
-            - api-identity
-            - api-customers
-            - api-bff-checkout
+            api-catalog:
+                condition: service_started
+            api-identity:
+                condition: service_started
+            api-customers:
+                condition: service_started
+            api-bff-checkout:
+                condition: service_started
+        # healthcheck: *common-healthcheck
     
     web-status:
         image: devstore-web-status:preview
@@ -168,12 +202,14 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=LocalDSStatus;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
             - ./certs/devstore.crt:/usr/local/share/ca-certificates/devstore.crt
         depends_on:
-            - web-mvc
+            api-identity:
+                condition: service_started
+        # healthcheck: *common-healthcheck
 
 volumes:
     dpkeys:

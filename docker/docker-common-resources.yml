@@ -67,7 +67,9 @@ services:
                    openssl req -sha256 -new -key devstore.rsa -out devstore.csr -subj '/CN=localhost' &&
                    openssl x509 -req -sha256 -days 365 -in devstore.csr -signkey devstore.rsa -out devstore.crt &&
                    openssl pkcs12 -export -out /https/devstore.academy-localhost.pfx -inkey devstore.rsa -in devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe &&
-                   rm devstore.rsa devstore.csr devstore.crt)"           
+                   # Copy CRT and KEY files to the nginx-certs volume
+                   cp devstore.crt /nginx-certs/ &&
+                   cp devstore.rsa /nginx-certs/devstore.key)"           
 
     devstore-server:        
         image: nginx:1.29
