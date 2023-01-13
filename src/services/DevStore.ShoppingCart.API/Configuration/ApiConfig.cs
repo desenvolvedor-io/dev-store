@@ -24,7 +24,7 @@ namespace DevStore.ShoppingCart.API.Configuration
                             .AllowAnyHeader());
             });
 
-            services.AddGenericHealthCheck();
+            services.AddDefaultHealthCheck(configuration);
         }
 
         public static void UseApiConfiguration(this WebApplication app, IWebHostEnvironment env)
@@ -47,7 +47,7 @@ namespace DevStore.ShoppingCart.API.Configuration
 
             app.MapGrpcService<ShoppingCartGrpcService>().RequireCors("Total");
 
-            app.UseGenericHealthCheck("/healthz");
+            app.UseDefaultHealthcheck();
         }
     }
 }

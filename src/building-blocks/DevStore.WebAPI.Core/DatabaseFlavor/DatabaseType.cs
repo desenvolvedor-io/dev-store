@@ -2,6 +2,7 @@
 
 public enum DatabaseType
 {
+    None,
     SqlServer,
     MySql,
     Postgre,
