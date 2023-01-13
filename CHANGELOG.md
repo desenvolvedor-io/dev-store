@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.1.0...v1.2.0) (2023-01-05)
+
+
+### Bug Fixes
+
+* connection typo ([#24](https://github.com/desenvolvedor-io/dev-store/issues/24)) ([faae5bb](https://github.com/desenvolvedor-io/dev-store/commit/faae5bbffebc492a572e6d10bc97c14c4e40b6fd))
+
+
+### Features
+
+* option to disable https redirection ([#23](https://github.com/desenvolvedor-io/dev-store/issues/23)) ([8691c55](https://github.com/desenvolvedor-io/dev-store/commit/8691c55598442baa02d34a2f64f902b044f01a10))
+
 # [1.1.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.0.0...v1.1.0) (2022-06-06)
 
 
