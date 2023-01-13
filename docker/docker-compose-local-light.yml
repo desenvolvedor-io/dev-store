@@ -217,7 +217,6 @@ services:
             USE_HTTPS_REDIRECTION: "false"
         volumes:
             - ./certs:/https:ro
-            - ./certs/devstore.crt:/usr/local/share/ca-certificates/devstore.crt
         depends_on:
             - database-devstore
 
@@ -232,8 +231,8 @@ services:
                    rm -f /https/devstore.academy-localhost.pfx &&
                    openssl genrsa -out devstore.rsa 2048 &&
                    openssl req -sha256 -new -key devstore.rsa -out devstore.csr -subj '/CN=localhost' &&
-                   openssl x509 -req -sha256 -days 365 -in devstore.csr -signkey devstore.rsa -out /https/devstore.crt &&
-                   openssl pkcs12 -export -out /https/devstore.academy-localhost.pfx -inkey devstore.rsa -in /https/devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe)"
+                   openssl x509 -req -sha256 -days 365 -in devstore.csr -signkey devstore.rsa -out devstore.crt &&
+                   openssl pkcs12 -export -out /https/devstore.academy-localhost.pfx -inkey devstore.rsa -in devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe)"
 
     seq:
         image: datalust/seq:latest
