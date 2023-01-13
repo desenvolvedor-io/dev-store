@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.2.0...v1.3.0) (2023-01-13)
+
+
+### Features
+
+* status page ([#26](https://github.com/desenvolvedor-io/dev-store/issues/26)) ([f2a867a](https://github.com/desenvolvedor-io/dev-store/commit/f2a867aff4673e42172f0fbba5ef8f3dbeff00f9))
+
 # [1.2.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.1.0...v1.2.0) (2023-01-05)
 
 
