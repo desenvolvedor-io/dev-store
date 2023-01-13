@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/desenvolvedor-io/dev-store/compare/v1.3.0...v1.3.1) (2023-01-13)
+
+
+### Bug Fixes
+
+* health checks ([#27](https://github.com/desenvolvedor-io/dev-store/issues/27)) ([1d1ac7c](https://github.com/desenvolvedor-io/dev-store/commit/1d1ac7c0fadb77556e2c414372f9ac68f85de8cb))
+
 # [1.3.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.2.0...v1.3.0) (2023-01-13)
 
 
