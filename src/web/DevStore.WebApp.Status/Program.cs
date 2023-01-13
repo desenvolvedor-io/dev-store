@@ -62,6 +62,7 @@ if (app.Configuration["USE_HTTPS_REDIRECTION"] == "true")
 app.MapHealthChecksUI(setup =>
 {
     setup.AddCustomStylesheet("devstore.css");
-    setup.UIPath = "/status";
+    setup.UIPath = "/";
+    setup.PageTitle = "DevStore - Status";
 });
 app.Run();

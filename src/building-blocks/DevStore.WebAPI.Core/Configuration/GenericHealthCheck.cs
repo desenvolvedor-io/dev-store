@@ -1,8 +1,6 @@
 ﻿using DevStore.Core.Utils;
 using DevStore.WebAPI.Core.DatabaseFlavor;
 using EasyNetQ;
-using EasyNetQ.ConnectionString;
-using HealthChecks.RabbitMQ;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
