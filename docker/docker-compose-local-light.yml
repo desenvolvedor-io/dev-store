@@ -30,7 +30,6 @@ services:
         image: rabbitmq:3-management
         container_name: devstore-rabbit
         expose:
-        ports:
             - 5672
             - 15672
         environment:
