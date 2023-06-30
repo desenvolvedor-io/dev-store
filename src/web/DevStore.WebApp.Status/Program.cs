@@ -12,12 +12,12 @@ builder.Logging.AddSerilog(new LoggerConfiguration()
 var healthCheckBuilder = builder.Services.AddHealthChecksUI(setupSettings: setup =>
 {
     setup.SetHeaderText("DevStore - Status Page");
-    var endpoints = builder.Configuration.GetSection("ENDPOINTS").Get<List<string>>();
+    var endpoints = builder.Configuration.GetSection("ENDPOINTS").Get<string>();
 
-    foreach (var endpoint in endpoints)
+    foreach (var endpoint in endpoints.Split(";"))
     {
-        var name = endpoint.Split(';')[0];
-        var uri = endpoint.Split(';')[1];
+        var name = endpoint.Split('|')[0];
+        var uri = endpoint.Split('|')[1];
 
         setup.AddHealthCheckEndpoint(name, uri);
     }
