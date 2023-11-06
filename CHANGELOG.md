@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.3.1...v1.4.0) (2023-11-06)
+
+
+### Bug Fixes
+
+* docker-compose ligh ports  ([cc5006f](https://github.com/desenvolvedor-io/dev-store/commit/cc5006f7beb1e185301f7e010baaf43d2d520c47)), closes [#28](https://github.com/desenvolvedor-io/dev-store/issues/28)
+* semantic release version ([#34](https://github.com/desenvolvedor-io/dev-store/issues/34)) ([e5a77e0](https://github.com/desenvolvedor-io/dev-store/commit/e5a77e0feff40dea98d8f5d81c196d203967f77b))
+
+
+### Features
+
+* remove SQL Queries ([#33](https://github.com/desenvolvedor-io/dev-store/issues/33)) ([e5f2a25](https://github.com/desenvolvedor-io/dev-store/commit/e5f2a25b57d15d13271ae77ff9bfe0ddb44607a2))
+
 ## [1.3.1](https://github.com/desenvolvedor-io/dev-store/compare/v1.3.0...v1.3.1) (2023-01-13)
 
 
