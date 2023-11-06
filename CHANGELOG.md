@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/desenvolvedor-io/dev-store/compare/v1.4.0...v1.4.1) (2023-11-06)
+
+
+### Bug Fixes
+
+* queries-sql & release.rc ([866d030](https://github.com/desenvolvedor-io/dev-store/commit/866d030168c3e41f2f2400010cf6ec429cac4432))
+
 # [1.4.0](https://github.com/desenvolvedor-io/dev-store/compare/v1.3.1...v1.4.0) (2023-11-06)
 
 
