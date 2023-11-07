@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/desenvolvedor-io/dev-store/compare/v1.4.2...v1.4.3) (2023-11-07)
+
+
+### Bug Fixes
+
+* sequence for all dbs ([b894931](https://github.com/desenvolvedor-io/dev-store/commit/b894931c44f58396a0ddf1d6234dd186c09475f3))
+
 ## [1.4.2](https://github.com/desenvolvedor-io/dev-store/compare/v1.4.1...v1.4.2) (2023-11-07)
 
 
