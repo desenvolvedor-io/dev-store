@@ -1,3 +1,11 @@
+## [1.4.2](https://github.com/desenvolvedor-io/dev-store/compare/v1.4.1...v1.4.2) (2023-11-07)
+
+
+### Bug Fixes
+
+* my-sequence bug ([f2537ca](https://github.com/desenvolvedor-io/dev-store/commit/f2537ca2b7dc234346b302b409a5fb33114a9d4a))
+* queries-sql & release.rc ([2e9fd5b](https://github.com/desenvolvedor-io/dev-store/commit/2e9fd5bdea9271e50c483898d912a3e6cea47ca4))
+
 ## [1.4.1](https://github.com/desenvolvedor-io/dev-store/compare/v1.4.0...v1.4.1) (2023-11-06)
 
 
