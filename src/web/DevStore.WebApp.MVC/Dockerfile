@@ -21,4 +21,9 @@ RUN dotnet publish "DevStore.WebApp.MVC.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Set a non-root user for running the application
+RUN useradd -r -u 1001 appuser
+USER appuser
+
 ENTRYPOINT ["dotnet", "DevStore.WebApp.MVC.dll"]
