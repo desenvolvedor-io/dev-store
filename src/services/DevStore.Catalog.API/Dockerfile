@@ -22,4 +22,9 @@ RUN dotnet publish "DevStore.Catalog.API.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# Set a non-root user for running the application
+RUN useradd -r -u 1001 appuser
+USER appuser
+
 ENTRYPOINT ["dotnet", "DevStore.Catalog.API.dll"]
