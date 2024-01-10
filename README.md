@@ -276,3 +276,8 @@ See the project running on <a href="https://devstore.academy" target="_blank">De
 
 ## About
 DevStore was proudly developed by [desenvolvedor.io](https://desenvolvedor.io/)❤<img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" /> team under the [MIT license](LICENSE).
+
+
+## Contributes By SOFTWARE ARCHITECTURE Students From Işık University
+
+When customers try to add items to the cart without logging in, it redirects me to an error page. But this reduces the user experience. Instead, we think it would be more positive for the user experience to be directed to the login page when someone clicks on the button.  Pull request was created by [Group 2 Students](https://github.com/muzaffertuna/dev-store)
