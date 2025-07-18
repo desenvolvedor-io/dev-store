@@ -75,7 +75,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/services/DevStore.ShoppingCart.API/bin/Debug/net6.0/DevStore.ShoppingCart.API.dll",
+            "program": "${workspaceFolder}/src/services/DevStore.ShoppingCart.API/bin/Debug/net9.0/DevStore.ShoppingCart.API.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/services/DevStore.ShoppingCart.API",
             "console": "internalConsole",
