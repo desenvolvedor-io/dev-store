@@ -5,7 +5,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 COPY ["services/DevStore.Billing.API/DevStore.Billing.API.csproj", "services/DevStore.Billing.API/"]
 COPY ["services/DevStore.Billing.DevsPay/DevStore.Billing.DevsPay.csproj", "services/DevStore.Billing.DevsPay/"]
