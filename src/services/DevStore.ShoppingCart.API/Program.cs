@@ -5,7 +5,6 @@ using DevStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Serilog;
 
-#region Builder Configuration
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +13,7 @@ builder.Logging.AddSerilog(new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger());
 
-#endregion
 
-#region Configure Services
 
 builder.Services.AddApiConfiguration(builder.Configuration);
 
@@ -30,9 +27,7 @@ builder.Services.AddMessageBusConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
-#endregion
 
-#region Configure Pipeline
 
 app.UseSwaggerConfiguration();
 
@@ -44,9 +39,7 @@ DbMigrationHelpers.EnsureSeedData(app).Wait();
 
 app.Run();
 
-#endregion
 
-#region Actions
 
 void MapActions(WebApplication app)
 {
@@ -94,4 +87,3 @@ void MapActions(WebApplication app)
         .WithTags("ShoppingCart");
 }
 
-#endregion

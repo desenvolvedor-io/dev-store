@@ -1,4 +1,4 @@
-﻿using DevStore.Core.Messages;
+using DevStore.Core.Messages;
 using System;
 using System.Collections.Generic;
 
@@ -32,7 +32,6 @@ namespace DevStore.Core.DomainObjects
             _events?.Clear();
         }
 
-        #region Comparisons
 
         public override bool Equals(object obj)
         {
@@ -70,6 +69,5 @@ namespace DevStore.Core.DomainObjects
             return $"{GetType().Name} [Id={Id}]";
         }
 
-        #endregion
     }
 }
