@@ -11,7 +11,7 @@ x-common-variables: &common-variables
 services:
     
     database:
-        image: mcr.microsoft.com/mssql/server:2017-latest
+        image: mcr.microsoft.com/mssql/server:2022-latest
         container_name: devstore-mssql
         expose:
             - 1433
@@ -26,7 +26,7 @@ services:
             start_period: 5s            
     
     rabbitmq:
-        image: rabbitmq:3-management
+        image: rabbitmq:4.1
         container_name: devstore-rabbit
         hostname: rabbitmq
         ports:
@@ -45,7 +45,7 @@ services:
             start_period: 5s
     
     logging:
-        image: datalust/seq:latest
+        image: datalust/seq:2025.1
         container_name: devstore-seq
         ports:
             - 5341:80
@@ -60,31 +60,25 @@ services:
             start_period: 5s    
     
     generate-pfx:
-        image: emberstack/openssl
+        image: emberstack/openssl:latest # last update October 2019
         container_name: generate-pfx
         volumes:
             - ./certs:/https:rw
+            - nginx-certs:/nginx-certs:rw
         command: >
-            sh -c "[ -e "/https/devstore.academy-localhost.pfx" ] && echo File Already exist || (
+            sh -c "[ -e "./https/devstore.academy-localhost.pfx" ] && echo File Already exist || (
                    rm -f /https/devstore.academy-localhost.pfx &&
                    openssl genrsa -out devstore.rsa 2048 &&
                    openssl req -sha256 -new -key devstore.rsa -out devstore.csr -subj '/CN=localhost' &&
                    openssl x509 -req -sha256 -days 365 -in devstore.csr -signkey devstore.rsa -out devstore.crt &&
                    openssl pkcs12 -export -out /https/devstore.academy-localhost.pfx -inkey devstore.rsa -in devstore.crt -password pass:9HoGMnb7Lu8NFdHBz4Vq2rtKivzMhmMXhtvuB4TZcLMmbWfFmDQCjJeLURAJ4GYe &&
-                   rm devstore.rsa devstore.csr devstore.crt)"           
-        depends_on:
-            database:
-                condition: service_healthy
-            logging:
-                condition: service_healthy
-            rabbitmq:
-                condition: service_healthy
+                   rm devstore.rsa devstore.csr devstore.crt)"             
 
     api-identity:
         image: desenvolvedorio/devstore-api-identity:latest
         container_name: devstore-api-identity
         restart: always
-        environment:
+        environment:            
             <<: *common-variables
             CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSUsers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
         volumes:
@@ -92,6 +86,12 @@ services:
         depends_on:
             generate-pfx:
                 condition: service_completed_successfully
+            database:
+                condition: service_healthy
+            logging:
+                condition: service_healthy
+            rabbitmq:
+                condition: service_healthy
 
     api-cart:
         image: desenvolvedorio/devstore-api-cart:latest
@@ -213,20 +213,24 @@ services:
             - web-mvc
     
     devstore-server:
-        image: nginx
+        image: nginx:1.29
         restart: always
         volumes:
             - ./nginx/devstore.conf:/etc/nginx/conf.d/default.conf:ro
-            - ./nginx/nerdstore-certificate.key:/etc/nginx/nerdstore-certificate.key:ro
-            - ./nginx/nerdstore-certificate.pem:/etc/nginx/nerdstore-certificate.pem:ro
+            - nginx-certs:/etc/nginx/certs:ro
         ports:
             - "7500:80"
             - "7501:443"
             - "7510:8080"
             - "7511:4443"
         depends_on:
-            - web-mvc
-            - web-status
+            generate-pfx:
+                condition: service_completed_successfully
+            web-mvc:
+                condition: service_started
+            web-status:
+                condition: service_started
 
 volumes:
     dpkeys:
+    nginx-certs:
