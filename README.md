@@ -5,7 +5,10 @@
 
 # DevStore | A microservices e-commerce reference application built with ASP.NET 9
 
-A real-world reference application powered by [desenvolvedor.io](https://desenvolvedor.io/) <img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" /> implementing the most common and used technologies to share with the technical community the best way to develop full and complex applications with .NET
+A real-world reference application powered
+by [desenvolvedor.io](https://desenvolvedor.io/) <img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" />
+implementing the most common and used technologies to share with the technical community the best way to develop full
+and complex applications with .NET
 
 ---
 
@@ -14,6 +17,7 @@ A real-world reference application powered by [desenvolvedor.io](https://desenvo
 ###### The EShopOnContainers is an awesome project. However, the code has some "bad smells." We found it difficult to start learning/using EShopOnContainers compared to DevStore. We like to think of the DevStore as a simplified (but no less complex) version and written with more care in code and small details. We also focused only on the Web architecture with ASP.NET.
 
 ## Give a Star! :star:
+
 If you liked the project or if DevStore is helping you, please give us a star ;)
 
 <p align="center">
@@ -21,6 +25,7 @@ If you liked the project or if DevStore is helping you, please give us a star ;)
 </p>
 
 ## Want to learn everything to build an app like this? :mortar_board:
+
 Check these online courses at [desenvolvedor.io](https://desenvolvedor.io) (only in Portuguese)
 
 - [ASP.NET Core Expert](https://desenvolvedor.io/formacao/asp-net-core-expert)
@@ -34,7 +39,7 @@ Check these online courses at [desenvolvedor.io](https://desenvolvedor.io) (only
     - ASP.NET Minimal API
     - ASP.NET Identity Core
     - Refresh Token
-    - JWT with rotating public/private keys    
+    - JWT with rotating public/private keys
     - gRPC
     - Background Services
     - Entity Framework Core
@@ -42,7 +47,7 @@ Check these online courses at [desenvolvedor.io](https://desenvolvedor.io) (only
 - Components / Services
     - RabbitMQ
     - EasyNetQ
-    - Refit 
+    - Refit
     - Polly
     - Bogus
     - Dapper
@@ -82,6 +87,7 @@ Check these online courses at [desenvolvedor.io](https://desenvolvedor.io) (only
 ## Architecture Overview
 
 ### The entire application is based on a unique solution with 7 APIs and one web application (MVC)
+
 <p align="center">
     <img alt="read before" src="https://user-images.githubusercontent.com/5068797/161202409-edcf2f38-0714-4de5-927d-1a02be4501ec.png" />
 </p>
@@ -98,7 +104,9 @@ There is a BFF / API Gateway to manage the Basket / Order / Payment requests and
 ---
 
 ## Getting Started
-You can run the DevStore project on any operating system. **Make sure you have installed docker in your environment.** ([Get Docker Installation](https://docs.docker.com/get-docker/))
+
+You can run the DevStore project on any operating system. **Make sure you have installed docker in your environment.
+** ([Get Docker Installation](https://docs.docker.com/get-docker/))
 
 Clone the DevStore's repository and navigate to the **/Docker** folder and then:
 
@@ -123,6 +131,7 @@ This docker compose will provide just one database container for all API service
 ```
 docker-compose -f docker-compose-local-light.yml up --build
 ```
+
 ---
 
 ### If you want to run locally with Visual Studio / VSCode:
@@ -140,7 +149,7 @@ So you can edit the Docker compose to just run the database and queue dependenci
 - You will need at least Visual Studio 2022 and .NET 6.
 - The latest SDK and tools can be downloaded from https://dot.net/core
 - Set up the solution to start multiple projects and hit F5
- 
+
 ![image](https://user-images.githubusercontent.com/5068797/161358024-bd5754b6-61e3-47f2-bd17-bd3c32ec4bdd.png)
 
 ---
@@ -148,7 +157,8 @@ So you can edit the Docker compose to just run the database and queue dependenci
 ### If you want Visual Studio Code experience:
 
 - Open the VSCode on the root directory (solution file)
-- Create a new launch.json at VSCode debug section and use the configuration below to set up the option "Start all projects"
+- Create a new launch.json at VSCode debug section and use the configuration below to set up the option "Start all
+  projects"
 
 ```json
 {
@@ -261,18 +271,25 @@ So you can edit the Docker compose to just run the database and queue dependenci
     ]
 }   
 ```
+
 ## Disclaimer
+
 - This is not an architectural template or bootstrap model for new apps
 - All implementations were made for the real world, but the goal is to share knowledge
 - In case it is too many implementations included, remove the excess and try to avoid **over-engineering**
 
 ## Pull-Requests
+
 Open an issue and let's discuss! Do not submit PRs for undiscussed or unapproved features.
 
 If you want to help us, choose an approved issue and implement it.
 
 ## We are Online
+
 See the project running on <a href="https://devstore.academy" target="_blank">DevStore official instance</a>
 
 ## About
-DevStore was proudly developed by [desenvolvedor.io](https://desenvolvedor.io/)❤<img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" /> team under the [MIT license](LICENSE).
+
+DevStore was proudly developed by [desenvolvedor.io](https://desenvolvedor.io/)
+❤<img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" />
+team under the [MIT license](LICENSE).
