@@ -1,10 +1,12 @@
-name: devstore-common-resources
+name: devstore
 
 services:
     
     database:
         image: mcr.microsoft.com/mssql/server:2022-latest
         container_name: devstore-mssql
+        ports:
+            - "1433:1433"
         expose:
             - 1433
         environment:
@@ -26,6 +28,7 @@ services:
             - "15672:15672"
         expose:
             - 5672
+            - 15672
         environment:
             RABBITMQ_DEFAULT_USER: "devstore"
             RABBITMQ_DEFAULT_PASS: "devstore"
@@ -81,3 +84,7 @@ services:
         depends_on:
             generate-pfx:
                 condition: service_completed_successfully
+
+volumes:
+    dpkeys:
+    nginx-certs:
