@@ -1,4 +1,5 @@
-﻿namespace DevStore.Core.DomainObjects
+﻿namespace DevStore.Core.DomainObjects;
+
+public interface IAggregateRoot
 {
-    public interface IAggregateRoot { }
 }

@@ -10,7 +10,6 @@ builder.Logging.AddSerilog(new LoggerConfiguration()
     .CreateLogger());
 
 
-
 builder.Services.AddApiConfiguration(builder.Configuration);
 
 builder.Services.AddJwtConfiguration(builder.Configuration);
@@ -27,10 +26,8 @@ builder.Services.ConfigureGrpcServices(builder.Configuration);
 var app = builder.Build();
 
 
-
 app.UseSwaggerConfiguration();
 
 app.UseApiConfiguration(app.Environment);
 
 app.Run();
-

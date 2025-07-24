@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Bogus" Version="34.0.2" />
-    <PackageReference Include="NetDevPack" Version="6.0.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Bogus" Version="35.6.3"/>
+        <PackageReference Include="NetDevPack" Version="6.0.1"/>
+    </ItemGroup>
 
 </Project>

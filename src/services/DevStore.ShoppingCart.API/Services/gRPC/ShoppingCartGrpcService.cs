@@ -1,81 +1,79 @@
-﻿using DevStore.ShoppingCart.API.Model;
+﻿using DevStore.ShoppingCart.API.Data;
+using DevStore.ShoppingCart.API.Model;
+using DevStore.WebAPI.Core.User;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using DevStore.WebAPI.Core.User;
 
-namespace DevStore.ShoppingCart.API.Services.gRPC
+namespace DevStore.ShoppingCart.API.Services.gRPC;
+
+[Authorize]
+public class ShoppingCartGrpcService : ShoppingCartOrders.ShoppingCartOrdersBase
 {
-    [Authorize]
-    public class ShoppingCartGrpcService : ShoppingCartOrders.ShoppingCartOrdersBase
+    private readonly ShoppingCartContext _context;
+    private readonly ILogger<ShoppingCartGrpcService> _logger;
+
+    private readonly IAspNetUser _user;
+
+    public ShoppingCartGrpcService(
+        ILogger<ShoppingCartGrpcService> logger,
+        IAspNetUser user,
+        ShoppingCartContext context)
     {
-        private readonly ILogger<ShoppingCartGrpcService> _logger;
+        _logger = logger;
+        _user = user;
+        _context = context;
+    }
 
-        private readonly IAspNetUser _user;
-        private readonly Data.ShoppingCartContext _context;
+    public override async Task<CustomerShoppingCartClientResponse> GetShoppingCart(GetShoppingCartRequest request,
+        ServerCallContext context)
+    {
+        _logger.LogInformation("Call GetCart");
 
-        public ShoppingCartGrpcService(
-            ILogger<ShoppingCartGrpcService> logger,
-            IAspNetUser user,
-            Data.ShoppingCartContext context)
+        var shoppingCart = await GetShoppingCartClient() ?? new CustomerShoppingCart();
+
+        return MapShoppingCartClientToProtoResponse(shoppingCart);
+    }
+
+    private async Task<CustomerShoppingCart> GetShoppingCartClient()
+    {
+        return await _context.CustomerShoppingCart
+            .Include(c => c.Items)
+            .FirstOrDefaultAsync(c => c.CustomerId == _user.GetUserId());
+    }
+
+    private static CustomerShoppingCartClientResponse MapShoppingCartClientToProtoResponse(
+        CustomerShoppingCart shoppingCart)
+    {
+        var shoppingCartResponse = new CustomerShoppingCartClientResponse
         {
-            _logger = logger;
-            _user = user;
-            _context = context;
-        }
+            Id = shoppingCart.Id.ToString(),
+            Customerid = shoppingCart.CustomerId.ToString(),
+            Total = (double)shoppingCart.Total,
+            Discount = (double)shoppingCart.Discount,
+            Hasvoucher = shoppingCart.HasVoucher
+        };
 
-        public override async Task<CustomerShoppingCartClientResponse> GetShoppingCart(GetShoppingCartRequest request, ServerCallContext context)
-        {
-            _logger.LogInformation("Call GetCart");
-
-            var shoppingCart = await GetShoppingCartClient() ?? new CustomerShoppingCart();
-
-            return MapShoppingCartClientToProtoResponse(shoppingCart);
-        }
-
-        private async Task<CustomerShoppingCart> GetShoppingCartClient()
-        {
-            return await _context.CustomerShoppingCart
-                .Include(c => c.Items)
-                .FirstOrDefaultAsync(c => c.CustomerId == _user.GetUserId());
-        }
-
-        private static CustomerShoppingCartClientResponse MapShoppingCartClientToProtoResponse(CustomerShoppingCart shoppingCart)
-        {
-            var shoppingCartResponse = new CustomerShoppingCartClientResponse
+        if (shoppingCart.Voucher != null)
+            shoppingCartResponse.Voucher = new VoucherResponse
             {
-                Id = shoppingCart.Id.ToString(),
-                Customerid = shoppingCart.CustomerId.ToString(),
-                Total = (double)shoppingCart.Total,
-                Discount = (double)shoppingCart.Discount,
-                Hasvoucher = shoppingCart.HasVoucher,
+                Code = shoppingCart.Voucher.Code,
+                Percentage = (double?)shoppingCart.Voucher.Percentage ?? 0,
+                Discount = (double?)shoppingCart.Voucher.Discount ?? 0,
+                Discounttype = (int)shoppingCart.Voucher.DiscountType
             };
 
-            if (shoppingCart.Voucher != null)
+        foreach (var item in shoppingCart.Items)
+            shoppingCartResponse.Items.Add(new ShoppingCartItemResponse
             {
-                shoppingCartResponse.Voucher = new VoucherResponse
-                {
-                    Code = shoppingCart.Voucher.Code,
-                    Percentage = (double?)shoppingCart.Voucher.Percentage ?? 0,
-                    Discount = (double?)shoppingCart.Voucher.Discount ?? 0,
-                    Discounttype = (int)shoppingCart.Voucher.DiscountType
-                };
-            }
+                Id = item.Id.ToString(),
+                Name = item.Name,
+                Image = item.Image,
+                Productid = item.ProductId.ToString(),
+                Quantity = item.Quantity,
+                Price = (double)item.Price
+            });
 
-            foreach (var item in shoppingCart.Items)
-            {
-                shoppingCartResponse.Items.Add(new ShoppingCartItemResponse
-                {
-                    Id = item.Id.ToString(),
-                    Name = item.Name,
-                    Image = item.Image,
-                    Productid = item.ProductId.ToString(),
-                    Quantity = item.Quantity,
-                    Price = (double)item.Price
-                });
-            }
-
-            return shoppingCartResponse;
-        }
+        return shoppingCartResponse;
     }
 }

@@ -5,14 +5,11 @@ using DevStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Serilog;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.AddSerilog(new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger());
-
 
 
 builder.Services.AddApiConfiguration(builder.Configuration);
@@ -28,7 +25,6 @@ builder.Services.AddMessageBusConfiguration(builder.Configuration);
 var app = builder.Build();
 
 
-
 app.UseSwaggerConfiguration();
 
 app.UseApiConfiguration(app.Environment);
@@ -39,18 +35,19 @@ DbMigrationHelpers.EnsureSeedData(app).Wait();
 
 app.Run();
 
+return;
 
-
+// ReSharper disable once VariableHidesOuterVariable
 void MapActions(WebApplication app)
 {
     app.MapGet("/shopping-cart", [Authorize] async (
-        ShoppingCart cart) => await cart.GetShoppingCart())
+            ShoppingCart cart) => await cart.GetShoppingCart())
         .WithName("GetShoppingCart")
         .WithTags("ShoppingCart");
 
     app.MapPost("/shopping-cart", [Authorize] async (
-        ShoppingCart cart,
-        CartItem item) => await cart.AddItem(item))
+            ShoppingCart cart,
+            CartItem item) => await cart.AddItem(item))
         .ProducesValidationProblem()
         .Produces<CartItem>(StatusCodes.Status201Created)
         .Produces(StatusCodes.Status400BadRequest)
@@ -58,9 +55,9 @@ void MapActions(WebApplication app)
         .WithTags("ShoppingCart");
 
     app.MapPut("/shopping-cart/{productId}", [Authorize] async (
-        ShoppingCart cart,
-        Guid productId,
-        CartItem item) => await cart.UpdateItem(productId, item))
+            ShoppingCart cart,
+            Guid productId,
+            CartItem item) => await cart.UpdateItem(productId, item))
         .ProducesValidationProblem()
         .Produces<CartItem>(StatusCodes.Status204NoContent)
         .Produces(StatusCodes.Status400BadRequest)
@@ -68,8 +65,8 @@ void MapActions(WebApplication app)
         .WithTags("ShoppingCart");
 
     app.MapDelete("/shopping-cart/{productId}", [Authorize] async (
-        ShoppingCart cart,
-        Guid productId) => await cart.RemoveItem(productId))
+            ShoppingCart cart,
+            Guid productId) => await cart.RemoveItem(productId))
         .ProducesValidationProblem()
         .Produces<CartItem>(StatusCodes.Status204NoContent)
         .Produces(StatusCodes.Status400BadRequest)
@@ -78,12 +75,11 @@ void MapActions(WebApplication app)
         .WithTags("ShoppingCart");
 
     app.MapPost("/shopping-cart/apply-voucher", [Authorize] async (
-        ShoppingCart cart,
-        Voucher voucher) => await cart.ApplyVoucher(voucher))
+            ShoppingCart cart,
+            Voucher voucher) => await cart.ApplyVoucher(voucher))
         .ProducesValidationProblem()
         .Produces<CartItem>(StatusCodes.Status204NoContent)
         .Produces(StatusCodes.Status400BadRequest)
         .WithName("ApplyVoucher")
         .WithTags("ShoppingCart");
 }
-

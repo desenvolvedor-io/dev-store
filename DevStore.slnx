@@ -1,46 +1,46 @@
 <Solution>
-  <Folder Name="/src/" />
-  <Folder Name="/src/ApiGateways/" />
-  <Folder Name="/src/ApiGateways/Checkout/">
-    <Project Path="src/api-gateways/DevStore.Bff.Checkout/DevStore.Bff.Checkout.csproj" />
-  </Folder>
-  <Folder Name="/src/Building Blocks/" />
-  <Folder Name="/src/Building Blocks/Core/">
-    <Project Path="src/building-blocks/DevStore.Core/DevStore.Core.csproj" />
-  </Folder>
-  <Folder Name="/src/Building Blocks/MessageBus/">
-    <Project Path="src/building-blocks/DevStore.MessageBus/DevStore.MessageBus.csproj" />
-  </Folder>
-  <Folder Name="/src/Building Blocks/Services/">
-    <Project Path="src/building-blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj" />
-  </Folder>
-  <Folder Name="/src/Services/" />
-  <Folder Name="/src/Services/Billing/">
-    <Project Path="src/services/DevStore.Billing.API/DevStore.Billing.API.csproj" />
-    <Project Path="src/services/DevStore.Billing.DevsPay/DevStore.Billing.DevsPay.csproj" />
-  </Folder>
-  <Folder Name="/src/Services/Catalog/">
-    <Project Path="src/services/DevStore.Catalog.API/DevStore.Catalog.API.csproj" />
-  </Folder>
-  <Folder Name="/src/Services/Customer/">
-    <Project Path="src/services/DevStore.Customers.API/DevStore.Customers.API.csproj" />
-  </Folder>
-  <Folder Name="/src/Services/Identity/">
-    <Project Path="src/services/DevStore.Identity.API/DevStore.Identity.API.csproj" />
-  </Folder>
-  <Folder Name="/src/Services/Order/">
-    <Project Path="src/services/DevStore.Orders.API/DevStore.Orders.API.csproj" />
-    <Project Path="src/services/DevStore.Orders.Domain/DevStore.Orders.Domain.csproj" />
-    <Project Path="src/services/DevStore.Orders.Infra/DevStore.Orders.Infra.csproj" />
-  </Folder>
-  <Folder Name="/src/Services/ShoppingCart/">
-    <Project Path="src/services/DevStore.ShoppingCart.API/DevStore.ShoppingCart.API.csproj" />
-  </Folder>
-  <Folder Name="/src/Web/" />
-  <Folder Name="/src/Web/HealthCheck/">
-    <Project Path="src/web/DevStore.WebApp.Status/DevStore.WebApp.Status.csproj" />
-  </Folder>
-  <Folder Name="/src/Web/MVC/">
-    <Project Path="src/web/DevStore.WebApp.MVC/DevStore.WebApp.MVC.csproj" />
-  </Folder>
+    <Folder Name="/src/"/>
+    <Folder Name="/src/ApiGateways/"/>
+    <Folder Name="/src/ApiGateways/Checkout/">
+        <Project Path="src/api-gateways/DevStore.Bff.Checkout/DevStore.Bff.Checkout.csproj"/>
+    </Folder>
+    <Folder Name="/src/Building Blocks/"/>
+    <Folder Name="/src/Building Blocks/Core/">
+        <Project Path="src/building-blocks/DevStore.Core/DevStore.Core.csproj"/>
+    </Folder>
+    <Folder Name="/src/Building Blocks/MessageBus/">
+        <Project Path="src/building-blocks/DevStore.MessageBus/DevStore.MessageBus.csproj"/>
+    </Folder>
+    <Folder Name="/src/Building Blocks/Services/">
+        <Project Path="src/building-blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj"/>
+    </Folder>
+    <Folder Name="/src/Services/"/>
+    <Folder Name="/src/Services/Billing/">
+        <Project Path="src/services/DevStore.Billing.API/DevStore.Billing.API.csproj"/>
+        <Project Path="src/services/DevStore.Billing.DevsPay/DevStore.Billing.DevsPay.csproj"/>
+    </Folder>
+    <Folder Name="/src/Services/Catalog/">
+        <Project Path="src/services/DevStore.Catalog.API/DevStore.Catalog.API.csproj"/>
+    </Folder>
+    <Folder Name="/src/Services/Customer/">
+        <Project Path="src/services/DevStore.Customers.API/DevStore.Customers.API.csproj"/>
+    </Folder>
+    <Folder Name="/src/Services/Identity/">
+        <Project Path="src/services/DevStore.Identity.API/DevStore.Identity.API.csproj"/>
+    </Folder>
+    <Folder Name="/src/Services/Order/">
+        <Project Path="src/services/DevStore.Orders.API/DevStore.Orders.API.csproj"/>
+        <Project Path="src/services/DevStore.Orders.Domain/DevStore.Orders.Domain.csproj"/>
+        <Project Path="src/services/DevStore.Orders.Infra/DevStore.Orders.Infra.csproj"/>
+    </Folder>
+    <Folder Name="/src/Services/ShoppingCart/">
+        <Project Path="src/services/DevStore.ShoppingCart.API/DevStore.ShoppingCart.API.csproj"/>
+    </Folder>
+    <Folder Name="/src/Web/"/>
+    <Folder Name="/src/Web/HealthCheck/">
+        <Project Path="src/web/DevStore.WebApp.Status/DevStore.WebApp.Status.csproj"/>
+    </Folder>
+    <Folder Name="/src/Web/MVC/">
+        <Project Path="src/web/DevStore.WebApp.MVC/DevStore.WebApp.MVC.csproj"/>
+    </Folder>
 </Solution>

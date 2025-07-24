@@ -1,5 +1,6 @@
 using System;
 using DevStore.Customers.API.Configuration;
+using DevStore.WebAPI.Core.Configuration;
 using DevStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,6 @@ DbMigrationHelpers.EnsureSeedData(app).Wait();
 
 app.UseSwaggerConfiguration();
 
-app.UseApiConfiguration(app.Environment);
+app.UseApiCoreConfiguration(app.Environment);
 
 app.Run();
-

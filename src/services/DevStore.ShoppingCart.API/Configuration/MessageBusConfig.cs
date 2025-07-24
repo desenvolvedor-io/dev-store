@@ -1,16 +1,13 @@
-﻿using DevStore.Core.Utils;
+﻿using System.Reflection;
 using DevStore.MessageBus;
-using DevStore.ShoppingCart.API.Services;
 
-namespace DevStore.ShoppingCart.API.Configuration
+namespace DevStore.ShoppingCart.API.Configuration;
+
+public static class MessageBusConfig
 {
-    public static class MessageBusConfig
+    public static void AddMessageBusConfiguration(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        public static void AddMessageBusConfiguration(this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            services.AddMessageBus(configuration.GetMessageQueueConnection("MessageBus"))
-                .AddHostedService<ShoppingCartIntegrationHandler>();
-        }
+        services.AddMessageBus(configuration, Assembly.GetAssembly(typeof(Program)));
     }
 }

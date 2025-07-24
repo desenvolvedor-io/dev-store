@@ -2,53 +2,52 @@
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevStore.ShoppingCart.API.Data
+namespace DevStore.ShoppingCart.API.Data;
+
+public sealed class ShoppingCartContext : DbContext
 {
-    public sealed class ShoppingCartContext : DbContext
+    public ShoppingCartContext(DbContextOptions<ShoppingCartContext> options)
+        : base(options)
     {
-        public ShoppingCartContext(DbContextOptions<ShoppingCartContext> options)
-            : base(options)
-        {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            ChangeTracker.AutoDetectChangesEnabled = false;
-        }
+        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        ChangeTracker.AutoDetectChangesEnabled = false;
+    }
 
-        public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<CustomerShoppingCart> CustomerShoppingCart { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
+    public DbSet<CustomerShoppingCart> CustomerShoppingCart { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
-                e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
-                property.SetColumnType("varchar(100)");
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        foreach (var property in modelBuilder.Model.GetEntityTypes()
+                     .SelectMany(e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
+            property.SetColumnType("varchar(100)");
 
-            modelBuilder.Ignore<ValidationResult>();
+        modelBuilder.Ignore<ValidationResult>();
 
-            modelBuilder.Entity<CustomerShoppingCart>()
-                .HasIndex(c => c.CustomerId)
-                .HasName("IDX_Customer");
+        modelBuilder.Entity<CustomerShoppingCart>()
+            .HasIndex(c => c.CustomerId)
+            .HasDatabaseName("IDX_Customer");
 
-            modelBuilder.Entity<CustomerShoppingCart>()
-                .Ignore(c => c.Voucher)
-                .OwnsOne(c => c.Voucher, v =>
-                {
-                    v.Property(vc => vc.Code)
-                        .HasColumnType("varchar(50)");
+        modelBuilder.Entity<CustomerShoppingCart>()
+            .Ignore(c => c.Voucher)
+            .OwnsOne(c => c.Voucher, v =>
+            {
+                v.Property(vc => vc.Code)
+                    .HasColumnType("varchar(50)");
 
-                    v.Property(vc => vc.DiscountType);
+                v.Property(vc => vc.DiscountType);
 
-                    v.Property(vc => vc.Percentage);
+                v.Property(vc => vc.Percentage);
 
-                    v.Property(vc => vc.Discount);
-                });
+                v.Property(vc => vc.Discount);
+            });
 
-            modelBuilder.Entity<CustomerShoppingCart>()
-                .HasMany(c => c.Items)
-                .WithOne(i => i.CustomerShoppingCart)
-                .HasForeignKey(c => c.ShoppingCartId);
+        modelBuilder.Entity<CustomerShoppingCart>()
+            .HasMany(c => c.Items)
+            .WithOne(i => i.CustomerShoppingCart)
+            .HasForeignKey(c => c.ShoppingCartId);
 
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.Cascade;
-        }
+        foreach (var relationship in modelBuilder.Model.GetEntityTypes()
+                     .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.Cascade;
     }
 }
