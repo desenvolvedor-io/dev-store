@@ -25,8 +25,7 @@ public sealed class ShoppingCartContext : DbContext
         modelBuilder.Ignore<ValidationResult>();
 
         modelBuilder.Entity<CustomerShoppingCart>()
-            .HasIndex(c => c.CustomerId)
-            .HasDatabaseName("IDX_Customer");
+            .HasIndex(c => c.CustomerId, "IDX_Customer");
 
         modelBuilder.Entity<CustomerShoppingCart>()
             .Ignore(c => c.Voucher)

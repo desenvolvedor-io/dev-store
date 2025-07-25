@@ -7,18 +7,17 @@ namespace DevStore.ShoppingCart.API.Services;
 
 public class ShoppingCartIntegrationHandler : IConsumer<OrderDoneIntegrationEvent>
 {
-    private readonly IBus _bus;
     private readonly IServiceProvider _serviceProvider;
 
-    public ShoppingCartIntegrationHandler(IServiceProvider serviceProvider, IBus bus)
+    public ShoppingCartIntegrationHandler(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _bus = bus;
     }
 
     public async Task Consume(ConsumeContext<OrderDoneIntegrationEvent> context)
     {
-        await context.RespondAsync(RemoveShoppingCart(context.Message));
+        await RemoveShoppingCart(context.Message);
+        await context.RespondAsync(new object());
     }
 
     private async Task RemoveShoppingCart(OrderDoneIntegrationEvent message)

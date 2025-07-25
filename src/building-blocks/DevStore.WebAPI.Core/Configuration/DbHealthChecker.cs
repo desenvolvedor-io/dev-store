@@ -36,7 +36,7 @@ public class DbHealthChecker
         }
 
         // after a few attemps we give up
-        throw new DatabaseNotFoundException("Error waiting database. Check ConnectionString and ensure database exist");
+        throw new DatabaseNotFoundException("Error waiting database. Check ConnectionString and ensure database exists");
     }
 
     private static bool CanConnect(DbContext context)

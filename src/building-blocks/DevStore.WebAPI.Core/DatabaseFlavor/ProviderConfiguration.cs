@@ -21,7 +21,7 @@ public class ProviderConfiguration
         options => options.UseSqlServer(_connectionString, sql => sql.MigrationsAssembly(MigrationAssembly));
 
     public Action<DbContextOptionsBuilder> MySql =>
-        options => options.UseMySQL(_connectionString, sql => sql.MigrationsAssembly(MigrationAssembly));
+        options => options.UseMySQL(_connectionString,  sql => sql.MigrationsAssembly(MigrationAssembly));
 
     public Action<DbContextOptionsBuilder> Postgre =>
         options =>
