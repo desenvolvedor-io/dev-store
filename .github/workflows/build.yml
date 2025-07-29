@@ -41,7 +41,7 @@ jobs:
           fi
   
   build-and-test:
-    name: Build solution
+    name: Build and Test
     runs-on: ubuntu-latest
     needs: versioning
 
