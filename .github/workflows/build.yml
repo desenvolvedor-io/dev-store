@@ -24,7 +24,9 @@ concurrency:
 jobs:
   
   versioning:
+    name: Versioning
     runs-on: ubuntu-latest
+
     outputs: 
       TAG: ${{ steps.tagging.outputs.TAG }}
     
@@ -39,9 +41,9 @@ jobs:
           fi
   
   build-services:
-    needs: versioning
+    name: Build docker image services
     runs-on: ubuntu-latest
-    name: Build docker image services   
+    needs: versioning
     
     env:
       TAG: ${{ needs.versioning.outputs.TAG }}
