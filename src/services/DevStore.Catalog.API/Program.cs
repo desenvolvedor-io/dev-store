@@ -17,9 +17,7 @@ builder.Services.AddSwaggerConfiguration();
 
 builder.Services.RegisterServices();
 
-
 var app = builder.Build();
-
 
 DbMigrationHelpers.EnsureSeedData(app).Wait();
 
@@ -28,3 +26,8 @@ app.UseSwaggerConfiguration();
 app.UseApiCoreConfiguration(app.Environment);
 
 app.Run();
+
+namespace DevStore.Catalog.API
+{
+    public partial class Program;
+}
