@@ -56,10 +56,10 @@ jobs:
         uses: actions/setup-dotnet@v4
           
       - name: Restore dependencies
-        run: dotnet restore ./DevStore.slns
+        run: dotnet restore
 
       - name: Build solution
-        run: dotnet build ./DevStore.slnx --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore
   
   build-docker-image-services:
     name: Build docker image services
