@@ -22,34 +22,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
+  
+  versioning:
+    runs-on: ubuntu-latest
+    outputs: 
+      TAG: ${{ steps.tagging.outputs.TAG }}
+    
+    steps:  
+      - name: Tagging
+        id: tagging
+        run: |
+          if [ "${GITHUB_REF}" == "refs/heads/main" ]; then
+              echo "TAG=latest" >> $GITHUB_OUTPUT
+          else
+              echo "TAG=preview" >> $GITHUB_OUTPUT
+          fi
+  
   build-services:
+    needs: versioning
     runs-on: ubuntu-latest
     name: Build docker image services   
+    
+    env:
+      TAG: ${{ needs.versioning.outputs.TAG }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         
-      - name: Tag name
-        id: tagging
-        run: |          
-          if [ "${GITHUB_REF}" == "refs/heads/main" ]; then
-              echo "TAG=latest" >> $GITHUB_ENV
-          else
-              echo "TAG=preview" >> $GITHUB_ENV
-          fi
-
       - name: Build docker images
         working-directory: ./docker
-        env:
-          TAG: ${{ steps.tagging.outputs.TAG }}
         run: |
           TAG=${{ env.TAG }} docker compose -f ./docker-compose-local.yml build
 
       - name: Push docker images
         working-directory: ./docker
-        env:
-          TAG: ${{ steps.tagging.outputs.TAG }}
         run: |
           TAG=${{ env.TAG }} docker compose -f ./docker-compose-local.yml push
