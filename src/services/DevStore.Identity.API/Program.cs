@@ -1,12 +1,10 @@
 using DevStore.Identity.API.Configuration;
+using DevStore.WebAPI.Core.Configuration;
 using Microsoft.AspNetCore.Builder;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddSerilog(new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger());
+builder.Services.AddLogger(builder.Configuration);
 
 builder.Services.AddIdentityConfiguration(builder.Configuration);
 

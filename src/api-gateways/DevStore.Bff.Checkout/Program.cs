@@ -1,14 +1,11 @@
 using DevStore.Bff.Checkout.Configuration;
+using DevStore.WebAPI.Core.Configuration;
 using DevStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Builder;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddSerilog(new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger());
-
+builder.Services.AddLogger(builder.Configuration);
 
 builder.Services.AddApiConfiguration(builder.Configuration);
 

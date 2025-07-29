@@ -7,6 +7,7 @@
         <UserSecretsId>0ab5617d-1cdf-455d-b9e2-e9f76e347af1</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..\..</DockerfileContext>
+        <NoWarn>NU1608</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,7 +22,6 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1"/>
-        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0"/>
     </ItemGroup>
 
     <ItemGroup>

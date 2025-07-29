@@ -1,16 +1,13 @@
 using DevStore.ShoppingCart.API;
 using DevStore.ShoppingCart.API.Configuration;
 using DevStore.ShoppingCart.API.Model;
+using DevStore.WebAPI.Core.Configuration;
 using DevStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Authorization;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddSerilog(new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger());
-
+builder.Services.AddLogger(builder.Configuration);
 
 builder.Services.AddApiConfiguration(builder.Configuration);
 

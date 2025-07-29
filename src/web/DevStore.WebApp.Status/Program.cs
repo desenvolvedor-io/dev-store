@@ -1,13 +1,12 @@
+using DevStore.WebAPI.Core.Configuration;
 using DevStore.WebAPI.Core.DatabaseFlavor;
 using DevStore.WebAPI.Core.Extensions;
-using Serilog;
+
 using static DevStore.WebAPI.Core.DatabaseFlavor.ProviderConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Logging.AddSerilog(new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger());
+builder.Services.AddLogger(builder.Configuration);
 
 var healthCheckBuilder = builder.Services.AddHealthChecksUI(setup =>
 {
