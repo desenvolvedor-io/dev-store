@@ -2,22 +2,15 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MySqlConnector;
 
 namespace DevStore.WebAPI.Core.DatabaseFlavor;
 
 public class ProviderConfiguration
 {
+    private static readonly string MigrationAssembly =
+        typeof(ProviderConfiguration).GetTypeInfo().Assembly.GetName().Name;
+
     private readonly string _connectionString;
-    public ProviderConfiguration With() => this;
-    private static readonly string MigrationAssembly = typeof(ProviderConfiguration).GetTypeInfo().Assembly.GetName().Name;
-
-    public static ProviderConfiguration Build(string connString)
-    {
-        return new ProviderConfiguration(connString);
-    }
-
-
 
     public ProviderConfiguration(string connString)
     {
@@ -28,7 +21,7 @@ public class ProviderConfiguration
         options => options.UseSqlServer(_connectionString, sql => sql.MigrationsAssembly(MigrationAssembly));
 
     public Action<DbContextOptionsBuilder> MySql =>
-        options => options.UseMySql(_connectionString, ServerVersion.AutoDetect(_connectionString), sql => sql.MigrationsAssembly(MigrationAssembly));
+        options => options.UseMySQL(_connectionString,  sql => sql.MigrationsAssembly(MigrationAssembly));
 
     public Action<DbContextOptionsBuilder> Postgre =>
         options =>
@@ -40,12 +33,25 @@ public class ProviderConfiguration
     public Action<DbContextOptionsBuilder> Sqlite =>
         options => options.UseSqlite(_connectionString, sql => sql.MigrationsAssembly(MigrationAssembly));
 
+    public ProviderConfiguration With()
+    {
+        return this;
+    }
+
+    public static ProviderConfiguration Build(string connString)
+    {
+        return new ProviderConfiguration(connString);
+    }
+
 
     /// <summary>
-    /// it's just a tuple. Returns 2 parameters.
-    /// Trying to improve readability at ConfigureServices
+    ///     it's just a tuple. Returns 2 parameters.
+    ///     Trying to improve readability at ConfigureServices
     /// </summary>
-    public static (DatabaseType, string) DetectDatabase(IConfiguration configuration) => (
-        configuration.GetValue<DatabaseType>("AppSettings:DatabaseType", DatabaseType.None),
-        configuration.GetConnectionString("DefaultConnection"));
+    public static (DatabaseType, string) DetectDatabase(IConfiguration configuration)
+    {
+        return (
+            configuration.GetValue("AppSettings:DatabaseType", DatabaseType.None),
+            configuration.GetConnectionString("DefaultConnection"));
+    }
 }

@@ -1,29 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<UserSecretsId>14093821-325c-4620-86a1-2b4a9d955c4f</UserSecretsId>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<DockerfileContext>..\..\..</DockerfileContext>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>14093821-325c-4620-86a1-2b4a9d955c4f</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..\..</DockerfileContext>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Grpc.AspNetCore" Version="2.44.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
-    <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
-    <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.71.0"/>
+        <PackageReference Include="Grpc.Tools" Version="2.72.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3"/>
+        <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\building-blocks\DevStore.MessageBus\DevStore.MessageBus.csproj" />
-		<ProjectReference Include="..\..\building-blocks\DevStore.WebAPI.Core\DevStore.WebAPI.Core.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\building-blocks\DevStore.WebAPI.Core\DevStore.WebAPI.Core.csproj"/>
+    </ItemGroup>
 
 
-	<ItemGroup>
-		<Protobuf Include="Protos\shoppingcart.proto" GrpcServices="Server" />
-	</ItemGroup>
+    <ItemGroup>
+        <Protobuf Include="Protos\shoppingcart.proto" GrpcServices="Server"/>
+    </ItemGroup>
 
 </Project>
