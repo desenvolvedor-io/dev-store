@@ -58,6 +58,9 @@ jobs:
         image: masstransit/rabbitmq
         ports:
           - 5672:5672
+        env:
+          RABBITMQ_DEFAULT_USER: "devstore"
+          RABBITMQ_DEFAULT_PASS: ${{ secrets.TEST_RABBITMW_PASSWORD }}  
     
     env:
       TAG: ${{ needs.versioning.outputs.TAG }}
@@ -78,7 +81,8 @@ jobs:
       - name: Run tests
         run: dotnet test --no-build --no-restore --configuration Release --logger "console;verbosity=detailed" --logger trx --results-directory "TestResults"  
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
         with:
           name: dotnet-test-results
           path: ./src/TestResults
