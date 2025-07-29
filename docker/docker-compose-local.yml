@@ -12,24 +12,13 @@ x-common-variables: &common-variables
     RabbitMqTransportOptions__Pass: "devstore"
     RabbitMqTransportOptions__VirtualHost: "/"
 
-# x-healthcheck: &common-healthcheck
-#    test: >
-#        sh -c "(
-#            apt-get update && apt-get install -y curl &&
-#            curl --fail http://localhost/healthz-infra || exit 1
-#        )"
-#    interval: 3s
-#    timeout: 5s
-#    retries: 10
-#    start_period: 3s
-
 include:
     - docker-common-resources.yml
 
 services:
     
     api-identity:
-        image: devstore-api-identity:preview
+        image: desenvolvedorio/devstore-api-identity:${TAG}
         container_name: devstore-api-identity
         build:
             context: ../src
@@ -49,10 +38,9 @@ services:
                 condition: service_started
             rabbitmq:
                 condition: service_started
-        # healthcheck: *common-healthcheck
-    
+
     api-cart:
-        image: devstore-api-cart:preview
+        image: desenvolvedorio/devstore-api-cart:${TAG}
         container_name: devstore-api-cart
         build:
             context: ../src
@@ -66,10 +54,9 @@ services:
         depends_on:
             api-identity:
                 condition: service_started
-        # healthcheck: *common-healthcheck                
 
     api-catalog:
-        image: devstore-api-catalog:preview
+        image: desenvolvedorio/devstore-api-catalog:${TAG}
         container_name: devstore-api-catalog
         build:
             context: ../src
@@ -83,10 +70,9 @@ services:
         depends_on:
             api-identity:
                 condition: service_started
-        # healthcheck: *common-healthcheck
-    
+
     api-customers:
-        image: devstore-api-customers:preview
+        image: desenvolvedorio/devstore-api-customers:${TAG}
         container_name: devstore-api-customers
         build:
             context: ../src
@@ -100,10 +86,9 @@ services:
         depends_on:
             api-identity:
                 condition: service_started
-        # healthcheck: *common-healthcheck
-    
+
     api-order:
-        image: devstore-api-order:preview
+        image: desenvolvedorio/devstore-api-order:${TAG}
         container_name: devstore-api-order
         build:
             context: ../src
@@ -118,10 +103,9 @@ services:
         depends_on:
             api-identity:
                 condition: service_started
-        # healthcheck: *common-healthcheck
 
     api-billing:
-        image: devstore-api-billing:preview
+        image: desenvolvedorio/devstore-api-billing:${TAG}
         container_name: devstore-api-billing
         build:
             context: ../src
@@ -137,10 +121,9 @@ services:
                 condition: service_started
             api-order:
                 condition: service_started
-        # healthcheck: *common-healthcheck
-    
+
     api-bff-checkout:
-        image: devstore-api-bff-checkout:preview
+        image: desenvolvedorio/devstore-api-bff-checkout:${TAG}
         container_name: devstore-api-bff-checkout
         build:
             context: ../src
@@ -160,10 +143,9 @@ services:
                 condition: service_started
             api-order:
                 condition: service_started
-        # healthcheck: *common-healthcheck
-    
+
     web-mvc:
-        image: devstore-web-mvc-ecommerce:preview
+        image: desenvolvedorio/devstore-web-mvc-ecommerce:${TAG}
         container_name: devstore-web-mvc-ecommerce
         build:
             context: ../src
@@ -191,10 +173,9 @@ services:
                 condition: service_started
             api-bff-checkout:
                 condition: service_started
-        # healthcheck: *common-healthcheck
-    
+
     web-status:
-        image: devstore-web-status:preview
+        image: desenvolvedorio/devstore-web-status:${TAG}
         container_name: devstore-web-status
         build:
             context: ../src
@@ -209,7 +190,6 @@ services:
         depends_on:
             api-identity:
                 condition: service_started
-        # healthcheck: *common-healthcheck
 
 volumes:
     dpkeys:

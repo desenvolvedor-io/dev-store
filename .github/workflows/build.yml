@@ -1,0 +1,42 @@
+name: Build devStore
+
+on:
+  push:
+    paths:
+      - 'global.json'
+      - 'src/**'
+      - '.github/**'
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'global.json'
+      - 'src/**'
+      - '.github/**'
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  build-services:
+    runs-on: ubuntu-latest
+    name: Build docker image services   
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build docker images
+        working-directory: ./docker
+        run: |
+          TAG=latest docker compose -f ./docker-compose-local.yml build
+
+      - name: Push docker images
+        working-directory: ./docker
+        run: |
+          docker compose push
