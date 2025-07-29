@@ -19,7 +19,7 @@ services:
         restart: always
         environment:            
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSUsers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSUsers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -38,7 +38,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSShoppingCart;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSShoppingCart;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -51,7 +51,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSCatalog;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSCatalog;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -64,7 +64,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSCustomers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSCustomers;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -77,7 +77,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSOrders;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSOrders;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
             Logging__Console__FormatterName: ""
         volumes:
             - ./certs:/https:ro
@@ -91,7 +91,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSBilling;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSBilling;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -106,7 +106,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
         depends_on:
@@ -121,7 +121,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
             LC_ALL: "en_US.UTF-8"
             LANG: "en_US.UTF-8"
             # Change the two lines above to your culture (ex pt_BR)
@@ -144,7 +144,7 @@ services:
         restart: always
         environment:
             <<: *common-variables
-            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123"
+            CUSTOMCONNSTR_DefaultConnection: "Server=database;Database=DSStatus;MultipleActiveResultSets=true;User Id=sa;Password=MyDB@123;MultipleActiveResultSets=true;TrustServerCertificate=True;"
         volumes:
             - ./certs:/https:ro
             - ./certs/devstore.crt:/usr/local/share/ca-certificates/devstore.crt
