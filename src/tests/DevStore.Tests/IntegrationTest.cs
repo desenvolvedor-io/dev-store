@@ -7,7 +7,8 @@ namespace DevStore.Tests;
 
 public abstract class IntegrationTest<TProgram>(string baseUrl) : 
     IClassFixture<WebApplicationFactory<TProgram>>,
-    IAsyncLifetime
+    IAsyncLifetime,
+    IDisposable
     where TProgram : class
 {
     private readonly WebApplicationFactory<TProgram> _webApiFactory = new();
@@ -64,5 +65,11 @@ public abstract class IntegrationTest<TProgram>(string baseUrl) :
 
             break;
         }
+    }
+
+    public void Dispose()
+    {
+        _webApiFactory.Dispose();
+        HttpClient.Dispose();
     }
 }
