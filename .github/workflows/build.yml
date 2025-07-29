@@ -60,7 +60,7 @@ jobs:
           - 5672:5672
         env:
           RABBITMQ_DEFAULT_USER: "devstore"
-          RABBITMQ_DEFAULT_PASS: ${{ secrets.TEST_RABBITMW_PASSWORD }}  
+          RABBITMQ_DEFAULT_PASS: ${{ secrets.TEST_RABBITMQ_PASSWORD }}  
     
     env:
       TAG: ${{ needs.versioning.outputs.TAG }}
