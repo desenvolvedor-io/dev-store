@@ -39,4 +39,4 @@ jobs:
       - name: Push docker images
         working-directory: ./docker
         run: |
-          docker compose -f ./docker-compose-local.yml push
+          TAG=latest docker compose -f ./docker-compose-local.yml push
