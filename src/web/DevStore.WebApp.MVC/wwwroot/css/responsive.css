@@ -1,61 +1,84 @@
 .mobile-block {
-  display: none; }
+    display: none;
+}
 
 @media (max-width: 1200px) {
-  /* tablet devices */ }
+    /* tablet devices */
+}
+
 @media (max-width: 992px) {
-  /* small tablet devices */
-  .slider-main .item-slide {
-    height: auto; }
+    /* small tablet devices */
+    .slider-main .item-slide {
+        height: auto;
+    }
 
-  .table-shopping-cart tr td:first-child {
-    width: 250px; }
-  .table-shopping-cart .itemside .info {
-    padding: 0; }
-  .table-shopping-cart .itemside .aside {
-    display: none; } }
+    .table-shopping-cart tr td:first-child {
+        width: 250px;
+    }
+
+    .table-shopping-cart .itemside .info {
+        padding: 0;
+    }
+
+    .table-shopping-cart .itemside .aside {
+        display: none;
+    }
+}
+
 @media all and (max-width: 768px) {
-  /* mobile devices */
-  .section-header .search {
-    margin-top: 1rem;
-    margin-bottom: 1rem; }
+    /* mobile devices */
+    .section-header .search {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 
-  .item-feature {
-    margin-bottom: 20px; }
+    .item-feature {
+        margin-bottom: 20px;
+    }
 
-  .mobile-order-first {
-    -webkit-box-ordinal-group: 0;
+    .mobile-order-first {
+        -webkit-box-ordinal-group: 0;
         -ms-flex-order: -1;
-            order: -1; }
+        order: -1;
+    }
 
-  .mobile-order-1 {
-    -webkit-box-ordinal-group: 2;
+    .mobile-order-1 {
+        -webkit-box-ordinal-group: 2;
         -ms-flex-order: 1;
-            order: 1; }
+        order: 1;
+    }
 
-  .mobile-order-2 {
-    -webkit-box-ordinal-group: 3;
+    .mobile-order-2 {
+        -webkit-box-ordinal-group: 3;
         -ms-flex-order: 2;
-            order: 2; }
+        order: 2;
+    }
 
-  .mobile-order-3 {
-    -webkit-box-ordinal-group: 4;
+    .mobile-order-3 {
+        -webkit-box-ordinal-group: 4;
         -ms-flex-order: 3;
-            order: 3; }
+        order: 3;
+    }
 
-  .mobile-block {
-    display: block; }
+    .mobile-block {
+        display: block;
+    }
 
-  .section-header .logo {
-    max-height: 40px;
-    width: auto; }
-  .section-header .search {
-    margin-top: 1rem; }
+    .section-header .logo {
+        max-height: 40px;
+        width: auto;
+    }
 
-  .navbar-expand .navbar-collapse {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
+    .section-header .search {
+        margin-top: 1rem;
+    }
+
+    .navbar-expand .navbar-collapse {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
         -ms-flex-direction: column;
-            flex-direction: column; } }
+        flex-direction: column;
+    }
+}
 
 /*# sourceMappingURL=responsive.css.map */

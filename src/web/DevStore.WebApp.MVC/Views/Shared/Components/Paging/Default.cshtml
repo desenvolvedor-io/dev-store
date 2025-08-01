@@ -8,12 +8,16 @@
                 if (i == Model.PageIndex)
                 {
                     <li class="page-item active">
-                        <a class="page-link" asp-action="@Model.ReferenceAction" asp-route-page="@i" asp-route-ps="@Model.PageSize" asp-route-q="@Model.Query">@i <span class="sr-only">(current)</span></a>
+                        <a class="page-link" asp-action="@Model.ReferenceAction" asp-route-page="@i"
+                           asp-route-ps="@Model.PageSize" asp-route-q="@Model.Query">@i <span
+                                class="sr-only">(current)</span></a>
                     </li>
                 }
                 else
                 {
-                    <li class="page-item"><a class="page-link" asp-action="@Model.ReferenceAction" asp-route-ps="@Model.PageSize" asp-route-page="@i" asp-route-q="@Model.Query">@i</a></li>
+                    <li class="page-item"><a class="page-link" asp-action="@Model.ReferenceAction"
+                                             asp-route-ps="@Model.PageSize" asp-route-page="@i"
+                                             asp-route-q="@Model.Query">@i</a></li>
                 }
             }
         }
