@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup Label="Databases">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.7"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.7"/>
+    </ItemGroup>
+
+    <ItemGroup Label="HealthCheck">
+        <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="9.0.0"/>
+        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0"/>
+        <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="9.0.0"/>
+        <PackageReference Include="AspNetCore.HealthChecks.Sqlite" Version="9.0.0"/>
+        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="9.0.0"/>
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.6"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.7"/>
+    </ItemGroup>
+</Project>

@@ -13,6 +13,7 @@
   </Folder>
   <Folder Name="/src/Building Blocks/Services/">
     <Project Path="src/building-blocks/DevStore.WebAPI.Core/DevStore.WebAPI.Core.csproj" />
+    <Project Path="src\building-blocks\DevStore.Infra.Core\DevStore.Infra.Core.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/src/Services/" />
   <Folder Name="/src/Services/Billing/">

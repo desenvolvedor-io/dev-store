@@ -1,4 +1,4 @@
-﻿namespace DevStore.WebAPI.Core.DatabaseFlavor;
+﻿namespace DevStore.Infra.Core.DatabaseFlavor;
 
 public enum DatabaseType
 {

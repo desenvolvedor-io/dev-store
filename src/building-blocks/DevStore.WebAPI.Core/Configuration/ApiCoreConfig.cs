@@ -1,4 +1,5 @@
-using DevStore.WebAPI.Core.DatabaseFlavor;
+using DevStore.Infra.Core.Configuration;
+using DevStore.Infra.Core.DatabaseFlavor;
 using DevStore.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using static DevStore.WebAPI.Core.DatabaseFlavor.ProviderConfiguration;
+using static DevStore.Infra.Core.DatabaseFlavor.ProviderConfiguration;
 
 namespace DevStore.WebAPI.Core.Configuration;
 
