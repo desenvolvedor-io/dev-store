@@ -7,6 +7,7 @@
         <UserSecretsId>0ab5617d-1cdf-455d-b9e2-e9f76e347af1</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <DockerfileContext>..\..\..</DockerfileContext>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <NoWarn>NU1608</NoWarn>
     </PropertyGroup>
 
@@ -17,7 +18,7 @@
         <PackageReference Include="AspNetCore.HealthChecks.UI.PostgreSQL.Storage"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.SQLite.Storage"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.SqlServer.Storage"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

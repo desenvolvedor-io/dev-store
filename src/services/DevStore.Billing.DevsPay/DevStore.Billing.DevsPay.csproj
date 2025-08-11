@@ -2,12 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Bogus"/>
         <PackageReference Include="FluentValidation"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="NetDevPack"/>
     </ItemGroup>
 
