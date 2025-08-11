@@ -1,13 +1,13 @@
-﻿using DevStore.WebAPI.Core.DatabaseFlavor;
+﻿using DevStore.Infra.Core.DatabaseFlavor;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using static DevStore.WebAPI.Core.DatabaseFlavor.ProviderConfiguration;
+using static DevStore.Infra.Core.DatabaseFlavor.ProviderConfiguration;
 
-namespace DevStore.WebAPI.Core.Configuration;
+namespace DevStore.Infra.Core.Configuration;
 
 public static class GenericHealthCheck
 {

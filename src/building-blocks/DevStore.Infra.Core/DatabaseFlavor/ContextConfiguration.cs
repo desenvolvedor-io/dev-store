@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DevStore.WebAPI.Core.DatabaseFlavor;
+namespace DevStore.Infra.Core.DatabaseFlavor;
 
 /// <summary>
 ///     SqlServer configuration

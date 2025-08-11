@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using static DevStore.WebAPI.Core.DatabaseFlavor.ProviderConfiguration;
+using static DevStore.Infra.Core.DatabaseFlavor.ProviderConfiguration;
 
-namespace DevStore.WebAPI.Core.DatabaseFlavor;
+namespace DevStore.Infra.Core.DatabaseFlavor;
 
 public static class ProviderSelector
 {
