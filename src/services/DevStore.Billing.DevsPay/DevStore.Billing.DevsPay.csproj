@@ -5,10 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bogus" />
-        <PackageReference Include="FluentValidation"  />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"  />
-        <PackageReference Include="NetDevPack"  />
+        <PackageReference Include="Bogus"/>
+        <PackageReference Include="FluentValidation"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+        <PackageReference Include="NetDevPack"/>
     </ItemGroup>
 
 </Project>

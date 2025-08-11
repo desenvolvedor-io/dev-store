@@ -11,17 +11,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AspNetCore.HealthChecks.UI" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI.MySql.Storage" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI.PostgreSQL.Storage" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI.SQLite.Storage" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI.SqlServer.Storage" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PackageReference Include="AspNetCore.HealthChecks.UI"/>
+        <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage"/>
+        <PackageReference Include="AspNetCore.HealthChecks.UI.MySql.Storage"/>
+        <PackageReference Include="AspNetCore.HealthChecks.UI.PostgreSQL.Storage"/>
+        <PackageReference Include="AspNetCore.HealthChecks.UI.SQLite.Storage"/>
+        <PackageReference Include="AspNetCore.HealthChecks.UI.SqlServer.Storage"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"/>
     </ItemGroup>
 
     <ItemGroup>

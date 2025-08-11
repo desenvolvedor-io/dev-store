@@ -1,7 +1,6 @@
 using DevStore.Infra.Core.DatabaseFlavor;
 using DevStore.WebAPI.Core.Configuration;
 using DevStore.WebAPI.Core.Extensions;
-
 using static DevStore.Infra.Core.DatabaseFlavor.ProviderConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);

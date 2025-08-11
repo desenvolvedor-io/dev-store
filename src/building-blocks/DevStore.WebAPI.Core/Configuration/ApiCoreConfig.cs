@@ -20,7 +20,7 @@ public static class ApiCoreConfig
             .ReadFrom.Configuration(configuration)
             .CreateLogger());
     }
-    
+
     public static IServiceCollection AddApiCoreConfiguration(this IServiceCollection services,
         IConfiguration configuration)
     {

@@ -7,23 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup Label="Databases">
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.8" />
     </ItemGroup>
 
     <ItemGroup Label="HealthCheck">
-        <PackageReference Include="AspNetCore.HealthChecks.MySql" />
-        <PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
-        <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" />
-        <PackageReference Include="AspNetCore.HealthChecks.Sqlite" />
-        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" />
-        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
+        <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="9.0.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.NpgSql"/>
+        <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq"/>
+        <PackageReference Include="AspNetCore.HealthChecks.Sqlite"/>
+        <PackageReference Include="AspNetCore.HealthChecks.SqlServer"/>
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MySql.EntityFrameworkCore" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+        <PackageReference Include="MySql.EntityFrameworkCore"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.8" />
     </ItemGroup>
 </Project>
 

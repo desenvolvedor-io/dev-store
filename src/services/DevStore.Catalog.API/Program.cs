@@ -29,5 +29,5 @@ app.Run();
 
 namespace DevStore.Catalog.API
 {
-    public partial class Program;
+    public class Program;
 }

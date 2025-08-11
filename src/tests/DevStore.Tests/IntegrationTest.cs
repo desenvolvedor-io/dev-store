@@ -5,7 +5,7 @@ using Xunit.Sdk;
 
 namespace DevStore.Tests;
 
-public abstract class IntegrationTest<TProgram>(string baseUrl) : 
+public abstract class IntegrationTest<TProgram>(string baseUrl) :
     IClassFixture<WebApplicationFactory<TProgram>>,
     IAsyncLifetime,
     IDisposable
@@ -25,6 +25,12 @@ public abstract class IntegrationTest<TProgram>(string baseUrl) :
     public Task DisposeAsync()
     {
         return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _webApiFactory.Dispose();
+        HttpClient.Dispose();
     }
 
     protected async Task ExecuteInScope<T>(Func<T, Task> action) where T : notnull
@@ -65,11 +71,5 @@ public abstract class IntegrationTest<TProgram>(string baseUrl) :
 
             break;
         }
-    }
-
-    public void Dispose()
-    {
-        _webApiFactory.Dispose();
-        HttpClient.Dispose();
     }
 }
