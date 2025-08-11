@@ -11,7 +11,7 @@ builder.Services.AddLogger(builder.Configuration);
 var healthCheckBuilder = builder.Services.AddHealthChecksUI(setup =>
 {
     setup.SetHeaderText("DevStore - Status Page");
-    var endpoints = builder.Configuration.GetSection("ENDPOINTS").Get<string>();
+    var endpoints = builder.Configuration.GetSection("ENDPOINTS").Get<string>()!;
 
     foreach (var endpoint in endpoints.Split(";"))
     {
