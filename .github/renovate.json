@@ -6,6 +6,9 @@
   "onboarding": false,
   "requireConfig": "optional",
   "forkProcessing": "enabled",
+  "repositories": [
+    "desenvolvedor-io/dev-store"
+  ],
   "enabledManagers": [
     "nuget"
   ],
