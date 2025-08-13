@@ -3,20 +3,15 @@
     <img alt="logo" src="https://user-images.githubusercontent.com/5068797/161364257-0c1d81f6-62ac-4192-93f8-836b4ce0fd06.png#gh-dark-mode-only" />
 </p>
 
-# DevStore | A microservices e-commerce reference application built with ASP.NET 9
+# A microservices e-commerce reference application built with ASP.NET 9
 
-A real-world reference application powered
-by [desenvolvedor.io](https://desenvolvedor.io/) <img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" />
-implementing the most common and used technologies to share with the technical community the best way to develop full
-and complex applications with .NET
+A real-world reference application powered by [desenvolvedor.io](https://desenvolvedor.io/) <img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" /> implementing the most common and used technologies to share with the technical community the best way to develop full and complex applications with .NET
 
----
+This project was inspired by [EShopOnContainers](https://github.com/dotnet-architecture/eShopOnContainers). However, the real motivation was to build it by "our way."
 
-###### This project was inspired by [EShopOnContainers](https://github.com/dotnet-architecture/eShopOnContainers). However, the real motivation was to build it by "our way."
+The EShopOnContainers is an awesome project. However, the code has some "bad smells." We found it difficult to start learning/using EShopOnContainers compared to DevStore. We like to think of the DevStore as a simplified (but no less complex) version and written with more care in code and small details. We also focused only on the Web architecture with ASP.NET.
 
-###### The EShopOnContainers is an awesome project. However, the code has some "bad smells." We found it difficult to start learning/using EShopOnContainers compared to DevStore. We like to think of the DevStore as a simplified (but no less complex) version and written with more care in code and small details. We also focused only on the Web architecture with ASP.NET.
-
-## Give a Star! :star:
+## ⭐ Give a Star!
 
 If you liked the project or if DevStore is helping you, please give us a star ;)
 
@@ -24,14 +19,14 @@ If you liked the project or if DevStore is helping you, please give us a star ;)
     <img alt="DevStore" src="https://user-images.githubusercontent.com/5068797/164293734-a72fbeeb-0965-4413-a624-29e1c56c25df.png" />
 </p>
 
-## Want to learn everything to build an app like this? :mortar_board:
+## :mortar_board: Want to learn everything to build an app like this?
 
 Check these online courses at [desenvolvedor.io](https://desenvolvedor.io) (only in Portuguese)
 
 - [ASP.NET Core Expert](https://desenvolvedor.io/formacao/asp-net-core-expert)
 - [Software Architect](https://desenvolvedor.io/formacao/arquiteto-de-software)
 
-## Technologies / Components implemented
+## 💻 Technologies / Components implemented
 
 - .NET 9
     - ASP.NET MVC Core
@@ -63,7 +58,7 @@ Check these online courses at [desenvolvedor.io](https://desenvolvedor.io) (only
     - NGINX
     - Docker (with composing)
 
-## Architecture:
+## 🗺️ Architecture:
 
 ### Complete architecture implementing the most important and used concerns as:
 
@@ -84,9 +79,9 @@ Check these online courses at [desenvolvedor.io](https://desenvolvedor.io) (only
 
 ---
 
-## Architecture Overview
+## 🔍 Architecture Overview
 
-### The entire application is based on a unique solution with 7 APIs and one web application (MVC)
+The entire application is based on a unique solution with 7 APIs and one web application (MVC)
 
 <p align="center">
     <img alt="read before" src="https://user-images.githubusercontent.com/5068797/161202409-edcf2f38-0714-4de5-927d-1a02be4501ec.png" />
@@ -103,38 +98,37 @@ There is a BFF / API Gateway to manage the Basket / Order / Payment requests and
 
 ---
 
-## Getting Started
+## 🏁 Getting Started
 
-You can run the DevStore project on any operating system. **Make sure you have installed docker in your environment.
-** ([Get Docker Installation](https://docs.docker.com/get-docker/))
+You can run the DevStore project on any operating system. **Make sure you have installed docker in your environment.** ([Get Docker Installation](https://docs.docker.com/get-docker/))
 
-Clone the DevStore's repository and navigate to the **/Docker** folder and then:
+Clone the DevStore's repository and navigate to the `/docker` folder and then:
 
-### If you just want to run the DevStore application in your Docker environment:
+### Run the DevStore application on Docker
 
+```bash
+docker compose up
 ```
-docker-compose up
-```
 
-### If you want to build the local images and run the DevStore application in your Docker environment:
+### Build local images and run onDocker
 
 This docker compose will provide one database container per each API service.
 
-```
-docker-compose -f docker-compose-local.yml up --build
+```bash
+docker compose -f docker-compose-local.yml up --build
 ```
 
-### If you prefer to save resource, then use the light local docker compose:
+### Only run dependency resources:
 
-This docker compose will provide just one database container for all API services.
+This docker compose will provide necessary services for all API services.
 
-```
-docker-compose -f docker-compose-local-light.yml up --build
+```bash
+docker compose -f docker-common-resources.yml up -d
 ```
 
 ---
 
-### If you want to run locally with Visual Studio / VSCode:
+### Run with Visual Studio / Visual Studio Code:
 
 You will need:
 
@@ -142,11 +136,15 @@ You will need:
 - MS-SQL Server instance (or container)
 - RabbitMQ
 
-So you can edit the Docker compose to just run the database and queue dependencies and save your time.
+So just run in the `/docker` folder the command:
+
+```bash
+docker compose -f docker-common-resources.yml up -d
+```
 
 ### If you want Visual Studio with F5 and debug experience:
 
-- You will need at least Visual Studio 2022 and .NET 6.
+- You will need at least Visual Studio 2022 and .NET 9.
 - The latest SDK and tools can be downloaded from https://dot.net/core
 - Set up the solution to start multiple projects and hit F5
 
@@ -272,23 +270,23 @@ So you can edit the Docker compose to just run the database and queue dependenci
 }   
 ```
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 - This is not an architectural template or bootstrap model for new apps
 - All implementations were made for the real world, but the goal is to share knowledge
 - In case it is too many implementations included, remove the excess and try to avoid **over-engineering**
 
-## Pull-Requests
+## 🙌 Contributing
 
 Open an issue and let's discuss! Do not submit PRs for undiscussed or unapproved features.
 
 If you want to help us, choose an approved issue and implement it.
 
-## We are Online
+## 🚀 We are online
 
 See the project running on <a href="https://devstore.academy" target="_blank">DevStore official instance</a>
 
-## About
+## 💭 About
 
 DevStore was proudly developed by [desenvolvedor.io](https://desenvolvedor.io/)
 ❤<img alt="Brasil" src="https://user-images.githubusercontent.com/5068797/161345649-c7184fdc-2bc3-42a9-8fb6-6ffee9c8f9c2.png" width="20" height="14" />

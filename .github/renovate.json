@@ -1,0 +1,47 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "branchPrefix": "renovate/",
+  "username": "renovate-release",
+  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
+  "platform": "github",
+  "onboarding": false,
+  "requireConfig": "optional",
+  "forkProcessing": "enabled",
+  "repositories": [
+    "desenvolvedor-io/dev-store"
+  ],
+  "enabledManagers": [
+    "nuget"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Microsoft NuGet Packages",
+      "matchManagers": [
+        "nuget"
+      ],
+      "matchPackagePatterns": [
+        "^dotnet-sdk$",
+        "^AspNetCore\\..*",
+        "^Microsoft\\..*",
+        "^System\\..*"
+      ],
+      "minimumReleaseAge": "2 days"
+    },
+    {
+      "groupName": "External NuGet Packages",
+      "matchManagers": [
+        "nuget"
+      ],
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "excludePackagePatterns": [
+        "^dotnet-sdk$",
+        "^AspNetCore\\..*",
+        "^Microsoft\\..*",
+        "^System\\..*"
+      ],
+      "minimumReleaseAge": "7 days"
+    }
+  ]
+}

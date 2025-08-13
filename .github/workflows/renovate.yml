@@ -1,0 +1,24 @@
+name: Renovate
+on:
+  schedule:
+    - cron: '0 6 * * 1' # Runs at 6am (GMT) every Monday
+  push:
+    branches:
+      - feat/add-renovate
+  workflow_dispatch:
+      
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    env:
+      LOG_LEVEL: debug
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Self-hosted Renovate
+        uses: renovatebot/github-action@v43.0.7
+        with:
+          configurationFile: '.github/renovate.json'
+          token: ${{ secrets.RENOVATE_TOKEN }}
