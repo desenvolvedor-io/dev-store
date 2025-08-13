@@ -1,7 +1,7 @@
 name: Renovate
 on:
   schedule:
-    - cron: '0 9,21 * * *'
+    - cron: '0 6 * * 1' # Runs at 6am (GMT) every Monday
   push:
     branches:
       - feat/add-renovate
