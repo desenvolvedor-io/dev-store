@@ -19,6 +19,7 @@
         "nuget"
       ],
       "matchPackageNames": [
+        "dotnet-sdk",
         "AspNetCore.*",
         "Microsoft.*",
         "System.*"
@@ -32,6 +33,7 @@
         "nuget"
       ],
       "excludePackageNames": [
+        "dotnet-sdk",
         "AspNetCore.*",
         "Microsoft.*",
         "System.*"
