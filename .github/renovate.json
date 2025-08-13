@@ -1,5 +1,5 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",  
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "branchPrefix": "renovate/",
   "username": "renovate-release",
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
@@ -31,6 +31,9 @@
       "groupName": "External NuGet Packages",
       "matchManagers": [
         "nuget"
+      ],
+      "matchPackagePatterns": [
+        "*"
       ],
       "excludePackagePatterns": [
         "^dotnet-sdk$",
