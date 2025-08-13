@@ -35,10 +35,12 @@ jobs:
         id: tagging
         run: |
           if [ "${GITHUB_REF}" == "refs/heads/main" ]; then
-              echo "TAG=latest" >> $GITHUB_OUTPUT
+              VALUE="latest"
           else
-              echo "TAG=preview" >> $GITHUB_OUTPUT
+              VALUE="preview"
           fi
+          echo "::notice:: $VALUE"
+          echo "TAG=$VALUE" >> "$GITHUB_OUTPUT"
   
   build-and-test:
     name: Build and Test
