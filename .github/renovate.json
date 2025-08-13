@@ -1,11 +1,14 @@
 {
   "branchPrefix": "renovate/",
   "username": "thiagolunardi",
-  "gitAuthor": "Thiago Lunardi <thiago@thiagolunardi.net>",
+  "gitAuthor": "Thiago Lunardi",
   "platform": "github",
   "onboarding": false,
   "requireConfig": "optional",
   "forkProcessing": "enabled",
+  "repositories": [
+    "desenvolvedor-io/dev-store"
+  ],
   "enabledManagers": [
     "nuget"
   ],
