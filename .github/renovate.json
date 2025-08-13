@@ -3,9 +3,7 @@
   "username": "thiagolunardi",
   "gitAuthor": "Thiago Lunardi <thiago@thiagolunardi.net>",
   "platform": "github",
-  "repositories": [
-    "desenvolvedor-io/dev-store"
-  ],
+  "forkProcessing": "enabled",
   "enabledManagers": [
     "nuget"
   ],
