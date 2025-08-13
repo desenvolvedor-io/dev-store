@@ -1,14 +1,11 @@
 {
   "branchPrefix": "renovate/",
-  "username": "thiagolunardi",
-  "gitAuthor": "Thiago Lunardi <thiago@thiagolunardi.net>",
+  "username": "renovate-release",
+  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "platform": "github",
   "onboarding": false,
   "requireConfig": "optional",
   "forkProcessing": "enabled",
-  "repositories": [
-    "desenvolvedor-io/dev-store"
-  ],
   "enabledManagers": [
     "nuget"
   ],
@@ -23,22 +20,21 @@
         "Microsoft.*",
         "System.*"
       ],
-      "dependencyDashboardApproval": false,
-      "minimumReleaseAge": "2 days"
-    },    
+      "groupName": "Microsoft NuGet Packages",
+      "minimumReleaseAge": "7 days"
+    },
     {
       "description": "External packages",
       "matchManagers": [
         "nuget"
       ],
-      "matchPackageNames": [
-        "!AspNetCore.*",
-        "!Microsoft.*",
-        "!System.*"
+      "excludePackageNames": [
+        "AspNetCore.*",
+        "Microsoft.*",
+        "System.*"
       ],
-      "dependencyDashboardApproval": false,
+      "groupName": "External NuGet Packages",
       "minimumReleaseAge": "7 days"
     }
-
   ]
 }
