@@ -107,7 +107,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}        
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
         
       - name: Build docker images
         working-directory: ./docker
