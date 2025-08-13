@@ -4,6 +4,7 @@
   "gitAuthor": "Thiago Lunardi <thiago@thiagolunardi.net>",
   "platform": "github",
   "onboarding": false,
+  "requireConfig": "optional",
   "forkProcessing": "enabled",
   "enabledManagers": [
     "nuget"
