@@ -12,13 +12,33 @@
   "enabledManagers": [
     "nuget"
   ],
-  "packageRules": [  
+  "packageRules": [
     {
-      "dependencyDashboardApproval": false,
+      "description": "Microsoft packages",
       "matchManagers": [
         "nuget"
       ],
-      "minimumReleaseAge": "1 days"
+      "matchPackageNames": [
+        "AspNetCore.*",
+        "Microsoft.*",
+        "System.*"
+      ],
+      "dependencyDashboardApproval": false,
+      "minimumReleaseAge": "2 days"
+    },    
+    {
+      "description": "External packages",
+      "matchManagers": [
+        "nuget"
+      ],
+      "matchPackageNames": [
+        "!AspNetCore.*",
+        "!Microsoft.*",
+        "!System.*"
+      ],
+      "dependencyDashboardApproval": false,
+      "minimumReleaseAge": "7 days"
     }
+
   ]
 }
