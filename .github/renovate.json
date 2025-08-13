@@ -1,0 +1,17 @@
+{
+  "branchPrefix": "renovate/",
+  "username": "thiagolunardi",
+  "gitAuthor": "Thiago Lunardi <thiago@thiagolunardi.net>",
+  "platform": "github",
+  "enabledManagers": [
+    "nuget"
+  ],
+  "packageRules": [  
+    {
+      "matchManagers": [
+        "nuget"
+      ],
+      "minimumReleaseAge": "7 days"
+    }
+  ]
+}
