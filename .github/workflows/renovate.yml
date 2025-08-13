@@ -11,7 +11,7 @@ jobs:
   renovate:
     runs-on: ubuntu-latest
     env:
-      LOG_LEVEL: debug
+      LOG_LEVEL: info
     steps:
 
       - name: Checkout
