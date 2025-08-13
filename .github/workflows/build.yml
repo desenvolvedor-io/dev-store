@@ -35,10 +35,12 @@ jobs:
         id: tagging
         run: |
           if [ "${GITHUB_REF}" == "refs/heads/main" ]; then
-              echo "TAG=latest" >> $GITHUB_OUTPUT
+              VALUE="latest"
           else
-              echo "TAG=preview" >> $GITHUB_OUTPUT
+              VALUE="preview"
           fi
+          echo "::notice:: $VALUE"
+          echo "TAG=$VALUE" >> "$GITHUB_OUTPUT"
   
   build-and-test:
     name: Build and Test
@@ -90,7 +92,9 @@ jobs:
   build-docker-image-services:
     name: Build docker image services
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: 
+      - versioning
+      - build-and-test
     
     env:
       TAG: ${{ needs.versioning.outputs.TAG }}
@@ -98,6 +102,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
         
       - name: Build docker images
         working-directory: ./docker
