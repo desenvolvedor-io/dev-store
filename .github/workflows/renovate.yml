@@ -1,5 +1,10 @@
 name: Renovate
 on:
+  schedule:
+    - cron: '0 9,21 * * *'
+  push:
+    branches:
+      - feat/add-renovate
   workflow_dispatch:
       
 jobs:
