@@ -3,16 +3,18 @@
   "username": "thiagolunardi",
   "gitAuthor": "Thiago Lunardi <thiago@thiagolunardi.net>",
   "platform": "github",
+  "onboarding": false,
   "forkProcessing": "enabled",
   "enabledManagers": [
     "nuget"
   ],
   "packageRules": [  
     {
+      "dependencyDashboardApproval": false,
       "matchManagers": [
         "nuget"
       ],
-      "minimumReleaseAge": "7 days"
+      "minimumReleaseAge": "1 days"
     }
   ]
 }
