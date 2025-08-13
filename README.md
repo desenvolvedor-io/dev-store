@@ -136,7 +136,7 @@ You will need:
 - MS-SQL Server instance (or container)
 - RabbitMQ
 
-So just run un the `/docker` folder the command:
+So just run in the `/docker` folder the command:
 
 ```bash
 docker compose -f docker-common-resources.yml up -d
