@@ -21,7 +21,7 @@
         "System.*"
       ],
       "groupName": "Microsoft NuGet Packages",
-      "minimumReleaseAge": "7 days"
+      "minimumReleaseAge": "2 days"
     },
     {
       "description": "External packages",
