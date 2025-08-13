@@ -17,7 +17,7 @@
         <PackageReference Include="AspNetCore.HealthChecks.UI.PostgreSQL.Storage" Version="9.0.0"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.SQLite.Storage" Version="9.0.0"/>
         <PackageReference Include="AspNetCore.HealthChecks.UI.SqlServer.Storage" Version="9.0.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.7">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
